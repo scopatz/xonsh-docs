@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.ptk.shell &mdash; xonsh 0.4.4 documentation</title>
+    <title>xonsh.ptk.shell &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -61,27 +61,26 @@
   <h1>Source code for xonsh.ptk.shell</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;The prompt_toolkit based xonsh shell.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
 
-<span class="kn">from</span> <span class="nn">prompt_toolkit.key_binding.manager</span> <span class="kn">import</span> <span class="n">KeyBindingManager</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.auto_suggest</span> <span class="kn">import</span> <span class="n">AutoSuggestFromHistory</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.layout.lexers</span> <span class="kn">import</span> <span class="n">PygmentsLexer</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.shortcuts</span> <span class="kn">import</span> <span class="n">print_tokens</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.filters</span> <span class="kn">import</span> <span class="n">Condition</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.styles</span> <span class="kn">import</span> <span class="n">PygmentsStyle</span>
-<span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="kn">import</span> <span class="n">get_all_styles</span>
-<span class="kn">from</span> <span class="nn">pygments.token</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.key_binding.manager</span> <span class="k">import</span> <span class="n">KeyBindingManager</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.auto_suggest</span> <span class="k">import</span> <span class="n">AutoSuggestFromHistory</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.layout.lexers</span> <span class="k">import</span> <span class="n">PygmentsLexer</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.shortcuts</span> <span class="k">import</span> <span class="n">print_tokens</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.styles</span> <span class="k">import</span> <span class="n">PygmentsStyle</span>
+<span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="k">import</span> <span class="n">get_all_styles</span>
+<span class="kn">from</span> <span class="nn">pygments.token</span> <span class="k">import</span> <span class="n">Token</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.base_shell</span> <span class="kn">import</span> <span class="n">BaseShell</span>
-<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="kn">import</span> <span class="n">print_exception</span>
-<span class="kn">from</span> <span class="nn">xonsh.environ</span> <span class="kn">import</span> <span class="n">partial_format_prompt</span>
-<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="kn">import</span> <span class="n">ptk_version</span><span class="p">,</span> <span class="n">ptk_version_info</span>
-<span class="kn">from</span> <span class="nn">xonsh.pyghooks</span> <span class="kn">import</span> <span class="p">(</span><span class="n">XonshLexer</span><span class="p">,</span> <span class="n">partial_color_tokenize</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">xonsh.base_shell</span> <span class="k">import</span> <span class="n">BaseShell</span>
+<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">print_exception</span>
+<span class="kn">from</span> <span class="nn">xonsh.environ</span> <span class="k">import</span> <span class="n">partial_format_prompt</span>
+<span class="kn">from</span> <span class="nn">xonsh.pyghooks</span> <span class="k">import</span> <span class="p">(</span><span class="n">XonshLexer</span><span class="p">,</span> <span class="n">partial_color_tokenize</span><span class="p">,</span>
                             <span class="n">xonsh_style_proxy</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">xonsh.ptk.completer</span> <span class="kn">import</span> <span class="n">PromptToolkitCompleter</span>
-<span class="kn">from</span> <span class="nn">xonsh.ptk.history</span> <span class="kn">import</span> <span class="n">PromptToolkitHistory</span>
-<span class="kn">from</span> <span class="nn">xonsh.ptk.key_bindings</span> <span class="kn">import</span> <span class="n">load_xonsh_bindings</span>
-<span class="kn">from</span> <span class="nn">xonsh.ptk.shortcuts</span> <span class="kn">import</span> <span class="n">Prompter</span>
+<span class="kn">from</span> <span class="nn">xonsh.ptk.completer</span> <span class="k">import</span> <span class="n">PromptToolkitCompleter</span>
+<span class="kn">from</span> <span class="nn">xonsh.ptk.history</span> <span class="k">import</span> <span class="n">PromptToolkitHistory</span>
+<span class="kn">from</span> <span class="nn">xonsh.ptk.key_bindings</span> <span class="k">import</span> <span class="n">load_xonsh_bindings</span>
+<span class="kn">from</span> <span class="nn">xonsh.ptk.shortcuts</span> <span class="k">import</span> <span class="n">Prompter</span>
 
 
 <div class="viewcode-block" id="PromptToolkitShell"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell">[docs]</a><span class="k">class</span> <span class="nc">PromptToolkitShell</span><span class="p">(</span><span class="n">BaseShell</span><span class="p">):</span>
@@ -94,16 +93,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pt_completer</span> <span class="o">=</span> <span class="n">PromptToolkitCompleter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
 
         <span class="n">key_bindings_manager_args</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;enable_auto_suggest_bindings&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s1">&#39;enable_search&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s1">&#39;enable_abort_and_exit_bindings&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s1">&#39;enable_auto_suggest_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;enable_search&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;enable_abort_and_exit_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
                 <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key_bindings_manager</span> <span class="o">=</span> <span class="n">KeyBindingManager</span><span class="p">(</span><span class="o">**</span><span class="n">key_bindings_manager_args</span><span class="p">)</span>
         <span class="n">load_xonsh_bindings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_bindings_manager</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PromptToolkitShell.singleline"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.singleline">[docs]</a>    <span class="k">def</span> <span class="nf">singleline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_in_history</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">auto_suggest</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="n">enable_history_search</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="PromptToolkitShell.singleline"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.singleline">[docs]</a>    <span class="k">def</span> <span class="nf">singleline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_in_history</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_suggest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">enable_history_search</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reads a single line of input from the shell. The store_in_history</span>
 <span class="sd">        kwarg flags whether the input should be stored in PTK&#39;s in-memory</span>
 <span class="sd">        history.</span>
@@ -113,16 +112,16 @@
         <span class="k">if</span> <span class="n">store_in_history</span><span class="p">:</span>
             <span class="n">history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">history</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="n">enable_history_search</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="n">auto_suggest</span> <span class="o">=</span> <span class="n">auto_suggest</span> <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AUTO_SUGGEST&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span>
+            <span class="n">history</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">enable_history_search</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">auto_suggest</span> <span class="o">=</span> <span class="n">auto_suggest</span> <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AUTO_SUGGEST&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">completions_display</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;COMPLETIONS_DISPLAY&#39;</span><span class="p">)</span>
         <span class="n">multicolumn</span> <span class="o">=</span> <span class="p">(</span><span class="n">completions_display</span> <span class="o">==</span> <span class="s1">&#39;multi&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="o">.</span><span class="n">style_name</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">)</span>
-        <span class="n">completer</span> <span class="o">=</span> <span class="bp">None</span> <span class="k">if</span> <span class="n">completions_display</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt_completer</span>
-        <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_tokens</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">completer</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">completions_display</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt_completer</span>
+        <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_tokens</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">get_prompt_tokens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">cli</span><span class="p">:</span> <span class="n">prompt_tokens</span>
-        <span class="n">rprompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rprompt_tokens</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">rprompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rprompt_tokens</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">get_rprompt_tokens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">cli</span><span class="p">:</span> <span class="n">rprompt_tokens</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompter</span><span class="p">:</span>
             <span class="n">prompt_args</span> <span class="o">=</span> <span class="p">{</span>
@@ -149,27 +148,27 @@
         <span class="sd">&quot;&quot;&quot;Pushes a line onto the buffer and compiles the code in a way that</span>
 <span class="sd">        enables multiline input.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">code</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">need_more_lines</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="n">code</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">code</span>
         <span class="n">src</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execer</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span>
                                        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">,</span>
                                        <span class="n">glbs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">,</span>
-                                       <span class="n">locs</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+                                       <span class="n">locs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
             <span class="n">print_exception</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="n">code</span></div>
 
-<div class="viewcode-block" id="PromptToolkitShell.cmdloop"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.cmdloop">[docs]</a>    <span class="k">def</span> <span class="nf">cmdloop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PromptToolkitShell.cmdloop"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.cmdloop">[docs]</a>    <span class="k">def</span> <span class="nf">cmdloop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Enters a loop that reads and execute input from user.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">intro</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">intro</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">intro</span><span class="p">)</span>
         <span class="n">auto_suggest</span> <span class="o">=</span> <span class="n">AutoSuggestFromHistory</span><span class="p">()</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_exit__</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -179,11 +178,11 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precmd</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">EOFError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IGNOREEOF&quot;</span><span class="p">):</span>
-                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Use &quot;exit&quot; to leave the shell.&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Use &quot;exit&quot; to leave the shell.&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">break</span></div>
 
@@ -219,8 +218,8 @@
         <span class="sd">&quot;&quot;&quot;Displays dots in multiline prompt&quot;&quot;&quot;</span>
         <span class="n">width</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">dots</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MULTILINE_PROMPT&#39;</span><span class="p">)</span>
-        <span class="n">dots</span> <span class="o">=</span> <span class="n">dots</span><span class="p">()</span> <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">dots</span><span class="p">)</span> <span class="k">else</span> <span class="n">dots</span>
-        <span class="k">if</span> <span class="n">dots</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">dots</span> <span class="o">=</span> <span class="n">dots</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">dots</span><span class="p">)</span> <span class="k">else</span> <span class="n">dots</span>
+        <span class="k">if</span> <span class="n">dots</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[(</span><span class="n">Token</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">*</span><span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
         <span class="n">basetoks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_color</span><span class="p">(</span><span class="n">dots</span><span class="p">)</span>
         <span class="n">baselen</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">basetoks</span><span class="p">)</span>
@@ -284,8 +283,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -306,7 +305,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -315,7 +314,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

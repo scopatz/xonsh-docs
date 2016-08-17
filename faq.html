@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Frequently Asked Questions &mdash; xonsh 0.4.4 documentation</title>
+    <title>Frequently Asked Questions &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
     <link rel="next" title="Wishlist &amp; To-Dos" href="todo.html" />
     <link rel="prev" title="Xonsh 0.1 Release Notes" href="previous/0.1_release_notes.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="previous/0.1_release_notes.html" title="Xonsh 0.1 Release Notes"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -166,8 +166,59 @@ portions of your <code class="docutils literal"><span class="pre">$PROMPT</span>
 Just removing the color lookup from the <code class="docutils literal"><span class="pre">$PROMPT</span></code> can still provide the branch
 name while being fast enough.</p>
 </div>
+<div class="section" id="exec">
+<h2>7. exec<a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h2>
+<p>The notion of <code class="docutils literal"><span class="pre">exec</span></code> is a bit of a tricky beast in xonsh. Both Python and
+basically every other shell language have an exec that perform radically
+different operations.</p>
+<ul class="simple">
+<li>In Python, <code class="docutils literal"><span class="pre">exec</span></code> is a builtin function that executes strings, ASTs, or
+code objects in a provided namespace.</li>
+<li>In sh-langs (and elsewhere), <code class="docutils literal"><span class="pre">exec</span></code> is a command the runs another command
+directly in the current process.</li>
+</ul>
+<p>These two ideas are central to both languages - without which most programs
+cannot be run.  Luckily, even though they share a name, they have distinct
+syntax and don&#8217;t share a namespace.  Therefore, in xonsh,</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="c1"># exec() as a function is run as Python&#39;s exec</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">exec</span><span class="p">(</span><span class="s1">&#39;x = 41; x += 1&#39;</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">())</span><span class="go"></span>
+
+<span class="go"># while exec as a statement is like bash&#39;s exec</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">exec</span> <span class="n">gdb</span><span class="go"></span>
+<span class="go">(gdb)</span>
+</pre></div>
+</div>
+<p>Yes, this is potentially confusing. This is particularly true since earlier
+versions of Python <em>had</em> an exec statement whose syntax would have clashed
+with the sh-lang command form.</p>
+<p>Yes, we are sorry. But the alternative is that important programs that use
+exec under the covers, such as SSH and gdb, would not be usable when xonsh
+is set as the default shell. (Note that we can&#8217;t rename the exec() function
+since Python would fail.) As usability is the most important aspect of a shell,
+xonsh trades a small amount of potential confusion for large class of important
+commands.</p>
+<p>All of the above being true, if the exec duality is causing you problems there
+a few operations that you can implement to mitigate the confusion. The first is
+that you can remove the <code class="docutils literal"><span class="pre">exec</span></code> alias and use the <code class="docutils literal"><span class="pre">xexec</span></code> alias instead:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;exec&#39;</span><span class="p">]</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">xexec</span> <span class="n">ssh</span><span class="go"></span>
+</pre></div>
+</div>
+<p>Alternatively, you can always be sure to run the exec command explicitly in
+subprocess mode with <code class="docutils literal"><span class="pre">![]</span></code> or <code class="docutils literal"><span class="pre">!()</span></code>:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">![</span><span class="nb">exec</span> bash<span class="k">]</span><span class="go"></span>
+</pre></div>
+</div>
+<p>Lastly, you can assign the result of the exec() function to a throw away
+variable (since the return is always None):</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="k">exec</span><span class="p">(</span><span class="s1">&#39;x = 42&#39;</span><span class="p">)</span><span class="go"></span>
+</pre></div>
+</div>
+<p>Hopefully, though, this trade-off makes sense and you never have to worry about
+it...unless chimera slaying is your bag.</p>
+</div>
 <div class="section" id="gotchas">
-<h2>7. Gotchas<a class="headerlink" href="#gotchas" title="Permalink to this headline">¶</a></h2>
+<h2>8. Gotchas<a class="headerlink" href="#gotchas" title="Permalink to this headline">¶</a></h2>
 <p>There are a few gotchas when using xonsh across multiple versions of Python,
 where some behavior can differ, as the underlying Python might behave
 differently.</p>
@@ -194,7 +245,8 @@ as recursive globbing is <a class="reference external" href="https://docs.python
 <li><a class="reference internal" href="#so-how-does-this-all-work">4. So how does this all work?</a></li>
 <li><a class="reference internal" href="#context-sensitive-parsing-is-gross">5. Context-sensitive parsing is gross</a></li>
 <li><a class="reference internal" href="#my-branches-are-timing-out">6. My Branches are Timing Out?!</a></li>
-<li><a class="reference internal" href="#gotchas">7. Gotchas</a></li>
+<li><a class="reference internal" href="#exec">7. exec</a></li>
+<li><a class="reference internal" href="#gotchas">8. Gotchas</a></li>
 </ul>
 </li>
 </ul>
@@ -220,8 +272,8 @@ as recursive globbing is <a class="reference external" href="https://docs.python
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -248,7 +300,7 @@ as recursive globbing is <a class="reference external" href="https://docs.python
         <li class="right" >
           <a href="previous/0.1_release_notes.html" title="Xonsh 0.1 Release Notes"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -256,7 +308,7 @@ as recursive globbing is <a class="reference external" href="https://docs.python
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Xonsh Change Log &mdash; xonsh 0.4.4 documentation</title>
+    <title>Xonsh Change Log &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
     <link rel="up" title="Previous Versions" href="index.html" />
     <link rel="next" title="Xonsh 0.2 Release Notes" href="0.2_release_notes.html" />
     <link rel="prev" title="Previous Versions" href="index.html" /> 
@@ -53,7 +53,7 @@
         <li class="right" >
           <a href="index.html" title="Previous Versions"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Previous Versions</a> &raquo;</li> 
       </ul>
@@ -68,6 +68,116 @@
             
   <div class="section" id="xonsh-change-log">
 <h1>Xonsh Change Log<a class="headerlink" href="#xonsh-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-4-5">
+<h2>v0.4.5<a class="headerlink" href="#v0-4-5" title="Permalink to this headline">¶</a></h2>
+<p><strong>Added:</strong></p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">_hist_get</span></code> that uses generators to filter and fetch
+the history commands of each session.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">-n</span></code> option to the show subcommand to choose
+to numerate the commands.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">exec</span></code> command is now a first class alias that acts the same way as in
+sh-based languages. It replaces the current process with the command and
+argument that follows it. This allows xonsh to be used as a default shell
+while maintaining functionality with SSH, gdb, and other third party programs
+that assume the default shell supports raw <code class="docutils literal"><span class="pre">exec</span> <span class="pre">command</span> <span class="pre">[args]</span></code> syntax.</p>
+<p>This feature introduces some ambiguity between exec-as-a-subprocess and
+exec-as-a-function (the inescapable Python builtin). Though the two pieces of
+syntax do not overlap, they perform very different operations. Please see
+the xonsh FAQ for more information on trade-offs and mitigation strategies.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">which</span> <span class="pre">-v</span></code> now calls superhelp, which will print highlighted source.</p>
+</li>
+<li><p class="first">Added xontribs:
+* <a class="reference external" href="https://github.com/astronouth7303/xontrib-z">z (Tracks your most used directories, based on &#8216;frecency&#8217;.)</a></p>
+</li>
+<li><p class="first">amalgamate.py now supports relative imports.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">history</span> <span class="pre">show</span></code> args <code class="docutils literal"><span class="pre">-t</span></code>, <code class="docutils literal"><span class="pre">-f</span></code>, <code class="docutils literal"><span class="pre">-T</span></code> <code class="docutils literal"><span class="pre">+T</span></code> to filter commands by timestamp</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">ensure_timestamp</span></code> in xonsh.tools to try and convert an object to a timestamp a.k.a float</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">$XONSH_DATETIME_FORMAT</span></code> envvar, the default format to be used with <code class="docutils literal"><span class="pre">datetime.datetime.strptime()</span></code></p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">xon.sh</span></code> script now sets <code class="docutils literal"><span class="pre">$LANG=C.UTF8</span></code> in the event that no encoding
+is detected.</p>
+</li>
+<li><p class="first">amalgamate.py now properly handles <code class="docutils literal"><span class="pre">from</span> <span class="pre">__future__</span></code> imports.</p>
+</li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">_hist_show</span></code> now uses <code class="docutils literal"><span class="pre">_hist_get</span></code> to print out the commands.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">xonsh.completers</span></code> sub-package is now fully lazy.</p>
+</li>
+<li><p class="first">The vox xontrib now takes flags very similar to Python&#8217;s venv tool. Use
+<code class="docutils literal"><span class="pre">vox</span> <span class="pre">--help</span> <span class="pre">&lt;command&gt;</span></code> to learn more.</p>
+</li>
+<li><p class="first">Xontribs may now define <code class="docutils literal"><span class="pre">__all__</span></code> as a module top-level to limit what gets exported to the shell context</p>
+</li>
+<li><p class="first">xon.sh uses the interpreter used to install instead of the default python3.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">imphooks</span></code> now checks directory access rights.</p>
+</li>
+<li><p class="first">$TITLE now changes both icon (tab) and window title</p>
+</li>
+<li><p class="first">Moved <code class="docutils literal"><span class="pre">amalgamate_source</span></code> outside <code class="docutils literal"><span class="pre">build_tables</span></code></p>
+</li>
+<li><p class="first">Disable amalgamation on setup develop</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">_hist_parse_args</span></code> implementation refactor</p>
+</li>
+<li><p class="first">moved all parameter checking in <code class="docutils literal"><span class="pre">_hist_get</span></code></p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">_hist_show</span></code> to handle numeration and timestamp printing of commands</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">xonsh.imphooks</span></code> does not install the import hooks automatically, you now
+need to explicitly call the  <cite>install_hook()</cite> method defined in this module.
+For example: <code class="docutils literal"><span class="pre">from</span> <span class="pre">xonsh.imphooks</span> <span class="pre">import</span> <span class="pre">install_hook;</span> <span class="pre">install_hook()</span></code>. The
+<code class="docutils literal"><span class="pre">install_hook</span></code> method can safely be called several times. If you need
+compatibility with previous versions of Xonsh you can use the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xonsh</span> <span class="k">import</span> <span class="n">imphooks</span>
+<span class="nb">getattr</span><span class="p">(</span><span class="n">imphooks</span><span class="p">,</span> <span class="s1">&#39;install_hook&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="kc">None</span><span class="p">)()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">xonfig command now dumps more encoding related settings.</p>
+</li>
+</ul>
+<p><strong>Removed:</strong></p>
+<ul class="simple">
+<li>Anaconda Build is shutting down so we can no longer build conda development packages.
+All references to these packages are removed from the documentation.</li>
+<li>Removed conda build recipe since the it is no longer used for Anaconda Build.
+The recipe used to build xonsh on conda-forge can be found here:
+<a class="reference external" href="https://github.com/conda-forge/xonsh-feedstock/blob/master/recipe/meta.yaml">https://github.com/conda-forge/xonsh-feedstock/blob/master/recipe/meta.yaml</a></li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">_zsh_hist_parser</span></code> not parsing history files without timestamps.</li>
+<li>Fixed amalgamation of aliased imports that are already in <code class="docutils literal"><span class="pre">sys.modules</span></code>.</li>
+<li>Xonsh will no longer fail to start in directories where the user doesn&#8217;t have
+read access.</li>
+<li>Fixed parser error line number exception from being raised while trying to
+raise a SyntaxError.</li>
+<li>Made pip completer more robust to when pip is not installed.</li>
+<li>Fix a startup problem on windows caused by a refactor of Prompt_toolkit.
+<a class="reference external" href="https://github.com/jonathanslenders/python-prompt-toolkit/commit/a9df2a2">https://github.com/jonathanslenders/python-prompt-toolkit/commit/a9df2a2</a></li>
+<li><code class="docutils literal"><span class="pre">ensure_slice</span></code> bugfix for -1 index/slice</li>
+<li>Alias tab completion works again</li>
+<li>Version number reported by bundled PLY</li>
+<li><code class="docutils literal"><span class="pre">xonfig</span></code> no longer breaks if PLY is externally installed and version 3.8</li>
+<li>LazyObject supports set union</li>
+<li>Fixed error with not sourcing files with <code class="docutils literal"><span class="pre">$XONSH_ENCODING</span></code> and
+<code class="docutils literal"><span class="pre">$XONSH_ENCODING_ERRORS</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">$IGNOREEOF</span></code> envrionment variable now works properly in the
+prompt-toolkit shell.</li>
+<li>Completions in <code class="docutils literal"><span class="pre">jupyter_kernel.py</span></code> now use updated completion framework</li>
+</ul>
+</div>
 <div class="section" id="v0-4-4">
 <h2>v0.4.4<a class="headerlink" href="#v0-4-4" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
@@ -839,6 +949,7 @@ with a decoding error.</li>
     <h3><a href="../index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xonsh Change Log</a><ul>
+<li><a class="reference internal" href="#v0-4-5">v0.4.5</a></li>
 <li><a class="reference internal" href="#v0-4-4">v0.4.4</a></li>
 <li><a class="reference internal" href="#v0-4-3">v0.4.3</a></li>
 <li><a class="reference internal" href="#v0-4-2">v0.4.2</a></li>
@@ -881,8 +992,8 @@ with a decoding error.</li>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -909,7 +1020,7 @@ with a decoding error.</li>
         <li class="right" >
           <a href="index.html" title="Previous Versions"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Previous Versions</a> &raquo;</li> 
       </ul>
@@ -918,7 +1029,7 @@ with a decoding error.</li>
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

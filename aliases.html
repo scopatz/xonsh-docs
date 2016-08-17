@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Built-in Aliases &mdash; xonsh 0.4.4 documentation</title>
+    <title>Built-in Aliases &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
     <link rel="next" title="Xontribs" href="xontribs.html" />
     <link rel="prev" title="Environment Variables" href="envvars.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="envvars.html" title="Environment Variables"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -145,13 +145,9 @@ single number is given as an argument, resume that job in the background.</p>
 leave xonsh in a safe manner. Typing <code class="docutils literal"><span class="pre">Crtl-d</span></code> is the same as typing <code class="docutils literal"><span class="pre">EOF</span></code> and
 pressing enter.</p>
 </div>
-<div class="section" id="xexec">
-<h2><code class="docutils literal"><span class="pre">xexec</span></code><a class="headerlink" href="#xexec" title="Permalink to this headline">¶</a></h2>
-<p>xexec uses the <code class="docutils literal"><span class="pre">os.execvpe()</span></code> function to replace the xonsh process with
-the specified program. This provides the functionality of the bash <code class="docutils literal"><span class="pre">exec</span></code>
-builtin.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt;&gt;&gt; xexec bash
-bash $
+<div class="section" id="exec-and-xexec">
+<h2><code class="docutils literal"><span class="pre">exec</span></code> and  <code class="docutils literal"><span class="pre">xexec</span></code><a class="headerlink" href="#exec-and-xexec" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -221,7 +217,7 @@ optional arguments:
 <h2><code class="docutils literal"><span class="pre">history</span></code><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
 <p>Tools for dealing with xonsh history. See <a class="reference external" href="tutorial_hist.html">the history tutorial</a>
 for more information all the history command and all of its sub-commands.</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>usage: history [-h] {show,session,id,file,info,diff,replay,gc} ...
+<div class="highlight-none"><div class="highlight"><pre><span></span>usage: history [-h] {show,id,file,info,diff,replay,gc} ...
 
 Tools for dealing with history
 
@@ -229,8 +225,8 @@ optional arguments:
   -h, --help            show this help message and exit
 
 action:
-  {show,session,id,file,info,diff,replay,gc}
-    show (session)      displays session history, default action
+  {show,id,file,info,diff,replay,gc}
+    show                displays session history, default action
     id                  displays the current session id
     file                displays the current history filename
     info                displays information about the current history
@@ -414,7 +410,7 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
 <li><a class="reference internal" href="#fg"><code class="docutils literal"><span class="pre">fg</span></code></a></li>
 <li><a class="reference internal" href="#bg"><code class="docutils literal"><span class="pre">bg</span></code></a></li>
 <li><a class="reference internal" href="#eof-exit-and-quit"><code class="docutils literal"><span class="pre">EOF</span></code>, <code class="docutils literal"><span class="pre">exit</span></code>, and <code class="docutils literal"><span class="pre">quit</span></code></a></li>
-<li><a class="reference internal" href="#xexec"><code class="docutils literal"><span class="pre">xexec</span></code></a></li>
+<li><a class="reference internal" href="#exec-and-xexec"><code class="docutils literal"><span class="pre">exec</span></code> and  <code class="docutils literal"><span class="pre">xexec</span></code></a></li>
 <li><a class="reference internal" href="#source"><code class="docutils literal"><span class="pre">source</span></code></a></li>
 <li><a class="reference internal" href="#source-bash"><code class="docutils literal"><span class="pre">source-bash</span></code></a></li>
 <li><a class="reference internal" href="#source-foreign"><code class="docutils literal"><span class="pre">source-foreign</span></code></a></li>
@@ -459,8 +455,8 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -487,7 +483,7 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
         <li class="right" >
           <a href="envvars.html" title="Environment Variables"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -495,7 +491,7 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

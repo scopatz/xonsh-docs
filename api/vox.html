@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Vox (xontrib.voxapi) &mdash; xonsh 0.4.4 documentation</title>
+    <title>Vox (xontrib.voxapi) &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,10 +29,10 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
-    <link rel="next" title="Matplotlib Hooks (xontrib.mplhooks)" href="mplhooks.html" />
-    <link rel="prev" title="Context Managers for Xonsh (xonsh.contexts)" href="contexts.html" /> 
+    <link rel="next" title="Developer’s Guide" href="../devguide.html" />
+    <link rel="prev" title="Matplotlib Hooks (xontrib.mplhooks)" href="mplhooks.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -48,12 +48,12 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
+          <a href="../devguide.html" title="Developer’s Guide"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="contexts.html" title="Context Managers for Xonsh (xonsh.contexts)"
+          <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
       </ul>
@@ -181,17 +181,13 @@ set self.__traceback__ to tb and return self.</p>
 </div></blockquote>
 <p><strong>system_site_packages</strong> : bool</p>
 <blockquote>
-<div><p>If True, the system (global) site-packages dir is available to 
+<div><p>If True, the system (global) site-packages dir is available to
 created environments.</p>
 </div></blockquote>
 <p><strong>symlinks</strong> : bool</p>
 <blockquote>
-<div><p>If True, attempt to symlink rather than copy files into virtual 
+<div><p>If True, attempt to symlink rather than copy files into virtual
 environment.</p>
-</div></blockquote>
-<p><strong>upgrade</strong> : bool</p>
-<blockquote>
-<div><p>If True, upgrade an existing virtual environment.</p>
 </div></blockquote>
 <p><strong>with_pip</strong> : bool</p>
 <blockquote class="last">
@@ -228,7 +224,7 @@ environment.</p>
 <dt id="xontrib.voxapi.Vox.upgrade">
 <code class="descname">upgrade</code><span class="sig-paren">(</span><em>name</em>, <em>*</em>, <em>symlinks=False</em>, <em>with_pip=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xontrib/voxapi.html#Vox.upgrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xontrib.voxapi.Vox.upgrade" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a virtual environment in $VIRTUALENV_HOME with python3&#8217;s <code class="docutils literal"><span class="pre">venv</span></code>.</p>
-<p>WARNING: If a virtual environment was with symlinks or without PIP, you must 
+<p>WARNING: If a virtual environment was created with symlinks or without PIP, you must
 specify these options again on upgrade.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -240,7 +236,7 @@ specify these options again on upgrade.</p>
 </div></blockquote>
 <p><strong>symlinks</strong> : bool</p>
 <blockquote>
-<div><p>If True, attempt to symlink rather than copy files into virtual 
+<div><p>If True, attempt to symlink rather than copy files into virtual
 environment.</p>
 </div></blockquote>
 <p><strong>with_pip</strong> : bool</p>
@@ -273,13 +269,13 @@ environment.</p>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="contexts.html"
-                          title="Previous page">&larr; Context Managers for Xonsh (<code class="docutils literal"><span class="pre">xonsh.contexts</span></code>)</a></p>
+    <p class="topless"><a href="mplhooks.html"
+                          title="Previous page">&larr; Matplotlib Hooks (<code class="docutils literal"><span class="pre">xontrib.mplhooks</span></code>)</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="mplhooks.html"
-                          title="Next page">&rarr; Matplotlib Hooks (<code class="docutils literal"><span class="pre">xontrib.mplhooks</span></code>)</a></p>
+    <p class="topless"><a href="../devguide.html"
+                          title="Next page">&rarr; Developer&#8217;s Guide</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -291,8 +287,8 @@ environment.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -314,12 +310,12 @@ environment.</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
+          <a href="../devguide.html" title="Developer’s Guide"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="contexts.html" title="Context Managers for Xonsh (xonsh.contexts)"
+          <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
       </ul>
@@ -328,7 +324,7 @@ environment.</p>
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

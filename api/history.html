@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>History (xonsh.history) &mdash; xonsh 0.4.4 documentation</title>
+    <title>History (xonsh.history) &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Tab Completer (xonsh.completer)" href="completer.html" />
     <link rel="prev" title="Object Inspectors (xonsh.inspectors)" href="inspectors.html" /> 
@@ -53,7 +53,7 @@
         <li class="right" >
           <a href="inspectors.html" title="Object Inspectors (xonsh.inspectors)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
       </ul>
@@ -119,6 +119,30 @@ will lazily acquire data from the file.</p>
 <dt id="xonsh.history.History">
 <em class="property">class </em><code class="descclassname">xonsh.history.</code><code class="descname">History</code><span class="sig-paren">(</span><em>filename=None</em>, <em>sessionid=None</em>, <em>buffersize=100</em>, <em>gc=True</em>, <em>**meta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/history.html#History"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.history.History" title="Permalink to this definition">¶</a></dt>
 <dd><p>Xonsh session history.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>rtns</td>
+<td>(sequence of ints) The return of the command (ie, 0 on success)</td>
+</tr>
+<tr class="row-even"><td>inps</td>
+<td>(sequence of strings) The command as typed by the user, including newlines</td>
+</tr>
+<tr class="row-odd"><td>tss</td>
+<td>(sequence of two-tuples of floats) The timestamps of when the command started and finished, including fractions</td>
+</tr>
+<tr class="row-even"><td>outs</td>
+<td>(sequence of strings) The output of the command, if xonsh is configured to save it</td>
+</tr>
+<tr class="row-odd"><td>In all of these sequences, index 0 is the oldest and -1 (the last item) is the newest.</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
 <p>Represents a xonsh session&#8217;s history as an in-memory buffer that is
 periodically flushed to disk.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -204,11 +228,10 @@ background, or execute immeadiately and block.</p>
 <dl class="method">
 <dt id="xonsh.history.History.show">
 <code class="descname">show</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/history.html#History.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.history.History.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns shell history as a list</p>
+<dd><p>Return shell history as a list</p>
 <dl class="docutils">
 <dt>Valid options:</dt>
 <dd><cite>session</cite> - returns xonsh history from current session
-<cite>show</cite>    - alias of <cite>session</cite>
 <cite>xonsh</cite>   - returns xonsh history from all sessions
 <cite>zsh</cite>     - returns all zsh history
 <cite>bash</cite>    - returns all bash history</dd>
@@ -496,8 +519,8 @@ initial name is set by the constructor.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -524,7 +547,7 @@ initial name is set by the constructor.</p>
         <li class="right" >
           <a href="inspectors.html" title="Object Inspectors (xonsh.inspectors)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
       </ul>
@@ -533,7 +556,7 @@ initial name is set by the constructor.</p>
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

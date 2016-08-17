@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.pretty &mdash; xonsh 0.4.4 documentation</title>
+    <title>xonsh.pretty &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -147,16 +147,17 @@
 <span class="kn">import</span> <span class="nn">contextlib</span>
 <span class="kn">import</span> <span class="nn">collections</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="kn">import</span> <span class="n">LazyObject</span><span class="p">,</span> <span class="n">lazyobject</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">LazyObject</span><span class="p">,</span> <span class="n">lazyobject</span>
 
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pretty&#39;</span><span class="p">,</span> <span class="s1">&#39;pretty_print&#39;</span><span class="p">,</span> <span class="s1">&#39;PrettyPrinter&#39;</span><span class="p">,</span> <span class="s1">&#39;RepresentationPrinter&#39;</span><span class="p">,</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;pretty&#39;</span><span class="p">,</span> <span class="s1">&#39;pretty_print&#39;</span><span class="p">,</span> <span class="s1">&#39;PrettyPrinter&#39;</span><span class="p">,</span> <span class="s1">&#39;RepresentationPrinter&#39;</span><span class="p">,</span>
     <span class="s1">&#39;for_type&#39;</span><span class="p">,</span> <span class="s1">&#39;for_type_by_name&#39;</span><span class="p">]</span>
 
 
 <span class="n">MAX_SEQ_LENGTH</span> <span class="o">=</span> <span class="mi">1000</span>
 
-<span class="k">def</span> <span class="nf">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Safe version of getattr.</span>
 
 <span class="sd">    Same as getattr, but will return ``default`` on any Exception,</span>
@@ -171,7 +172,7 @@
 <span class="n">CUnicodeIO</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span>
 
 
-<div class="viewcode-block" id="pretty"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.pretty">[docs]</a><span class="k">def</span> <span class="nf">pretty</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
+<div class="viewcode-block" id="pretty"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.pretty">[docs]</a><span class="k">def</span> <span class="nf">pretty</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pretty print the object&#39;s representation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -182,7 +183,7 @@
     <span class="k">return</span> <span class="n">stream</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="pretty_print"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.pretty_print">[docs]</a><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
+<div class="viewcode-block" id="pretty_print"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.pretty_print">[docs]</a><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Like pretty() but print to stdout.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -194,8 +195,7 @@
 
 
 <span class="k">class</span> <span class="nc">_PrettyPrinterBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="nd">@contextlib.contextmanager</span>
+    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
     <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;with statement support for indenting/dedenting.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">indentation</span> <span class="o">+=</span> <span class="n">indent</span>
@@ -204,7 +204,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">indentation</span> <span class="o">-=</span> <span class="n">indent</span>
 
-    <span class="nd">@contextlib.contextmanager</span>
+    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
     <span class="k">def</span> <span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">open</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;like begin_group / end_group but for the with statement.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">begin_group</span><span class="p">(</span><span class="n">indent</span><span class="p">,</span> <span class="nb">open</span><span class="p">)</span>
@@ -294,7 +294,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">output_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer_width</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-
 <div class="viewcode-block" id="PrettyPrinter.begin_group"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.PrettyPrinter.begin_group">[docs]</a>    <span class="k">def</span> <span class="nf">begin_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">open</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Begin a group.  If you want support for python &lt; 2.5 which doesn&#39;t has</span>
@@ -381,20 +380,20 @@
 <span class="sd">    verbose mode.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
-        <span class="n">singleton_pprinters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">type_pprinters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">deferred_pprinters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+                 <span class="n">singleton_pprinters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">type_pprinters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deferred_pprinters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">max_seq_length</span><span class="o">=</span><span class="n">MAX_SEQ_LENGTH</span><span class="p">):</span>
 
         <span class="n">PrettyPrinter</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">max_width</span><span class="p">,</span> <span class="n">newline</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">max_seq_length</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">singleton_pprinters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">singleton_pprinters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">singleton_pprinters</span> <span class="o">=</span> <span class="n">_singleton_pprinters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">singleton_pprinters</span> <span class="o">=</span> <span class="n">singleton_pprinters</span>
-        <span class="k">if</span> <span class="n">type_pprinters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">type_pprinters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">type_pprinters</span> <span class="o">=</span> <span class="n">_type_pprinters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type_pprinters</span> <span class="o">=</span> <span class="n">type_pprinters</span>
-        <span class="k">if</span> <span class="n">deferred_pprinters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">deferred_pprinters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">deferred_pprinters</span> <span class="o">=</span> <span class="n">_deferred_type_pprinters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deferred_pprinters</span> <span class="o">=</span> <span class="n">deferred_pprinters</span>
 
@@ -405,7 +404,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">begin_group</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">obj_class</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="n">obj_class</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
             <span class="c1"># First try to find registered singleton printers for the type.</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">printer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">singleton_pprinters</span><span class="p">[</span><span class="n">obj_id</span><span class="p">]</span>
@@ -423,7 +422,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># deferred printer</span>
                     <span class="n">printer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_deferred_types</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">printer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">printer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">printer</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">cycle</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># Finally look for special method names.</span>
@@ -432,7 +431,7 @@
                         <span class="c1"># callability.</span>
                         <span class="k">if</span> <span class="s1">&#39;_repr_pretty_&#39;</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
                             <span class="n">meth</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_repr_pretty_</span>
-                            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">meth</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">meth</span><span class="p">):</span>
                                 <span class="k">return</span> <span class="n">meth</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">cycle</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">_default_pprint</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">cycle</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
@@ -447,10 +446,10 @@
 <span class="sd">        class is not in the registry. Successful matches will be moved to the</span>
 <span class="sd">        regular type registry for future use.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mod</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">printer</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">printer</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deferred_pprinters</span><span class="p">:</span>
             <span class="c1"># Move the printer over to the regular registry.</span>
             <span class="n">printer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deferred_pprinters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -459,13 +458,11 @@
 
 
 <span class="k">class</span> <span class="nc">Printable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">output_width</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">output_width</span>
 
 
 <span class="k">class</span> <span class="nc">Text</span><span class="p">(</span><span class="n">Printable</span><span class="p">):</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
@@ -481,7 +478,6 @@
 
 
 <span class="k">class</span> <span class="nc">Breakable</span><span class="p">(</span><span class="n">Printable</span><span class="p">):</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">pretty</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">seq</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
@@ -503,15 +499,13 @@
 
 
 <span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">Printable</span><span class="p">):</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">breakables</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="kc">False</span>
 
 
 <span class="k">class</span> <span class="nc">GroupQueue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">groups</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
@@ -528,10 +522,10 @@
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">stack</span><span class="p">)):</span>
                 <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">breakables</span><span class="p">:</span>
                     <span class="k">del</span> <span class="n">stack</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                    <span class="n">group</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="bp">True</span>
+                    <span class="n">group</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">return</span> <span class="n">group</span>
             <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
-                <span class="n">group</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">group</span><span class="o">.</span><span class="n">want_break</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">del</span> <span class="n">stack</span><span class="p">[:]</span>
 
     <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
@@ -555,8 +549,8 @@
 <span class="sd">    The default print function.  Used if an object does not provide one and</span>
 <span class="sd">    it&#39;s none of the builtin objects.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">klass</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_baseclass_reprs</span><span class="p">:</span>
+    <span class="n">klass</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_baseclass_reprs</span><span class="p">:</span>
         <span class="c1"># A user-provided repr. Find newlines and replace them with p.break_()</span>
         <span class="n">_repr_pprint</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">)</span>
         <span class="k">return</span>
@@ -566,7 +560,7 @@
     <span class="k">if</span> <span class="n">cycle</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39; ...&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-        <span class="n">first</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -584,7 +578,7 @@
                 <span class="n">p</span><span class="o">.</span><span class="n">indentation</span> <span class="o">+=</span> <span class="n">step</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">indentation</span> <span class="o">-=</span> <span class="n">step</span>
-                <span class="n">first</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
 
 
@@ -593,9 +587,10 @@
 <span class="sd">    Factory that returns a pprint function useful for sequences.  Used by</span>
 <span class="sd">    the default pprint for tuples, dicts, and lists.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
         <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
             <span class="c1"># If the subclass provides its own repr, use it instead.</span>
             <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 
@@ -612,6 +607,7 @@
             <span class="c1"># Special case for 1-item tuples.</span>
             <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">inner</span>
 
 
@@ -619,9 +615,10 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Factory that returns a pprint function useful for sets and frozensets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
         <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
             <span class="c1"># If the subclass provides its own repr, use it instead.</span>
             <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 
@@ -647,17 +644,19 @@
                     <span class="n">p</span><span class="o">.</span><span class="n">breakable</span><span class="p">()</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">inner</span>
 
 
-<span class="k">def</span> <span class="nf">_dict_pprinter_factory</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">basetype</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_dict_pprinter_factory</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">basetype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Factory that returns a pprint function used by the default pprint of</span>
 <span class="sd">    dicts and dict proxies.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">):</span>
         <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">basetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">basetype</span> <span class="ow">and</span> <span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span> <span class="o">!=</span> <span class="n">basetype</span><span class="o">.</span><span class="n">__repr__</span><span class="p">:</span>
             <span class="c1"># If the subclass provides its own repr, use it instead.</span>
             <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">typ</span><span class="o">.</span><span class="n">__repr__</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 
@@ -680,6 +679,7 @@
             <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">inner</span>
 
 
@@ -707,14 +707,14 @@
     <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">flags</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">breakable</span><span class="p">()</span>
-        <span class="n">done_one</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">done_one</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;TEMPLATE&#39;</span><span class="p">,</span> <span class="s1">&#39;IGNORECASE&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCALE&#39;</span><span class="p">,</span> <span class="s1">&#39;MULTILINE&#39;</span><span class="p">,</span> <span class="s1">&#39;DOTALL&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;UNICODE&#39;</span><span class="p">,</span> <span class="s1">&#39;VERBOSE&#39;</span><span class="p">,</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">):</span>
+                     <span class="s1">&#39;UNICODE&#39;</span><span class="p">,</span> <span class="s1">&#39;VERBOSE&#39;</span><span class="p">,</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">re</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">done_one</span><span class="p">:</span>
                     <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;re.&#39;</span> <span class="o">+</span> <span class="n">flag</span><span class="p">)</span>
-                <span class="n">done_one</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">done_one</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
 
 
@@ -728,7 +728,7 @@
         <span class="n">_repr_pprint</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cycle</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="n">mod</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">_safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__qualname__</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -740,7 +740,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&lt;unknown type&gt;&#39;</span>
 
-    <span class="k">if</span> <span class="n">mod</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;__builtin__&#39;</span><span class="p">,</span> <span class="s1">&#39;builtins&#39;</span><span class="p">,</span> <span class="s1">&#39;exceptions&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mod</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;__builtin__&#39;</span><span class="p">,</span> <span class="s1">&#39;builtins&#39;</span><span class="p">,</span> <span class="s1">&#39;exceptions&#39;</span><span class="p">):</span>
         <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mod</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
@@ -750,7 +750,7 @@
     <span class="sd">&quot;&quot;&quot;A pprint that just redirects to the normal repr function.&quot;&quot;&quot;</span>
     <span class="c1"># Find newlines and replace them with p.break_()</span>
     <span class="n">output</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">output_line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">output_line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
         <span class="k">if</span> <span class="n">idx</span><span class="p">:</span>
             <span class="n">p</span><span class="o">.</span><span class="n">break_</span><span class="p">()</span>
         <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">output_line</span><span class="p">)</span>
@@ -780,49 +780,48 @@
     <span class="n">p</span><span class="o">.</span><span class="n">end_group</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
 
 
-
-
 <span class="nd">@lazyobject</span>
 <span class="k">def</span> <span class="nf">_type_pprinters</span><span class="p">():</span>
     <span class="c1">#: printers for builtin types</span>
     <span class="n">tp</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nb">int</span><span class="p">:</span>                        <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="nb">float</span><span class="p">:</span>                      <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="nb">str</span><span class="p">:</span>                        <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="nb">tuple</span><span class="p">:</span>                      <span class="n">_seq_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span>
-        <span class="nb">list</span><span class="p">:</span>                       <span class="n">_seq_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
-        <span class="nb">dict</span><span class="p">:</span>                       <span class="n">_dict_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span>
-        <span class="nb">set</span><span class="p">:</span>                        <span class="n">_set_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="nb">set</span><span class="p">),</span>
-        <span class="nb">frozenset</span><span class="p">:</span>                  <span class="n">_set_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;frozenset({&#39;</span><span class="p">,</span> <span class="s1">&#39;})&#39;</span><span class="p">,</span> <span class="nb">frozenset</span><span class="p">),</span>
-        <span class="nb">super</span><span class="p">:</span>                      <span class="n">_super_pprint</span><span class="p">,</span>
-        <span class="nb">type</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)):</span>       <span class="n">_re_pattern_pprint</span><span class="p">,</span>
-        <span class="nb">type</span><span class="p">:</span>                       <span class="n">_type_pprint</span><span class="p">,</span>
-        <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">:</span>         <span class="n">_function_pprint</span><span class="p">,</span>
-        <span class="n">types</span><span class="o">.</span><span class="n">BuiltinFunctionType</span><span class="p">:</span>  <span class="n">_function_pprint</span><span class="p">,</span>
-        <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">:</span>           <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>          <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">:</span>         <span class="n">_repr_pprint</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="nb">int</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+        <span class="nb">float</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+        <span class="nb">tuple</span><span class="p">:</span> <span class="n">_seq_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span>
+        <span class="nb">list</span><span class="p">:</span> <span class="n">_seq_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
+        <span class="nb">dict</span><span class="p">:</span> <span class="n">_dict_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span>
+        <span class="nb">set</span><span class="p">:</span> <span class="n">_set_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="nb">set</span><span class="p">),</span>
+        <span class="nb">frozenset</span><span class="p">:</span> <span class="n">_set_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;frozenset({&#39;</span><span class="p">,</span> <span class="s1">&#39;})&#39;</span><span class="p">,</span> <span class="nb">frozenset</span><span class="p">),</span>
+        <span class="nb">super</span><span class="p">:</span> <span class="n">_super_pprint</span><span class="p">,</span>
+        <span class="nb">type</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)):</span> <span class="n">_re_pattern_pprint</span><span class="p">,</span>
+        <span class="nb">type</span><span class="p">:</span> <span class="n">_type_pprint</span><span class="p">,</span>
+        <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">:</span> <span class="n">_function_pprint</span><span class="p">,</span>
+        <span class="n">types</span><span class="o">.</span><span class="n">BuiltinFunctionType</span><span class="p">:</span> <span class="n">_function_pprint</span><span class="p">,</span>
+        <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">:</span> <span class="n">_repr_pprint</span><span class="p">,</span>
+    <span class="p">}</span>
     <span class="c1">#: the exception base</span>
     <span class="k">try</span><span class="p">:</span>
-       <span class="n">_exception_base</span> <span class="o">=</span> <span class="ne">BaseException</span>
+        <span class="n">_exception_base</span> <span class="o">=</span> <span class="ne">BaseException</span>
     <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
         <span class="n">_exception_base</span> <span class="o">=</span> <span class="ne">Exception</span>
-    <span class="n">tp</span><span class="p">[</span><span class="n">_exception_base</span><span class="p">]</span> <span class="o">=</span>  <span class="n">_exception_pprint</span>
+    <span class="n">tp</span><span class="p">[</span><span class="n">_exception_base</span><span class="p">]</span> <span class="o">=</span> <span class="n">_exception_pprint</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tp</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">DictProxyType</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dict_pprinter_factory</span><span class="p">(</span><span class="s1">&#39;&lt;dictproxy {&#39;</span><span class="p">,</span> <span class="s1">&#39;}&gt;&#39;</span><span class="p">)</span>
         <span class="n">tp</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ClassType</span><span class="p">]</span> <span class="o">=</span> <span class="n">_type_pprint</span>
         <span class="n">tp</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">SliceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> <span class="c1"># Python 3</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># Python 3</span>
         <span class="n">tp</span><span class="p">[</span><span class="nb">slice</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tp</span><span class="p">[</span><span class="nb">xrange</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
-        <span class="n">tp</span><span class="p">[</span><span class="nb">long</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
-        <span class="n">tp</span><span class="p">[</span><span class="nb">unicode</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
+        <span class="n">tp</span><span class="p">[</span><span class="n">xrange</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
+        <span class="n">tp</span><span class="p">[</span><span class="n">long</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
+        <span class="n">tp</span><span class="p">[</span><span class="n">unicode</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
     <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
         <span class="n">tp</span><span class="p">[</span><span class="nb">range</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
         <span class="n">tp</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">_repr_pprint</span>
     <span class="k">return</span> <span class="n">tp</span>
+
 
 <span class="c1">#: printers for types specified by name</span>
 <span class="nd">@lazyobject</span>
@@ -839,23 +838,23 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a pretty printer for a given type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">oldfunc</span> <span class="o">=</span> <span class="n">_type_pprinters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">oldfunc</span> <span class="o">=</span> <span class="n">_type_pprinters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># To support easy restoration of old pprinters, we need to ignore Nones.</span>
         <span class="n">_type_pprinters</span><span class="p">[</span><span class="n">typ</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
     <span class="k">return</span> <span class="n">oldfunc</span></div>
 
 
-<div class="viewcode-block" id="for_type_by_name"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.for_type_by_name">[docs]</a><span class="k">def</span> <span class="nf">for_type_by_name</span><span class="p">(</span><span class="n">type_module</span><span class="p">,</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">dtp</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="for_type_by_name"><a class="viewcode-back" href="../../api/pretty.html#xonsh.pretty.for_type_by_name">[docs]</a><span class="k">def</span> <span class="nf">for_type_by_name</span><span class="p">(</span><span class="n">type_module</span><span class="p">,</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">dtp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a pretty printer for a type specified by the module and name of a type</span>
 <span class="sd">    rather than the type object itself.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">dtp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">dtp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dtp</span> <span class="o">=</span> <span class="n">_deferred_type_pprinters</span>
     <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">type_module</span><span class="p">,</span> <span class="n">type_name</span><span class="p">)</span>
-    <span class="n">oldfunc</span> <span class="o">=</span> <span class="n">dtp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">oldfunc</span> <span class="o">=</span> <span class="n">dtp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># To support easy restoration of old pprinters, we need to ignore Nones.</span>
         <span class="n">dtp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
     <span class="k">return</span> <span class="n">oldfunc</span></div>
@@ -863,8 +862,8 @@
 
 <span class="c1">#: printers for the default singletons</span>
 <span class="n">_singleton_pprinters</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span>
-                                    <span class="nb">map</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">Ellipsis</span><span class="p">,</span>
-                                             <span class="bp">NotImplemented</span><span class="p">]),</span> <span class="n">_repr_pprint</span><span class="p">),</span>
+    <span class="nb">map</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="bp">Ellipsis</span><span class="p">,</span>
+             <span class="bp">NotImplemented</span><span class="p">]),</span> <span class="n">_repr_pprint</span><span class="p">),</span>
                                   <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;_singleton_pprinters&#39;</span><span class="p">)</span>
 
 
@@ -905,7 +904,6 @@
             <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
             <span class="n">p</span><span class="o">.</span><span class="n">pretty</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-
 </pre></div>
 
           </div>
@@ -919,8 +917,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -941,7 +939,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -950,7 +948,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

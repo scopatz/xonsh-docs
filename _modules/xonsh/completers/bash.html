@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.completers.bash &mdash; xonsh 0.4.4 documentation</title>
+    <title>xonsh.completers.bash &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -68,36 +68,32 @@
 <span class="kn">import</span> <span class="nn">builtins</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="kn">import</span> <span class="n">ON_WINDOWS</span>
+<span class="kn">import</span> <span class="nn">xonsh.lazyasd</span> <span class="k">as</span> <span class="nn">xl</span>
+<span class="kn">import</span> <span class="nn">xonsh.platform</span> <span class="k">as</span> <span class="nn">xp</span>
 
-<span class="n">RE_DASHF</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;-F\s+(\w+)&#39;</span><span class="p">)</span>
 
-<span class="n">INITED</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">RE_DASHF</span> <span class="o">=</span> <span class="n">xl</span><span class="o">.</span><span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;-F\s+(\w+)&#39;</span><span class="p">),</span>
+                         <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;RE_DASHF&#39;</span><span class="p">)</span>
 
-<span class="n">BASH_COMPLETE_HASH</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">INITED</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">BASH_COMPLETE_HASH</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">BASH_COMPLETE_FUNCS</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">BASH_COMPLETE_FILES</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="n">CACHED_HASH</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="n">CACHED_FUNCS</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="n">CACHED_FILES</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">CACHED_HASH</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">CACHED_FUNCS</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">CACHED_FILES</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="n">BASH_COMPLETE_SCRIPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;source &quot;{filename}&quot;</span>
-<span class="s2">COMP_WORDS=({line})</span>
-<span class="s2">COMP_LINE={comp_line}</span>
+<span class="n">BASH_COMPLETE_SCRIPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;source &quot;</span><span class="si">{filename}</span><span class="s2">&quot;</span>
+<span class="s2">COMP_WORDS=(</span><span class="si">{line}</span><span class="s2">)</span>
+<span class="s2">COMP_LINE=</span><span class="si">{comp_line}</span><span class="s2"></span>
 <span class="s2">COMP_POINT=${{#COMP_LINE}}</span>
-<span class="s2">COMP_COUNT={end}</span>
-<span class="s2">COMP_CWORD={n}</span>
-<span class="s2">{func} {cmd} {prefix} {prev}</span>
+<span class="s2">COMP_COUNT=</span><span class="si">{end}</span><span class="s2"></span>
+<span class="s2">COMP_CWORD=</span><span class="si">{n}</span><span class="s2"></span>
+<span class="si">{func}</span><span class="s2"> </span><span class="si">{cmd}</span><span class="s2"> </span><span class="si">{prefix}</span><span class="s2"> </span><span class="si">{prev}</span><span class="s2"></span>
 <span class="s2">for ((i=0;i&lt;${{#COMPREPLY[*]}};i++)) do echo ${{COMPREPLY[i]}}; done</span>
 <span class="s2">&quot;&quot;&quot;</span>
-
-
-<span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="kn">import</span> <span class="n">windows_bash_command</span>
-    <span class="n">BASH_COMMAND</span> <span class="o">=</span> <span class="n">windows_bash_command</span><span class="p">()</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">BASH_COMMAND</span> <span class="o">=</span> <span class="s1">&#39;bash&#39;</span>
 
 
 <div class="viewcode-block" id="update_bash_completion"><a class="viewcode-back" href="../../../api/completers/bash.html#xonsh.completers.bash.update_bash_completion">[docs]</a><span class="k">def</span> <span class="nf">update_bash_completion</span><span class="p">():</span>
@@ -128,7 +124,7 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cachefname</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">CACHED_HASH</span><span class="p">,</span> <span class="n">CACHED_FUNCS</span><span class="p">,</span> <span class="n">CACHED_FILES</span><span class="p">)</span>
                 <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
-        <span class="n">INITED</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">INITED</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">invalid</span> <span class="o">=</span> <span class="p">((</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cachefname</span><span class="p">))</span> <span class="ow">or</span>
                <span class="n">BASH_COMPLETE_HASH</span> <span class="o">!=</span> <span class="n">CACHED_HASH</span> <span class="ow">or</span>
@@ -151,9 +147,9 @@
     <span class="n">update_bash_completion</span><span class="p">()</span>
     <span class="n">splt</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">splt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">func</span> <span class="o">=</span> <span class="n">BASH_COMPLETE_FUNCS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="n">fnme</span> <span class="o">=</span> <span class="n">BASH_COMPLETE_FILES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">fnme</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="n">BASH_COMPLETE_FUNCS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">fnme</span> <span class="o">=</span> <span class="n">BASH_COMPLETE_FILES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">fnme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">tok</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splt</span><span class="p">):</span>
@@ -174,9 +170,9 @@
         <span class="n">end</span><span class="o">=</span><span class="n">endidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span> <span class="n">prev</span><span class="o">=</span><span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">prev</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">BASH_COMMAND</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">script</span><span class="p">,</span> <span class="n">universal_newlines</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">xp</span><span class="o">.</span><span class="n">bash_command</span><span class="p">()],</span> <span class="nb">input</span><span class="o">=</span><span class="n">script</span><span class="p">,</span> <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">())</span>
-    <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="n">FileNotFoundError</span><span class="p">):</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
     <span class="n">rtn</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
@@ -196,7 +192,7 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">cmd</span> <span class="o">==</span> <span class="s1">&#39;cd&#39;</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">RE_DASHF</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">bcf</span><span class="p">[</span><span class="n">cmd</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
@@ -216,7 +212,7 @@
     <span class="n">func_files</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xp</span><span class="o">.</span><span class="n">ON_WINDOWS</span><span class="p">:</span>
             <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">:])]</span>
         <span class="n">func_files</span><span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">BASH_COMPLETE_FILES</span> <span class="o">=</span> <span class="p">{</span>
@@ -229,9 +225,10 @@
 <span class="k">def</span> <span class="nf">_source_completions</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">BASH_COMMAND</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="n">universal_newlines</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-            <span class="n">env</span><span class="o">=</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">(),</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">FileNotFoundError</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">xp</span><span class="o">.</span><span class="n">bash_command</span><span class="p">()],</span> <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="p">),</span>
+            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">(),</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span>
 
 
@@ -241,10 +238,10 @@
     <span class="n">paths</span> <span class="o">=</span> <span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">completers</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-            <span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;source &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()))</span>
+            <span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;source &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()))</span>
         <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">_file</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_file</span><span class="p">()):</span>
-                <span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;source &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_file</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()))</span>
+                <span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;source &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_file</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()))</span>
     <span class="k">return</span> <span class="n">sources</span>
 
 
@@ -265,8 +262,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -287,7 +284,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -296,7 +293,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &mdash; xonsh 0.4.4 documentation</title>
+    <title>Tutorial &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
     <link rel="next" title="Tutorial: History" href="tutorial_hist.html" />
     <link rel="prev" title="Additional Setup" href="add_to_shell.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="add_to_shell.html" title="Additional Setup"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -477,7 +477,7 @@ result is automatically converted to a string. For example,</p>
 <span class="go">4</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">echo</span> <span class="k">@(</span><span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;yo&#39;</span><span class="p">]</span><span class="k">)</span><span class="go"></span>
 <span class="go">42 yo</span><span class="gp"></span>
-<span class="gp">&gt;&gt;&gt;</span> <span class="n">echo</span> <span class="s2">&quot;hello&quot;</span> <span class="o">|</span> <span class="k">@(lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">None</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span> <span class="o">+</span> <span class="s2">&quot; world&quot;</span><span class="k">)</span><span class="go"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">echo</span> <span class="s2">&quot;hello&quot;</span> <span class="o">|</span> <span class="k">@(lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">None</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; world</span><span class="se">\n</span><span class="s2">&quot;</span><span class="k">)</span><span class="go"></span>
 <span class="go">hello world</span>
 </pre></div>
 </div>
@@ -1017,8 +1017,8 @@ must have one of the following two signatures</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="adding-and-removing-aliases">
-<h3>Adding and Removing Aliases<a class="headerlink" href="#adding-and-removing-aliases" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="adding-modifying-and-removing-aliases">
+<h3>Adding, Modifying, and Removing Aliases<a class="headerlink" href="#adding-modifying-and-removing-aliases" title="Permalink to this headline">¶</a></h3>
 <p>We can dynamically alter the aliases present simply by modifying the
 built-in mapping.  Here is an example using a function value:</p>
 <div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">_banana</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span><span class="gp"></span>
@@ -1026,6 +1026,17 @@ built-in mapping.  Here is an example using a function value:</p>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_banana</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">banana</span><span class="go"></span>
 <span class="go">&#39;My spoon is tooo big!&#39;</span>
+</pre></div>
+</div>
+<p>To redefine an alias, simply assign a new function, here using a python lambda
+with keyword arguments:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">args</span><span class="p">,</span><span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">:</span> <span class="s2">&quot;Banana for scale.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">banana</span><span class="go"></span>
+<span class="go">Banana for scale.</span>
+</pre></div>
+</div>
+<p>Removing an alias is as easy as deleting the key from the alias dictionary:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">]</span><span class="go"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1383,7 +1394,7 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 <li><a class="reference internal" href="#compile-evaluate-execute">Compile, Evaluate, &amp; Execute</a></li>
 <li><a class="reference internal" href="#aliases">Aliases</a><ul>
 <li><a class="reference internal" href="#callable-aliases">Callable Aliases</a></li>
-<li><a class="reference internal" href="#adding-and-removing-aliases">Adding and Removing Aliases</a></li>
+<li><a class="reference internal" href="#adding-modifying-and-removing-aliases">Adding, Modifying, and Removing Aliases</a></li>
 <li><a class="reference internal" href="#anonymous-aliases">Anonymous Aliases</a></li>
 <li><a class="reference internal" href="#foreground-only-aliases">Foreground-only Aliases</a></li>
 </ul>
@@ -1418,8 +1429,8 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -1446,7 +1457,7 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
         <li class="right" >
           <a href="add_to_shell.html" title="Additional Setup"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -1454,7 +1465,7 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

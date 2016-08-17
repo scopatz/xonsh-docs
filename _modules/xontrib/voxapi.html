@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xontrib.voxapi &mdash; xonsh 0.4.4 documentation</title>
+    <title>xontrib.voxapi &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -61,20 +61,24 @@
   <h1>Source code for xontrib.voxapi</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;API for Vox, the Python virtual environment manager for xonsh.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">venv</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
-<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">collections.abc</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="kn">import</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">scandir</span>
+<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">scandir</span>
+
 
 <span class="n">VirtualEnvironment</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;VirtualEnvironment&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">])</span>
 
-<div class="viewcode-block" id="EnvironmentInUse"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.EnvironmentInUse">[docs]</a><span class="k">class</span> <span class="nc">EnvironmentInUse</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span> <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="NoEnvironmentActive"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.NoEnvironmentActive">[docs]</a><span class="k">class</span> <span class="nc">NoEnvironmentActive</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span> <span class="k">pass</span></div>
+<div class="viewcode-block" id="EnvironmentInUse"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.EnvironmentInUse">[docs]</a><span class="k">class</span> <span class="nc">EnvironmentInUse</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NoEnvironmentActive"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.NoEnvironmentActive">[docs]</a><span class="k">class</span> <span class="nc">NoEnvironmentActive</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="Vox"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.Vox">[docs]</a><span class="k">class</span> <span class="nc">Vox</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;API access to Vox and virtual environments, in a dict-like format.</span>
@@ -93,8 +97,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;VIRTUALENV_HOME&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Vox.create"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.Vox.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">system_site_packages</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
-               <span class="n">with_pip</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Vox.create"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.Vox.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">system_site_packages</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a virtual environment in $VIRTUALENV_HOME with python3&#39;s ``venv``.</span>
 
 <span class="sd">        Parameters</span>
@@ -102,27 +106,26 @@
 <span class="sd">        name : str</span>
 <span class="sd">            Virtual environment name</span>
 <span class="sd">        system_site_packages : bool</span>
-<span class="sd">            If True, the system (global) site-packages dir is available to </span>
+<span class="sd">            If True, the system (global) site-packages dir is available to</span>
 <span class="sd">            created environments.</span>
 <span class="sd">        symlinks : bool</span>
-<span class="sd">            If True, attempt to symlink rather than copy files into virtual </span>
+<span class="sd">            If True, attempt to symlink rather than copy files into virtual</span>
 <span class="sd">            environment.</span>
-<span class="sd">        upgrade : bool</span>
-<span class="sd">            If True, upgrade an existing virtual environment.</span>
 <span class="sd">        with_pip : bool</span>
 <span class="sd">            If True, ensure pip is installed in the virtual environment. (Default is True)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># NOTE: clear=True is the same as delete then create.</span>
         <span class="c1"># NOTE: upgrade=True is its own method</span>
         <span class="n">env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> 
-            <span class="n">system_site_packages</span><span class="o">=</span><span class="n">system_site_packages</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="n">symlinks</span><span class="p">,</span> 
+        <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">env_path</span><span class="p">,</span>
+            <span class="n">system_site_packages</span><span class="o">=</span><span class="n">system_site_packages</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="n">symlinks</span><span class="p">,</span>
             <span class="n">with_pip</span><span class="o">=</span><span class="n">with_pip</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Vox.upgrade"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.Vox.upgrade">[docs]</a>    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">with_pip</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Vox.upgrade"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.Vox.upgrade">[docs]</a>    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a virtual environment in $VIRTUALENV_HOME with python3&#39;s ``venv``.</span>
 
-<span class="sd">        WARNING: If a virtual environment was with symlinks or without PIP, you must </span>
+<span class="sd">        WARNING: If a virtual environment was created with symlinks or without PIP, you must</span>
 <span class="sd">        specify these options again on upgrade.</span>
 
 <span class="sd">        Parameters</span>
@@ -130,7 +133,7 @@
 <span class="sd">        name : str</span>
 <span class="sd">            Virtual environment name</span>
 <span class="sd">        symlinks : bool</span>
-<span class="sd">            If True, attempt to symlink rather than copy files into virtual </span>
+<span class="sd">            If True, attempt to symlink rather than copy files into virtual</span>
 <span class="sd">            environment.</span>
 <span class="sd">        with_pip : bool</span>
 <span class="sd">            If True, ensure pip is installed in the virtual environment.</span>
@@ -143,7 +146,8 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">cfgfile</span><span class="p">:</span>
                 <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                    <span class="k">continue</span>
                 <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">cfgops</span><span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="p">{</span>
@@ -154,7 +158,7 @@
         <span class="c1"># END things we shouldn&#39;t be doing.</span>
 
         <span class="c1"># Ok, do what we came here to do.</span>
-        <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">upgrade</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">)</span></div>
+        <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">upgrade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_binname</span><span class="p">():</span>
@@ -171,7 +175,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        name : str or Ellipsis</span>
-<span class="sd">            Virtual environment name or absolute path. If ... is given, return </span>
+<span class="sd">            Virtual environment name or absolute path. If ... is given, return</span>
 <span class="sd">            the current one (throws a KeyError if there isn&#39;t one).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="o">...</span><span class="p">:</span>
@@ -236,7 +240,7 @@
         <span class="k">if</span> <span class="s1">&#39;VIRTUAL_ENV&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="p">()</span>
 
-        <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PATH&#39;</span><span class="p">:</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]}</span>
+        <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PATH&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">])}</span>
         <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bin_path</span><span class="p">)</span>
         <span class="n">env</span><span class="p">[</span><span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env_path</span>
         <span class="k">if</span> <span class="s1">&#39;PYTHONHOME&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
@@ -254,7 +258,7 @@
         <span class="n">env_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s1">&#39;oldvars&#39;</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">env</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
             <span class="k">del</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span>
 
@@ -292,8 +296,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -314,7 +318,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -323,7 +327,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

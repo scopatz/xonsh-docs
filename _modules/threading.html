@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>threading &mdash; xonsh 0.4.4 documentation</title>
+    <title>threading &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -61,17 +61,17 @@
   <h1>Source code for threading</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Thread module emulating a subset of Java&#39;s threading model.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sys</span> <span class="kn">as</span> <span class="nn">_sys</span>
+<span class="kn">import</span> <span class="nn">sys</span> <span class="k">as</span> <span class="nn">_sys</span>
 <span class="kn">import</span> <span class="nn">_thread</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">monotonic</span> <span class="k">as</span> <span class="n">_time</span>
-<span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">format_exc</span> <span class="k">as</span> <span class="n">_format_exc</span>
-<span class="kn">from</span> <span class="nn">_weakrefset</span> <span class="kn">import</span> <span class="n">WeakSet</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span> <span class="k">as</span> <span class="n">_islice</span><span class="p">,</span> <span class="n">count</span> <span class="k">as</span> <span class="n">_count</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">monotonic</span> <span class="k">as</span> <span class="n">_time</span>
+<span class="kn">from</span> <span class="nn">traceback</span> <span class="k">import</span> <span class="n">format_exc</span> <span class="k">as</span> <span class="n">_format_exc</span>
+<span class="kn">from</span> <span class="nn">_weakrefset</span> <span class="k">import</span> <span class="n">WeakSet</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span> <span class="k">as</span> <span class="n">_islice</span><span class="p">,</span> <span class="n">count</span> <span class="k">as</span> <span class="n">_count</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">_collections</span> <span class="kn">import</span> <span class="n">deque</span> <span class="k">as</span> <span class="n">_deque</span>
+    <span class="kn">from</span> <span class="nn">_collections</span> <span class="k">import</span> <span class="n">deque</span> <span class="k">as</span> <span class="n">_deque</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span> <span class="k">as</span> <span class="n">_deque</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span> <span class="k">as</span> <span class="n">_deque</span>
 
 <span class="c1"># Note regarding PEP 8 compliant names</span>
 <span class="c1">#  This threading model was originally inspired by Java, and inherited</span>
@@ -96,15 +96,15 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="n">_CRLock</span> <span class="o">=</span> <span class="n">_thread</span><span class="o">.</span><span class="n">RLock</span>
 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-    <span class="n">_CRLock</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_CRLock</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">TIMEOUT_MAX</span> <span class="o">=</span> <span class="n">_thread</span><span class="o">.</span><span class="n">TIMEOUT_MAX</span>
 <span class="k">del</span> <span class="n">_thread</span>
 
 
 <span class="c1"># Support for profile and trace hooks</span>
 
-<span class="n">_profile_hook</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="n">_trace_hook</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">_profile_hook</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_trace_hook</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">def</span> <span class="nf">setprofile</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Set a profile function for all threads started from the threading module.</span>
@@ -139,7 +139,7 @@
 <span class="sd">    acquired it.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">_CRLock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_CRLock</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_PyRLock</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_CRLock</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -155,7 +155,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block</span> <span class="o">=</span> <span class="n">_allocate_lock</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -173,7 +173,7 @@
             <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Acquire a lock, blocking or non-blocking.</span>
 
 <span class="sd">        When invoked without arguments: if this thread already owns the lock,</span>
@@ -231,7 +231,7 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;cannot release un-acquired lock&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">count</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_block</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
@@ -249,7 +249,7 @@
         <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">owner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
 
@@ -271,8 +271,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">lock</span> <span class="o">=</span> <span class="n">RLock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">lock</span>
         <span class="c1"># Export the lock&#39;s acquire() and release() methods</span>
@@ -315,11 +315,11 @@
         <span class="c1"># This method is called only if _lock doesn&#39;t have _is_owned().</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait until notified or until a timeout occurs.</span>
 
 <span class="sd">        If the calling thread has not acquired the lock when this method is</span>
@@ -348,16 +348,16 @@
         <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_waiters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">waiter</span><span class="p">)</span>
         <span class="n">saved_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_release_save</span><span class="p">()</span>
-        <span class="n">gotit</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">gotit</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>    <span class="c1"># restore state no matter what (e.g., KeyboardInterrupt)</span>
-            <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-                <span class="n">gotit</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">gotit</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">gotit</span> <span class="o">=</span> <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+                    <span class="n">gotit</span> <span class="o">=</span> <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">gotit</span> <span class="o">=</span> <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="n">gotit</span> <span class="o">=</span> <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">gotit</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_acquire_restore</span><span class="p">(</span><span class="n">saved_state</span><span class="p">)</span>
@@ -367,7 +367,7 @@
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                     <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">wait_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predicate</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wait_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predicate</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait until a condition evaluates to True.</span>
 
 <span class="sd">        predicate should be a callable which result will be interpreted as a</span>
@@ -375,12 +375,12 @@
 <span class="sd">        wait.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">endtime</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">endtime</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">waittime</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">predicate</span><span class="p">()</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">waittime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">endtime</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">waittime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">endtime</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">endtime</span> <span class="o">=</span> <span class="n">_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">waittime</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">waittime</span> <span class="o">=</span> <span class="n">endtime</span> <span class="o">-</span> <span class="n">_time</span><span class="p">()</span>
@@ -443,7 +443,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span> <span class="o">=</span> <span class="n">Condition</span><span class="p">(</span><span class="n">Lock</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Acquire a semaphore, decrementing the internal counter by one.</span>
 
 <span class="sd">        When invoked without arguments: if the internal counter is larger than</span>
@@ -467,16 +467,16 @@
 <span class="sd">        that interval, return false.  Return true otherwise.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">blocking</span> <span class="ow">and</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">blocking</span> <span class="ow">and</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;can&#39;t specify timeout for non-blocking acquire&quot;</span><span class="p">)</span>
-        <span class="n">rc</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="n">endtime</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">endtime</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="p">:</span>
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">blocking</span><span class="p">:</span>
                     <span class="k">break</span>
-                <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">endtime</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">endtime</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">endtime</span> <span class="o">=</span> <span class="n">_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">timeout</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">timeout</span> <span class="o">=</span> <span class="n">endtime</span> <span class="o">-</span> <span class="n">_time</span><span class="p">()</span>
@@ -485,7 +485,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">-=</span> <span class="mi">1</span>
-                <span class="n">rc</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">rc</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">rc</span>
 
     <span class="n">__enter__</span> <span class="o">=</span> <span class="n">acquire</span>
@@ -556,7 +556,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span> <span class="o">=</span> <span class="n">Condition</span><span class="p">(</span><span class="n">Lock</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_reset_internal_locks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># private!  called by Thread._reset_internal_locks by _after_fork()</span>
@@ -576,7 +576,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">notify_all</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -587,9 +587,9 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Block until the internal flag is true.</span>
 
 <span class="sd">        If the internal flag is true on entry, return immediately. Otherwise,</span>
@@ -631,7 +631,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parties</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parties</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a barrier, initialised to &#39;parties&#39; threads.</span>
 
 <span class="sd">        &#39;action&#39; is a callable which, when supplied, will be called by one of</span>
@@ -647,7 +647,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#0 filling, 1, draining, -1 resetting, -2 broken</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait for the barrier.</span>
 
 <span class="sd">        When the specified number of threads have started waiting, they are all</span>
@@ -656,7 +656,7 @@
 <span class="sd">        Returns an individual index number from 0 to &#39;parties-1&#39;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_enter</span><span class="p">()</span> <span class="c1"># Block while the barrier drains.</span>
@@ -803,7 +803,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_initialized</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="c1"># Need to store a reference to sys.exc_info for printing</span>
     <span class="c1"># out exceptions when a thread tries to use a global var. during interp.</span>
     <span class="c1"># shutdown and thus raises an exception about trying to perform some</span>
@@ -813,8 +813,8 @@
     <span class="c1"># allowing .join() to return.</span>
     <span class="c1">#XXX __exc_clear = _sys.exc_clear</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                 <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This constructor should always be called with keyword arguments. Arguments are:</span>
 
 <span class="sd">        *group* should be None; reserved for future extension when a ThreadGroup</span>
@@ -836,22 +836,22 @@
 <span class="sd">        else to the thread.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">group</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;group argument must be None for now&quot;</span>
-        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;group argument must be None for now&quot;</span>
+        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span> <span class="ow">or</span> <span class="n">_newname</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
-        <span class="k">if</span> <span class="n">daemon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">daemon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span> <span class="o">=</span> <span class="n">daemon</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span> <span class="o">=</span> <span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">daemon</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ident</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ident</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_started</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># sys.stderr is not stored in the class like</span>
         <span class="c1"># sys.exc_info since it can be changed between instances</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span> <span class="o">=</span> <span class="n">_sys</span><span class="o">.</span><span class="n">stderr</span>
@@ -867,8 +867,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># The thread isn&#39;t alive after fork: it doesn&#39;t have a tstate</span>
             <span class="c1"># anymore.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="bp">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">,</span> <span class="s2">&quot;Thread.__init__() was not called&quot;</span>
@@ -880,7 +880,7 @@
             <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;stopped&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">+=</span> <span class="s2">&quot; daemon&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ident</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ident</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ident</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
 
@@ -942,7 +942,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bootstrap_inner</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span> <span class="ow">and</span> <span class="n">_sys</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span> <span class="ow">and</span> <span class="n">_sys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span>
             <span class="k">raise</span>
 
@@ -980,28 +980,28 @@
                 <span class="c1"># shutdown) use self._stderr.  Otherwise still use sys (as in</span>
                 <span class="c1"># _sys) in case sys.stderr was redefined since the creation of</span>
                 <span class="c1"># self.</span>
-                <span class="k">if</span> <span class="n">_sys</span> <span class="ow">and</span> <span class="n">_sys</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Exception in thread </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_format_exc</span><span class="p">()),</span> <span class="nb">file</span><span class="o">=</span><span class="n">_sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">_sys</span> <span class="ow">and</span> <span class="n">_sys</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception in thread </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_format_exc</span><span class="p">()),</span> <span class="n">file</span><span class="o">=</span><span class="n">_sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="c1"># Do the best job possible w/o a huge amt. of code to</span>
                     <span class="c1"># approximate a traceback (code ideas from</span>
                     <span class="c1"># Lib/traceback.py)</span>
                     <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_tb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span><span class="p">()</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="k">print</span><span class="p">((</span>
+                        <span class="nb">print</span><span class="p">((</span>
                             <span class="s2">&quot;Exception in thread &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span>
-                            <span class="s2">&quot; (most likely raised during interpreter shutdown):&quot;</span><span class="p">),</span> <span class="nb">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
-                        <span class="k">print</span><span class="p">((</span>
-                            <span class="s2">&quot;Traceback (most recent call last):&quot;</span><span class="p">),</span> <span class="nb">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
+                            <span class="s2">&quot; (most likely raised during interpreter shutdown):&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">((</span>
+                            <span class="s2">&quot;Traceback (most recent call last):&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
                         <span class="k">while</span> <span class="n">exc_tb</span><span class="p">:</span>
-                            <span class="k">print</span><span class="p">((</span>
+                            <span class="nb">print</span><span class="p">((</span>
                                 <span class="s1">&#39;  File &quot;</span><span class="si">%s</span><span class="s1">&quot;, line </span><span class="si">%s</span><span class="s1">, in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
                                 <span class="p">(</span><span class="n">exc_tb</span><span class="o">.</span><span class="n">tb_frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span>
                                     <span class="n">exc_tb</span><span class="o">.</span><span class="n">tb_lineno</span><span class="p">,</span>
-                                    <span class="n">exc_tb</span><span class="o">.</span><span class="n">tb_frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)),</span> <span class="nb">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
+                                    <span class="n">exc_tb</span><span class="o">.</span><span class="n">tb_frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
                             <span class="n">exc_tb</span> <span class="o">=</span> <span class="n">exc_tb</span><span class="o">.</span><span class="n">tb_next</span>
-                        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">)),</span> <span class="nb">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span><span class="p">)</span>
                     <span class="c1"># Make sure that exc_tb gets deleted since it is a memory</span>
                     <span class="c1"># hog; deleting everything else is just for thoroughness</span>
                     <span class="k">finally</span><span class="p">:</span>
@@ -1040,10 +1040,10 @@
         <span class="c1"># Special case:  _main_thread releases ._tstate_lock via this</span>
         <span class="c1"># module&#39;s _shutdown() function.</span>
         <span class="n">lock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span>
-        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="ow">not</span> <span class="n">lock</span><span class="o">.</span><span class="n">locked</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Remove current thread from the dict of currently running threads.&quot;</span>
@@ -1080,7 +1080,7 @@
             <span class="k">if</span> <span class="s1">&#39;dummy_threading&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
                 <span class="k">raise</span>
 
-    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait until the thread terminates.</span>
 
 <span class="sd">        This blocks the calling thread until the thread whose join() method is</span>
@@ -1111,14 +1111,14 @@
         <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">current_thread</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;cannot join current thread&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_tstate_lock</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># the behavior of a negative timeout isn&#39;t documented, but</span>
             <span class="c1"># historically .join(timeout=x) for x&lt;0 has acted as if timeout=0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_tstate_lock</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_wait_for_tstate_lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_wait_for_tstate_lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="c1"># Issue #18808: wait for the thread state to be gone.</span>
         <span class="c1"># At the end of the thread&#39;s life, after all knowledge of the thread</span>
         <span class="c1"># is removed from C data structures, C code releases our _tstate_lock.</span>
@@ -1126,7 +1126,7 @@
         <span class="c1"># If the lock is acquired, the C code is done, and self._stop() is</span>
         <span class="c1"># called.  That sets ._is_stopped to True, and ._tstate_lock to None.</span>
         <span class="n">lock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tstate_lock</span>
-        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># already determined that the C code is done</span>
+        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># already determined that the C code is done</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span>
         <span class="k">elif</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
             <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
@@ -1143,7 +1143,7 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">,</span> <span class="s2">&quot;Thread.__init__() not called&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
-    <span class="nd">@name.setter</span>
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">,</span> <span class="s2">&quot;Thread.__init__() not called&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -1170,8 +1170,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">,</span> <span class="s2">&quot;Thread.__init__() not called&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
-            <span class="k">return</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_tstate_lock</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_tstate_lock</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_stopped</span>
 
     <span class="n">isAlive</span> <span class="o">=</span> <span class="n">is_alive</span>
@@ -1192,7 +1192,7 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">,</span> <span class="s2">&quot;Thread.__init__() not called&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_daemonic</span>
 
-    <span class="nd">@daemon.setter</span>
+    <span class="nd">@daemon</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">daemonic</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Thread.__init__() not called&quot;</span><span class="p">)</span>
@@ -1223,12 +1223,12 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="n">interval</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span> <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span> <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1247,7 +1247,7 @@
 <span class="k">class</span> <span class="nc">_MainThread</span><span class="p">(</span><span class="n">Thread</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_tstate_lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_ident</span><span class="p">()</span>
@@ -1266,7 +1266,7 @@
 <span class="k">class</span> <span class="nc">_DummyThread</span><span class="p">(</span><span class="n">Thread</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">_newname</span><span class="p">(</span><span class="s2">&quot;Dummy-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">daemon</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">_newname</span><span class="p">(</span><span class="s2">&quot;Dummy-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_ident</span><span class="p">()</span>
@@ -1276,8 +1276,8 @@
     <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;cannot join a dummy thread&quot;</span>
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;cannot join a dummy thread&quot;</span>
 
 
 <span class="c1"># Global API functions</span>
@@ -1323,7 +1323,7 @@
     <span class="k">with</span> <span class="n">_active_limbo_lock</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_active</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">_limbo</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-<span class="kn">from</span> <span class="nn">_thread</span> <span class="kn">import</span> <span class="n">stack_size</span>
+<span class="kn">from</span> <span class="nn">_thread</span> <span class="k">import</span> <span class="n">stack_size</span>
 
 <span class="c1"># Create the main thread object,</span>
 <span class="c1"># and make it available for the interpreter</span>
@@ -1340,7 +1340,7 @@
     <span class="n">tlock</span> <span class="o">=</span> <span class="n">_main_thread</span><span class="o">.</span><span class="n">_tstate_lock</span>
     <span class="c1"># The main thread isn&#39;t finished yet, so its thread state lock can&#39;t have</span>
     <span class="c1"># been released.</span>
-    <span class="k">assert</span> <span class="n">tlock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+    <span class="k">assert</span> <span class="n">tlock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
     <span class="k">assert</span> <span class="n">tlock</span><span class="o">.</span><span class="n">locked</span><span class="p">()</span>
     <span class="n">tlock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
     <span class="n">_main_thread</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
@@ -1354,7 +1354,7 @@
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">t</span>
-    <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="kc">None</span>
 
 <span class="k">def</span> <span class="nf">main_thread</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Return the main thread object.</span>
@@ -1368,9 +1368,9 @@
 <span class="c1"># module, or from the python fallback</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">_thread</span> <span class="kn">import</span> <span class="n">_local</span> <span class="k">as</span> <span class="n">local</span>
+    <span class="kn">from</span> <span class="nn">_thread</span> <span class="k">import</span> <span class="n">_local</span> <span class="k">as</span> <span class="n">local</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">_threading_local</span> <span class="kn">import</span> <span class="n">local</span>
+    <span class="kn">from</span> <span class="nn">_threading_local</span> <span class="k">import</span> <span class="n">local</span>
 
 
 <span class="k">def</span> <span class="nf">_after_fork</span><span class="p">():</span>
@@ -1398,13 +1398,13 @@
             <span class="k">if</span> <span class="n">thread</span> <span class="ow">is</span> <span class="n">current</span><span class="p">:</span>
                 <span class="c1"># There is only one active thread. We reset the ident to</span>
                 <span class="c1"># its new value since it can have changed.</span>
-                <span class="n">thread</span><span class="o">.</span><span class="n">_reset_internal_locks</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">thread</span><span class="o">.</span><span class="n">_reset_internal_locks</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">ident</span> <span class="o">=</span> <span class="n">get_ident</span><span class="p">()</span>
                 <span class="n">thread</span><span class="o">.</span><span class="n">_ident</span> <span class="o">=</span> <span class="n">ident</span>
                 <span class="n">new_active</span><span class="p">[</span><span class="n">ident</span><span class="p">]</span> <span class="o">=</span> <span class="n">thread</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># All the others are already stopped.</span>
-                <span class="n">thread</span><span class="o">.</span><span class="n">_reset_internal_locks</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">thread</span><span class="o">.</span><span class="n">_reset_internal_locks</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">thread</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
 
         <span class="n">_limbo</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -1424,8 +1424,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -1446,7 +1446,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -1455,7 +1455,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

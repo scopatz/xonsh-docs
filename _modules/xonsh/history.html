@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.history &mdash; xonsh 0.4.4 documentation</title>
+    <title>xonsh.history &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -63,24 +63,24 @@
 <span class="sd">&quot;&quot;&quot;Implements the xonsh history object.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="kn">as</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">abc</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="kn">import</span> <span class="n">LazyObject</span><span class="p">,</span> <span class="n">lazyobject</span>
-<span class="kn">from</span> <span class="nn">xonsh.lazyjson</span> <span class="kn">import</span> <span class="n">LazyJSON</span><span class="p">,</span> <span class="n">ljdump</span><span class="p">,</span> <span class="n">LJNode</span>
-<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ensure_slice</span><span class="p">,</span> <span class="n">to_history_tuple</span><span class="p">,</span>
-                         <span class="n">expanduser_abs_path</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">xonsh.diff_history</span> <span class="kn">import</span> <span class="n">_dh_create_parser</span><span class="p">,</span> <span class="n">_dh_main_action</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">lazyobject</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyjson</span> <span class="k">import</span> <span class="n">LazyJSON</span><span class="p">,</span> <span class="n">ljdump</span><span class="p">,</span> <span class="n">LJNode</span>
+<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">ensure_slice</span><span class="p">,</span> <span class="n">to_history_tuple</span><span class="p">,</span>
+                         <span class="n">expanduser_abs_path</span><span class="p">,</span> <span class="n">ensure_timestamp</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">xonsh.diff_history</span> <span class="k">import</span> <span class="n">_dh_create_parser</span><span class="p">,</span> <span class="n">_dh_main_action</span>
 
 
 <span class="k">def</span> <span class="nf">_gc_commands_to_rmfiles</span><span class="p">(</span><span class="n">hsize</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
@@ -113,7 +113,7 @@
     <span class="k">for</span> <span class="n">ts</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">ts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">hsize</span><span class="p">:</span>
             <span class="k">break</span>
-        <span class="n">rmfiles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+        <span class="n">rmfiles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">rmfiles</span>
 
 
@@ -135,13 +135,13 @@
 <div class="viewcode-block" id="HistoryGC"><a class="viewcode-back" href="../../api/history.html#xonsh.history.HistoryGC">[docs]</a><span class="k">class</span> <span class="nc">HistoryGC</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Shell history garbage collection.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wait_for_shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wait_for_shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Thread responsible for garbage collecting old history.</span>
 
 <span class="sd">        May wait for shell (and for xonshrc to have been loaded) to start work.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_shell</span> <span class="o">=</span> <span class="n">wait_for_shell</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -154,14 +154,14 @@
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_shell</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
         <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>  <span class="c1"># pylint: disable=no-member</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">hsize</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_HISTORY_SIZE&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">hsize</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">to_history_tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="n">only_unlocked</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="n">only_unlocked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">rmfiles_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gc_units_to_rmfiles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rmfiles_fn</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Units type {0!r} not understood&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rmfiles_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Units type </span><span class="si">{0!r}</span><span class="s1"> not understood&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rmfiles_fn</span><span class="p">(</span><span class="n">hsize</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
@@ -169,14 +169,13 @@
             <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
                 <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="HistoryGC.files"><a class="viewcode-back" href="../../api/history.html#xonsh.history.HistoryGC.files">[docs]</a>    <span class="k">def</span> <span class="nf">files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">only_unlocked</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="HistoryGC.files"><a class="viewcode-back" href="../../api/history.html#xonsh.history.HistoryGC.files">[docs]</a>    <span class="k">def</span> <span class="nf">files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">only_unlocked</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Find and return the history files. Optionally locked files may be</span>
 <span class="sd">        excluded.</span>
 
 <span class="sd">        This is sorted by the last closed time. Returns a list of (timestamp,</span>
 <span class="sd">        file) tuples.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span>  <span class="c1"># this could be a function but is intimate to this class</span>
         <span class="c1"># pylint: disable=no-member</span>
         <span class="n">xdd</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_DATA_DIR&#39;</span><span class="p">)</span>
         <span class="n">xdd</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">xdd</span><span class="p">)</span>
@@ -185,7 +184,7 @@
         <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">lj</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">lj</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">only_unlocked</span> <span class="ow">and</span> <span class="n">lj</span><span class="p">[</span><span class="s1">&#39;locked&#39;</span><span class="p">]:</span>
                     <span class="k">continue</span>
                 <span class="c1"># info: closing timestamp, number of commands, filename</span>
@@ -202,12 +201,12 @@
 <div class="viewcode-block" id="HistoryFlusher"><a class="viewcode-back" href="../../api/history.html#xonsh.history.HistoryFlusher">[docs]</a><span class="k">class</span> <span class="nc">HistoryFlusher</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Flush shell history to disk periodically.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">buffer</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">at_exit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">at_exit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Thread for flushing history.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HistoryFlusher</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="nb">buffer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">buffer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
         <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cond</span> <span class="o">=</span> <span class="n">cond</span>
@@ -235,15 +234,15 @@
         <span class="n">hist</span><span class="p">[</span><span class="s1">&#39;cmds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_exit</span><span class="p">:</span>
             <span class="n">hist</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># apply end time</span>
-            <span class="n">hist</span><span class="p">[</span><span class="s1">&#39;locked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">hist</span><span class="p">[</span><span class="s1">&#39;locked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">ljdump</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div></div>
+            <span class="n">ljdump</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="CommandField"><a class="viewcode-back" href="../../api/history.html#xonsh.history.CommandField">[docs]</a><span class="k">class</span> <span class="nc">CommandField</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A field in the &#39;cmds&#39; portion of history.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Represents a field in the &#39;cmds&#39; portion of history.</span>
 
 <span class="sd">        Will query the buffer for the relevant data, if possible. Otherwise it</span>
@@ -286,7 +285,7 @@
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">_cond</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i_am_at_the_front</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">lj</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">lj</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">rtn</span> <span class="o">=</span> <span class="n">lj</span><span class="p">[</span><span class="s1">&#39;cmds&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rtn</span><span class="p">,</span> <span class="n">LJNode</span><span class="p">):</span>
                     <span class="n">rtn</span> <span class="o">=</span> <span class="n">rtn</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -298,36 +297,26 @@
         <span class="k">return</span> <span class="bp">self</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">_find_histfile_var</span><span class="p">(</span><span class="n">file_list</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">file_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
-    <span class="n">hist_file</span> <span class="o">=</span> <span class="bp">None</span>
-
-    <span class="n">found_hist</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">def</span> <span class="nf">_find_histfile_var</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the path of the history file</span>
+<span class="sd">    from the value of the envvar HISTFILE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
             <span class="k">continue</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rc_file</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">rc_file</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;HISTFILE=&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                    <span class="n">evar</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="n">hist_file</span> <span class="o">=</span> <span class="n">evar</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]:</span>
-                        <span class="n">hist_file</span> <span class="o">=</span> <span class="n">hist_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;HISTFILE=&#39;</span><span class="p">):</span>
+                    <span class="n">hist_file</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                     <span class="n">hist_file</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">hist_file</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">hist_file</span><span class="p">):</span>
-                        <span class="n">found_hist</span> <span class="o">=</span> <span class="bp">True</span>
-                        <span class="k">break</span>
-        <span class="k">if</span> <span class="n">found_hist</span><span class="p">:</span>
-            <span class="k">break</span>
-
-    <span class="k">if</span> <span class="n">hist_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">default</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">default</span><span class="p">):</span>
-            <span class="n">hist_file</span> <span class="o">=</span> <span class="n">default</span>
-
-    <span class="k">return</span> <span class="n">hist_file</span>
+                        <span class="k">return</span> <span class="n">hist_file</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">default</span><span class="p">:</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">default</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">default</span>
 
 
 <span class="k">def</span> <span class="nf">_all_xonsh_parser</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -341,50 +330,42 @@
 
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
              <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;xonsh-&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">)]</span>
-    <span class="n">file_hist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">json_file</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-            <span class="n">file_hist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_file</span><span class="o">.</span><span class="n">load</span><span class="p">()[</span><span class="s1">&#39;cmds&#39;</span><span class="p">])</span>
+            <span class="n">json_file</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="c1"># Invalid json file</span>
             <span class="k">pass</span>
-    <span class="n">commands</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">],</span>
-                 <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">commands</span> <span class="ow">in</span> <span class="n">file_hist</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commands</span> <span class="k">if</span> <span class="n">c</span><span class="p">]</span>
-    <span class="n">commands</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commands</span><span class="p">)]</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="n">json_file</span><span class="o">.</span><span class="n">load</span><span class="p">()[</span><span class="s1">&#39;cmds&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">ind</span><span class="p">)</span>
+            <span class="n">ind</span> <span class="o">+=</span> <span class="mi">1</span>
 
 
-<span class="k">def</span> <span class="nf">_curr_session_parser</span><span class="p">(</span><span class="n">hist</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_curr_session_parser</span><span class="p">(</span><span class="n">hist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take in History object and return command list tuple with</span>
 <span class="sd">    format: (name, start_time, index)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">hist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">hist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">hist</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_history__</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">hist</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
-    <span class="n">start_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">start</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">tss</span><span class="p">]</span>
-    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">name</span>
-             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">inps</span><span class="p">]</span>
-    <span class="n">commands</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">start_times</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">]</span>
+    <span class="n">start_times</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">tss</span><span class="p">)</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">inps</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)):</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_zsh_hist_parser</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">default_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zsh_history&#39;</span><span class="p">)</span>
-    <span class="n">location_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zshrc&#39;</span><span class="p">),</span>
-                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zprofile&#39;</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="n">_find_histfile_var</span><span class="p">(</span><span class="n">location_list</span><span class="p">,</span> <span class="n">default_location</span><span class="p">)</span>
-    <span class="n">z_hist_formatted</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="n">location</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">location</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;backslashreplace&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">z_file</span><span class="p">:</span>
-            <span class="n">z_txt</span> <span class="o">=</span> <span class="n">z_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="n">z_hist</span> <span class="o">=</span> <span class="n">z_txt</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">z_hist</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">z_hist</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_zsh_hist_parser</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yield commands from zsh history file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">_find_histfile_var</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zshrc&#39;</span><span class="p">),</span>
+                                       <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zprofile&#39;</span><span class="p">)],</span>
+                                      <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.zsh_history&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">location</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;backslashreplace&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zsh_hist</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">zsh_hist</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">start_time</span><span class="p">,</span> <span class="n">command</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
@@ -393,48 +374,53 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">start_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">start_time</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
                     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                        <span class="n">start_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-                    <span class="n">z_hist_formatted</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">command</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">ind</span><span class="p">))</span>
-                <span class="k">return</span> <span class="n">z_hist_formatted</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="k">yield</span> <span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;No zsh history file found&quot;</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No zsh history file found&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_bash_hist_parser</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">default_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bash_history&#39;</span><span class="p">)</span>
-    <span class="n">location_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bashrc&#39;</span><span class="p">),</span>
-                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bash_profile&#39;</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="n">_find_histfile_var</span><span class="p">(</span><span class="n">location_list</span><span class="p">,</span> <span class="n">default_location</span><span class="p">)</span>
-    <span class="n">bash_hist_formatted</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="n">location</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">location</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;backslashreplace&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bash_file</span><span class="p">:</span>
-            <span class="n">b_txt</span> <span class="o">=</span> <span class="n">bash_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="n">bash_hist</span> <span class="o">=</span> <span class="n">b_txt</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">bash_hist</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">command</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bash_hist</span><span class="p">):</span>
-                    <span class="n">bash_hist_formatted</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">command</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ind</span><span class="p">))</span>
-                <span class="k">return</span> <span class="n">bash_hist_formatted</span>
+<span class="k">def</span> <span class="nf">_bash_hist_parser</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yield commands from bash history file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">_find_histfile_var</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bashrc&#39;</span><span class="p">),</span>
+                                       <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bash_profile&#39;</span><span class="p">)],</span>
+                                      <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.bash_history&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">location</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;backslashreplace&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bash_hist</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bash_hist</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;No bash history file&quot;</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No bash history file&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 
 
-<span class="nd">@functools.lru_cache</span><span class="p">()</span>
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">_hist_create_parser</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Create a parser for the &quot;history&quot; command.&quot;&quot;&quot;</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;history&#39;</span><span class="p">,</span>
                                 <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Tools for dealing with history&#39;</span><span class="p">)</span>
     <span class="n">subp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;action&#39;</span><span class="p">)</span>
     <span class="c1"># session action</span>
-    <span class="n">show</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">],</span>
+    <span class="n">show</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="n">prefix_chars</span><span class="o">=</span><span class="s1">&#39;-+&#39;</span><span class="p">,</span>
                            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;displays session history, default action&#39;</span><span class="p">)</span>
-    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;reverse&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;reverses the direction&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;reverse&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;reverses the direction&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;numerate&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;numerate each command&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;show command timestamps&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-T&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;show only commands before timestamp&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;+T&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;show only commands after timestamp&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;datetime_format&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the datetime format to be used for filtering and printing&#39;</span><span class="p">)</span>
     <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">_HIST_SESSIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;session&#39;</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Choose a history session, defaults to current session&#39;</span><span class="p">)</span>
-    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;slices&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">show</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;slices&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;display history entries or range of entries&#39;</span><span class="p">)</span>
     <span class="c1"># &#39;id&#39; subcommand</span>
     <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;displays the current session id&#39;</span><span class="p">)</span>
@@ -443,24 +429,24 @@
     <span class="c1"># &#39;info&#39; subcommand</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;displays information about the &#39;</span>
                                          <span class="s1">&#39;current history&#39;</span><span class="p">))</span>
-    <span class="n">info</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--json&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--json&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;print in JSON format&#39;</span><span class="p">)</span>
     <span class="c1"># diff</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;diff&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;diffs two xonsh history files&#39;</span><span class="p">)</span>
     <span class="n">_dh_create_parser</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
     <span class="c1"># replay, dynamically</span>
-    <span class="kn">from</span> <span class="nn">xonsh</span> <span class="kn">import</span> <span class="n">replay</span>
+    <span class="kn">from</span> <span class="nn">xonsh</span> <span class="k">import</span> <span class="n">replay</span>
     <span class="n">rp</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;replay&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;replays a xonsh history file&#39;</span><span class="p">)</span>
     <span class="n">replay</span><span class="o">.</span><span class="n">_rp_create_parser</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">rp</span><span class="p">)</span>
     <span class="n">_HIST_MAIN_ACTIONS</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">replay</span><span class="o">.</span><span class="n">_rp_main_action</span>
     <span class="c1"># gc</span>
     <span class="n">gcp</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s1">&#39;gc&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;launches a new history garbage collector&#39;</span><span class="p">)</span>
-    <span class="n">gcp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--size&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+    <span class="n">gcp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--size&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;next two arguments represent the history size and &#39;</span>
                            <span class="s1">&#39;units; e.g. &quot;--size 8128 commands&quot;&#39;</span><span class="p">))</span>
     <span class="n">bgcp</span> <span class="o">=</span> <span class="n">gcp</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
-    <span class="n">bgcp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--blocking&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;blocking&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">bgcp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--blocking&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;blocking&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;ensures that the gc blocks the main thread, &#39;</span>
                             <span class="s1">&#39;default True&#39;</span><span class="p">))</span>
@@ -469,107 +455,116 @@
     <span class="k">return</span> <span class="n">p</span>
 
 
-<span class="k">def</span> <span class="nf">_hist_show</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hist</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start_index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end_index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-          <span class="n">start_time</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Show the requested portion of shell history.</span>
-<span class="sd">    Accepts multiple history sources (xonsh, bash, zsh)</span>
+<span class="k">def</span> <span class="nf">_hist_get_portion</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">slices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yield from portions of history commands.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">slices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># islice failed</span>
+            <span class="k">pass</span>
+    <span class="n">commands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">:</span>
+        <span class="k">yield from</span> <span class="n">commands</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
 
-<span class="sd">    May be invoked as an alias with history all/bash/zsh which will</span>
-<span class="sd">    provide history as stdout or with __xonsh_history__.show()</span>
-<span class="sd">    which will return the history as a list with each item</span>
-<span class="sd">    in the tuple form (name, start_time, index).</span>
 
-<span class="sd">    If invoked via __xonsh_history__.show() then the ns parameter</span>
-<span class="sd">    can be supplied as a str with the follow options::</span>
+<span class="k">def</span> <span class="nf">_hist_filter_ts</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yield only the commands between start and end time.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">start_time</span> <span class="o">&lt;=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">cmd</span>
 
-<span class="sd">        session - returns xonsh history from current session</span>
-<span class="sd">        xonsh   - returns xonsh history from all sessions</span>
-<span class="sd">        all     - alias of xonsh</span>
-<span class="sd">        zsh     - returns all zsh history</span>
-<span class="sd">        bash    - returns all bash history</span>
+
+<span class="k">def</span> <span class="nf">_hist_get</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">slices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+              <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the requested portion of shell history.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    session: {&#39;session&#39;, &#39;all&#39;, &#39;xonsh&#39;, &#39;bash&#39;, &#39;zsh&#39;}</span>
+<span class="sd">        The history session to get.</span>
+<span class="sd">    slices : list of slice-like objects, optional</span>
+<span class="sd">        Get only portions of history.</span>
+<span class="sd">    start_time, end_time: float, optional</span>
+<span class="sd">        Filter commands by timestamp.</span>
+<span class="sd">    location: string, optional</span>
+<span class="sd">        The history file location (bash or zsh)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    generator</span>
+<span class="sd">       A filtered list of commands</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Check if ns is a string, meaning it was invoked from</span>
-    <span class="k">if</span> <span class="n">hist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">hist</span> <span class="o">=</span> <span class="n">bultins</span><span class="o">.</span><span class="n">__xonsh_history__</span>
-    <span class="n">alias</span> <span class="o">=</span> <span class="bp">True</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ns</span> <span class="ow">in</span> <span class="n">_HIST_SESSIONS</span><span class="p">:</span>
-        <span class="n">ns</span> <span class="o">=</span> <span class="n">_hist_create_parser</span><span class="p">()</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="n">ns</span><span class="p">])</span>
-        <span class="n">alias</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ns</span><span class="p">:</span>
-        <span class="n">ns</span> <span class="o">=</span> <span class="n">_hist_create_parser</span><span class="p">()</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="s1">&#39;xonsh&#39;</span><span class="p">])</span>
-        <span class="n">alias</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">cmds</span> <span class="o">=</span> <span class="n">_HIST_SESSIONS</span><span class="p">[</span><span class="n">session</span><span class="p">](</span><span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">slices</span><span class="p">:</span>
+        <span class="c1"># transform/check all slices</span>
+        <span class="n">slices</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_slice</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">]</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="n">_hist_get_portion</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">slices</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">start_time</span> <span class="ow">or</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">ensure_timestamp</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">datetime_format</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">ensure_timestamp</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">datetime_format</span><span class="p">)</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="n">_hist_filter_ts</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cmds</span>
+
+
+<span class="k">def</span> <span class="nf">_hist_show</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show the requested portion of shell history.</span>
+<span class="sd">    Accepts same parameters with `_hist_get`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">commands</span> <span class="o">=</span> <span class="n">_HIST_SESSIONS</span><span class="p">[</span><span class="n">ns</span><span class="o">.</span><span class="n">session</span><span class="p">](</span><span class="n">hist</span><span class="o">=</span><span class="n">hist</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} is not a valid history session&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">action</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">commands</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">start_time</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
-            <span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-            <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commands</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start_time</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Invalid start time, must be float or datetime.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">end_time</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
-            <span class="n">end_time</span> <span class="o">=</span> <span class="n">end_time</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-            <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commands</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Invalid end time, must be float or datetime.&quot;</span><span class="p">)</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">ns</span><span class="p">:</span>
-        <span class="n">_commands</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ns</span><span class="o">.</span><span class="n">slices</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">ensure_slice</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;{!r} is not a valid slice format&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">s</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">_commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">commands</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
-                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s2">&quot;Index likely not in range. Only {} commands.&quot;</span>
-                    <span class="k">print</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">commands</span><span class="p">)),</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-                    <span class="k">return</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">_commands</span><span class="p">:</span>
-                <span class="n">commands</span> <span class="o">=</span> <span class="n">_commands</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="n">_hist_get</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">session</span><span class="p">,</span>
+                             <span class="n">slices</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">slices</span><span class="p">,</span>
+                             <span class="n">start_time</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                             <span class="n">end_time</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span>
+                             <span class="n">datetime_format</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">datetime_format</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;history: error: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">commands</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">numerate</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">numerate</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">) </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="n">end_index</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">and</span>
-            <span class="n">start_time</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="n">commands</span> <span class="o">=</span> <span class="n">commands</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">ns</span> <span class="ow">and</span> <span class="n">ns</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
-        <span class="n">commands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">commands</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">commands</span><span class="p">:</span>
-        <span class="n">digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">])))</span>
-        <span class="k">if</span> <span class="n">alias</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">line_ind</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)):</span>
-                    <span class="k">if</span> <span class="n">line_ind</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;{:&gt;{width}}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span>
-                                                       <span class="n">width</span><span class="o">=</span><span class="n">digits</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">print</span><span class="p">(</span><span class="s1">&#39; {:&gt;&gt;{width}} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span>
-                                                        <span class="n">width</span><span class="o">=</span><span class="n">digits</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">commands</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:(</span><span class="si">{}</span><span class="s1">) </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
 
 
-<span class="c1">#</span>
 <span class="c1"># Interface to History</span>
-<span class="c1">#</span>
 <div class="viewcode-block" id="History"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History">[docs]</a><span class="k">class</span> <span class="nc">History</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Xonsh session history.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Xonsh session history.</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sessionid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">buffersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">gc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rtns : sequence of ints</span>
+<span class="sd">        The return of the command (ie, 0 on success)</span>
+<span class="sd">    inps : sequence of strings</span>
+<span class="sd">        The command as typed by the user, including newlines</span>
+<span class="sd">    tss : sequence of two-tuples of floats</span>
+<span class="sd">        The timestamps of when the command started and finished, including</span>
+<span class="sd">        fractions</span>
+<span class="sd">    outs : sequence of strings</span>
+<span class="sd">        The output of the command, if xonsh is configured to save it</span>
+
+<span class="sd">    In all of these sequences, index 0 is the oldest and -1 (the last item) is the newest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sessionid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buffersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">gc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">meta</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Represents a xonsh session&#39;s history as an in-memory buffer that is</span>
 <span class="sd">        periodically flushed to disk.</span>
@@ -590,13 +585,13 @@
 <span class="sd">        gc : bool, optional</span>
 <span class="sd">            Run garbage collector flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sessionid</span> <span class="o">=</span> <span class="n">sid</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span> <span class="k">if</span> <span class="n">sessionid</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">sessionid</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sessionid</span> <span class="o">=</span> <span class="n">sid</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span> <span class="k">if</span> <span class="n">sessionid</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sessionid</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># pylint: disable=no-member</span>
             <span class="n">data_dir</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_DATA_DIR&#39;</span><span class="p">)</span>
             <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;xonsh-{0}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
+                <span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;xonsh-</span><span class="si">{0}</span><span class="s1">.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="p">[]</span>
@@ -604,13 +599,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_len</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_cmd_out</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_cmd_rtn</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_cmd_out</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_cmd_rtn</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;cmds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;sessionid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">ljdump</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gc</span> <span class="o">=</span> <span class="n">HistoryGC</span><span class="p">()</span> <span class="k">if</span> <span class="n">gc</span> <span class="k">else</span> <span class="bp">None</span>
+            <span class="n">ljdump</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gc</span> <span class="o">=</span> <span class="n">HistoryGC</span><span class="p">()</span> <span class="k">if</span> <span class="n">gc</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="c1"># command fields that are known</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tss</span> <span class="o">=</span> <span class="n">CommandField</span><span class="p">(</span><span class="s1">&#39;ts&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inps</span> <span class="o">=</span> <span class="n">CommandField</span><span class="p">(</span><span class="s1">&#39;inp&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
@@ -637,20 +632,20 @@
         <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;ignoredups&#39;</span> <span class="ow">in</span> <span class="n">opts</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span>
                 <span class="n">cmd</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">inps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="c1"># Skipping dup cmd</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="s1">&#39;ignoreerr&#39;</span> <span class="ow">in</span> <span class="n">opts</span> <span class="ow">and</span> <span class="n">cmd</span><span class="p">[</span><span class="s1">&#39;rtn&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># Skipping failed cmd</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_len</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># must come before flushing</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span><span class="p">:</span>
             <span class="n">hf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">hf</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">hf</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">hf</span></div>
 
-<div class="viewcode-block" id="History.flush"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">at_exit</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="History.flush"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">at_exit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Flushes the current command buffer to disk.</span>
 
 <span class="sd">        Parameters</span>
@@ -672,17 +667,15 @@
         <span class="k">return</span> <span class="n">hf</span></div>
 
 <div class="viewcode-block" id="History.show"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns shell history as a list</span>
+        <span class="sd">&quot;&quot;&quot;Return shell history as a list</span>
 
 <span class="sd">        Valid options:</span>
 <span class="sd">            `session` - returns xonsh history from current session</span>
-<span class="sd">            `show`    - alias of `session`</span>
 <span class="sd">            `xonsh`   - returns xonsh history from all sessions</span>
 <span class="sd">            `zsh`     - returns all zsh history</span>
 <span class="sd">            `bash`    - returns all bash history</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_hist_show</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_hist_get</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_hist_info</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">):</span>
@@ -695,15 +688,15 @@
     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;bufferlength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">json</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;{0}: {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">_hist_gc</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Start and monitor garbage collection of the shell history.&quot;&quot;&quot;</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">gc</span> <span class="o">=</span> <span class="n">gc</span> <span class="o">=</span> <span class="n">HistoryGC</span><span class="p">(</span><span class="n">wait_for_shell</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">gc</span> <span class="o">=</span> <span class="n">gc</span> <span class="o">=</span> <span class="n">HistoryGC</span><span class="p">(</span><span class="n">wait_for_shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">blocking</span><span class="p">:</span>
         <span class="k">while</span> <span class="n">gc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
             <span class="k">continue</span>
@@ -716,38 +709,51 @@
             <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="n">_all_xonsh_parser</span><span class="p">,</span>
             <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="n">_zsh_hist_parser</span><span class="p">,</span>
             <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="n">_bash_hist_parser</span><span class="p">}</span>
+
+
 <span class="nd">@lazyobject</span>
 <span class="k">def</span> <span class="nf">_HIST_MAIN_ACTIONS</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">{</span>
-    <span class="s1">&#39;show&#39;</span><span class="p">:</span> <span class="n">_hist_show</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">sessionid</span><span class="p">),</span>
-    <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span>
-    <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="n">_hist_info</span><span class="p">,</span>
-    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="n">_dh_main_action</span><span class="p">,</span>
-    <span class="s1">&#39;gc&#39;</span><span class="p">:</span> <span class="n">_hist_gc</span><span class="p">,</span>
+        <span class="s1">&#39;show&#39;</span><span class="p">:</span> <span class="n">_hist_show</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">sessionid</span><span class="p">),</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span>
+        <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="n">_hist_info</span><span class="p">,</span>
+        <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="n">_dh_main_action</span><span class="p">,</span>
+        <span class="s1">&#39;gc&#39;</span><span class="p">:</span> <span class="n">_hist_gc</span><span class="p">,</span>
     <span class="p">}</span>
 
 
 <span class="k">def</span> <span class="nf">_hist_parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parse arguments using the history argument parser.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Prepare and parse arguments for the history command.</span>
+
+<span class="sd">    Add default action for ``history`` and</span>
+<span class="sd">    default session for ``history show``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">_hist_create_parser</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_HIST_MAIN_ACTIONS</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;show&#39;</span>
-       <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
-       <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">,</span> <span class="s1">&#39;-r&#39;</span><span class="p">]</span>
-       <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_HIST_SESSIONS</span><span class="p">):</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;session&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="s1">&#39;session&#39;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_HIST_MAIN_ACTIONS</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="s1">&#39;session&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;show&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">a</span> <span class="ow">in</span> <span class="n">_HIST_SESSIONS</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">):</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;session&#39;</span><span class="p">)</span>
+        <span class="n">ns</span><span class="p">,</span> <span class="n">slices</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">slices</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">slices</span><span class="p">:</span>
+                <span class="n">ns</span><span class="o">.</span><span class="n">slices</span> <span class="o">=</span> <span class="n">slices</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ns</span><span class="o">.</span><span class="n">slices</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ns</span>
 
 
-<div class="viewcode-block" id="history_main"><a class="viewcode-back" href="../../api/history.html#xonsh.history.history_main">[docs]</a><span class="k">def</span> <span class="nf">history_main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="history_main"><a class="viewcode-back" href="../../api/history.html#xonsh.history.history_main">[docs]</a><span class="k">def</span> <span class="nf">history_main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This is the history command entry point.&quot;&quot;&quot;</span>
     <span class="n">hist</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_history__</span>
     <span class="n">ns</span> <span class="o">=</span> <span class="n">_hist_parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">_HIST_MAIN_ACTIONS</span><span class="p">[</span><span class="n">ns</span><span class="o">.</span><span class="n">action</span><span class="p">](</span><span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">ns</span><span class="p">:</span>
+        <span class="n">_HIST_MAIN_ACTIONS</span><span class="p">[</span><span class="n">ns</span><span class="o">.</span><span class="n">action</span><span class="p">](</span><span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -761,8 +767,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -783,7 +789,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -792,7 +798,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.ptk.completer &mdash; xonsh 0.4.4 documentation</title>
+    <title>xonsh.ptk.completer &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="../../../index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -64,10 +64,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
 
-<span class="kn">from</span> <span class="nn">prompt_toolkit.layout.dimension</span> <span class="kn">import</span> <span class="n">LayoutDimension</span>
-<span class="kn">from</span> <span class="nn">prompt_toolkit.completion</span> <span class="kn">import</span> <span class="n">Completer</span><span class="p">,</span> <span class="n">Completion</span>
-
-<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="kn">import</span> <span class="n">ptk_version</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.layout.dimension</span> <span class="k">import</span> <span class="n">LayoutDimension</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.completion</span> <span class="k">import</span> <span class="n">Completer</span><span class="p">,</span> <span class="n">Completion</span>
 
 
 <div class="viewcode-block" id="PromptToolkitCompleter"><a class="viewcode-back" href="../../../api/ptk/completer.html#xonsh.ptk.completer.PromptToolkitCompleter">[docs]</a><span class="k">class</span> <span class="nc">PromptToolkitCompleter</span><span class="p">(</span><span class="n">Completer</span><span class="p">):</span>
@@ -86,13 +84,14 @@
 
         <span class="c1">#  Only generate completions when the user hits tab.</span>
         <span class="k">if</span> <span class="n">complete_event</span><span class="o">.</span><span class="n">completion_requested</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">yield from</span> <span class="p">[]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">current_line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
                 <span class="n">endidx</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">cursor_position_col</span>
                 <span class="n">begidx</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">endidx</span><span class="p">]</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">line</span><span class="p">[:</span><span class="n">endidx</span><span class="p">]</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
                 <span class="n">prefix</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">begidx</span><span class="p">:</span><span class="n">endidx</span><span class="p">]</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">expand_alias</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="n">completions</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span>
                                                          <span class="n">line</span><span class="p">,</span>
                                                          <span class="n">begidx</span><span class="p">,</span>
@@ -113,6 +112,7 @@
             <span class="n">h</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">render_info</span><span class="o">.</span><span class="n">content_height</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;COMPLETIONS_MENU_ROWS&#39;</span><span class="p">)</span>
             <span class="n">size</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">r</span>
+
             <span class="k">def</span> <span class="nf">comp_height</span><span class="p">(</span><span class="n">cli</span><span class="p">):</span>
                 <span class="c1"># If there is an autocompletion menu to be shown, make sure that o</span>
                 <span class="c1"># layout has at least a minimal height in order to display it.</span>
@@ -134,8 +134,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -156,7 +156,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -165,7 +165,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

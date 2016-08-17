@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Developer’s Guide &mdash; xonsh 0.4.4 documentation</title>
+    <title>Developer’s Guide &mdash; xonsh 0.4.5.dev2 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.4',
+        VERSION:     '0.4.5.dev2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,9 +29,9 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.4 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
     <link rel="next" title="Previous Versions" href="previous/index.html" />
-    <link rel="prev" title="Matplotlib Hooks (xontrib.mplhooks)" href="api/mplhooks.html" /> 
+    <link rel="prev" title="Vox (xontrib.voxapi)" href="api/vox.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -50,9 +50,9 @@
           <a href="previous/index.html" title="Previous Versions"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="api/mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
+          <a href="api/vox.html" title="Vox (xontrib.voxapi)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -74,6 +74,28 @@ develop xonsh.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">All code changes must go through the pull request review procedure.</p>
+</div>
+<div class="section" id="making-your-first-change">
+<h2>Making Your First Change<a class="headerlink" href="#making-your-first-change" title="Permalink to this headline">¶</a></h2>
+<p>First, install xonsh from source and open a xonsh shell in your favorite
+terminal application. See installation instructions for details.</p>
+<p>Next, make a trivial change (e.g. <code class="docutils literal"><span class="pre">print(&quot;hello!&quot;)</span></code> in <code class="docutils literal"><span class="pre">main.py</span></code>).</p>
+<p>Finally, run the following commands. You should see the effects of your change
+(e.g. <code class="docutils literal"><span class="pre">hello!</span></code>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ $XONSH_DEBUG=1
+$ xonsh
+</pre></div>
+</div>
+<p>The xonsh build process collapses all Python source files into a single
+<code class="docutils literal"><span class="pre">__amalgam__.py</span></code> file. When xonsh is started with a falsy value for
+<a class="reference external" href="envvars.html">$XONSH_DEBUG</a>, it imports Python modules straight from
+<code class="docutils literal"><span class="pre">__amalgam__.py</span></code>, which decreases startup times by eliminating the cost of
+runtime imports. But setting <code class="docutils literal"><span class="pre">$</span> <span class="pre">$XONSH_DEBUG=1</span></code> will suppress amalgamated
+imports. Reloading the xonsh shell (<code class="docutils literal"><span class="pre">$</span> <span class="pre">xonsh</span></code>) won&#8217;t simply import the stale
+<code class="docutils literal"><span class="pre">__amalgam__.py</span></code> file that doesn&#8217;t contain your new change, but will instead
+import the unamalgamated source code which does contain your change. You can now
+load every subsequent change by reloading xonsh, and if your code changes don&#8217;t
+seem to have any effect, make sure you check <code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> first!</p>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
@@ -471,6 +493,7 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Developer&#8217;s Guide</a><ul>
+<li><a class="reference internal" href="#making-your-first-change">Making Your First Change</a></li>
 <li><a class="reference internal" href="#changelog">Changelog</a></li>
 <li><a class="reference internal" href="#style-guide">Style Guide</a><ul>
 <li><a class="reference internal" href="#rules-to-write-by">Rules to Write By</a><ul>
@@ -516,8 +539,8 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
   </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="api/mplhooks.html"
-                          title="Previous page">&larr; Matplotlib Hooks (<code class="docutils literal"><span class="pre">xontrib.mplhooks</span></code>)</a></p>
+    <p class="topless"><a href="api/vox.html"
+                          title="Previous page">&larr; Vox (<code class="docutils literal"><span class="pre">xontrib.voxapi</span></code>)</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
@@ -534,8 +557,8 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -560,9 +583,9 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
           <a href="previous/index.html" title="Previous Versions"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="api/mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
+          <a href="api/vox.html" title="Vox (xontrib.voxapi)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.4 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -570,7 +593,7 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
