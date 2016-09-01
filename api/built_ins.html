@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Built-Ins (xonsh.built_ins) &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>Built-Ins (xonsh.built_ins) &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Environment (xonsh.environ)" href="environ.html" />
     <link rel="prev" title="Import Hooks (xonsh.imphooks)" href="imphooks.html" /> 
@@ -53,9 +53,9 @@
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,6 +71,79 @@
 <p>The xonsh built-ins.</p>
 <p>Note that this module is named &#8216;built_ins&#8217; so as not to be confused with the
 special Python builtins module.</p>
+<dl class="function">
+<dt id="xonsh.built_ins.call_macro">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">call_macro</code><span class="sig-paren">(</span><em>f</em>, <em>raw_args</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#call_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.call_macro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls a function as a macro, returning its result.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>f</strong> : callable object</p>
+<blockquote>
+<div><p>The function that is called as <code class="docutils literal"><span class="pre">f(*args)</span></code>.</p>
+</div></blockquote>
+<p><strong>raw_args</strong> : tuple of str</p>
+<blockquote>
+<div><p>The str reprensetaion of arguments of that were passed into the
+macro. These strings will be parsed, compiled, evaled, or left as
+a string dependending on the annotations of f.</p>
+</div></blockquote>
+<p><strong>glbs</strong> : Mapping</p>
+<blockquote>
+<div><p>The globals from the call site.</p>
+</div></blockquote>
+<p><strong>locs</strong> : Mapping or None</p>
+<blockquote class="last">
+<div><p>The locals from the call site.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.convert_macro_arg">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">convert_macro_arg</code><span class="sig-paren">(</span><em>raw_arg</em>, <em>kind</em>, <em>glbs</em>, <em>locs</em>, <em>*</em>, <em>name='&lt;arg&gt;'</em>, <em>macroname='&lt;macro&gt;'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#convert_macro_arg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.convert_macro_arg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a string macro argument based on the requested kind.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>raw_arg</strong> : str</p>
+<blockquote>
+<div><p>The str reprensetaion of the macro argument.</p>
+</div></blockquote>
+<p><strong>kind</strong> : object</p>
+<blockquote>
+<div><p>A flag or type representing how to convert the argument.</p>
+</div></blockquote>
+<p><strong>glbs</strong> : Mapping</p>
+<blockquote>
+<div><p>The globals from the call site.</p>
+</div></blockquote>
+<p><strong>locs</strong> : Mapping or None</p>
+<blockquote>
+<div><p>The locals from the call site.</p>
+</div></blockquote>
+<p><strong>name</strong> : str, optional</p>
+<blockquote>
+<div><p>The macro argument name.</p>
+</div></blockquote>
+<p><strong>macroname</strong> : str, optional</p>
+<blockquote>
+<div><p>The name of the macro itself.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The converted argument.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
 <dt id="xonsh.built_ins.ensure_list_of_strs">
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">ensure_list_of_strs</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#ensure_list_of_strs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.ensure_list_of_strs" title="Permalink to this definition">¶</a></dt>
@@ -113,6 +186,33 @@ PermissionError if the script is not executable.</p>
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">load_builtins</code><span class="sig-paren">(</span><em>execer=None</em>, <em>config=None</em>, <em>login=False</em>, <em>ctx=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#load_builtins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.load_builtins" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the xonsh builtins into the Python builtins. Sets the
 BUILTINS_LOADED variable to True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.macro_context">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">macro_context</code><span class="sig-paren">(</span><em>f</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#macro_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.macro_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attaches macro globals and locals temporarily to function as a
+context manager.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>f</strong> : callable object</p>
+<blockquote>
+<div><p>The function that is called as <code class="docutils literal"><span class="pre">f(*args)</span></code>.</p>
+</div></blockquote>
+<p><strong>glbs</strong> : Mapping</p>
+<blockquote>
+<div><p>The globals from the call site.</p>
+</div></blockquote>
+<p><strong>locs</strong> : Mapping or None</p>
+<blockquote class="last">
+<div><p>The locals from the call site.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -270,16 +370,16 @@ scope. Likely useful in testing.</p>
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

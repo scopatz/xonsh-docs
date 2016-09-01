@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Vox (xontrib.voxapi) &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>Vox (xontrib.voxapi) &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,9 +29,9 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
-    <link rel="next" title="Developer’s Guide" href="../devguide.html" />
+    <link rel="next" title="Advanced Events" href="../advanced_events.html" />
     <link rel="prev" title="Matplotlib Hooks (xontrib.mplhooks)" href="mplhooks.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -48,14 +48,14 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="../devguide.html" title="Developer’s Guide"
+          <a href="../advanced_events.html" title="Advanced Events"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -69,10 +69,18 @@
   <div class="section" id="module-xontrib.voxapi">
 <span id="vox-xontrib-voxapi"></span><span id="xonsh-vox"></span><h1>Vox (<code class="docutils literal"><span class="pre">xontrib.voxapi</span></code>)<a class="headerlink" href="#module-xontrib.voxapi" title="Permalink to this headline">¶</a></h1>
 <p>API for Vox, the Python virtual environment manager for xonsh.</p>
+<p>Vox defines several events related to the life cycle of virtual environments:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">vox_on_create(env:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></li>
+<li><code class="docutils literal"><span class="pre">vox_on_activate(env:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></li>
+<li><code class="docutils literal"><span class="pre">vox_on_deactivate(env:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></li>
+<li><code class="docutils literal"><span class="pre">vox_on_delete(env:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></li>
+</ul>
 <dl class="exception">
 <dt id="xontrib.voxapi.EnvironmentInUse">
 <em class="property">exception </em><code class="descclassname">xontrib.voxapi.</code><code class="descname">EnvironmentInUse</code><a class="reference internal" href="../_modules/xontrib/voxapi.html#EnvironmentInUse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xontrib.voxapi.EnvironmentInUse" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>The given environment is currently activated, and the operation cannot be performed.</p>
+<dl class="method">
 <dt id="xontrib.voxapi.EnvironmentInUse.with_traceback">
 <code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xontrib.voxapi.EnvironmentInUse.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) &#8211;
@@ -89,7 +97,8 @@ set self.__traceback__ to tb and return self.</p>
 <dl class="exception">
 <dt id="xontrib.voxapi.NoEnvironmentActive">
 <em class="property">exception </em><code class="descclassname">xontrib.voxapi.</code><code class="descname">NoEnvironmentActive</code><a class="reference internal" href="../_modules/xontrib/voxapi.html#NoEnvironmentActive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xontrib.voxapi.NoEnvironmentActive" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>No environment is currently activated, and the operation cannot be performed.</p>
+<dl class="method">
 <dt id="xontrib.voxapi.NoEnvironmentActive.with_traceback">
 <code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xontrib.voxapi.NoEnvironmentActive.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) &#8211;
@@ -274,8 +283,8 @@ environment.</p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="../devguide.html"
-                          title="Next page">&rarr; Developer&#8217;s Guide</a></p>
+    <p class="topless"><a href="../advanced_events.html"
+                          title="Next page">&rarr; Advanced Events</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -310,21 +319,21 @@ environment.</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="../devguide.html" title="Developer’s Guide"
+          <a href="../advanced_events.html" title="Advanced Events"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="mplhooks.html" title="Matplotlib Hooks (xontrib.mplhooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

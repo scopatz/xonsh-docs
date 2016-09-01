@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.ptk.key_bindings &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>xonsh.ptk.key_bindings &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../../index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -69,7 +69,7 @@
                                     <span class="n">ViInsertMode</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">prompt_toolkit.keys</span> <span class="k">import</span> <span class="n">Keys</span>
 <span class="kn">from</span> <span class="nn">xonsh.aliases</span> <span class="k">import</span> <span class="n">xonsh_exit</span>
-<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">ON_WINDOWS</span>
+<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">check_for_partial_string</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
 <span class="n">DEDENT_TOKENS</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="s1">&#39;raise&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">,</span> <span class="s1">&#39;pass&#39;</span><span class="p">,</span> <span class="s1">&#39;break&#39;</span><span class="p">,</span> <span class="s1">&#39;continue&#39;</span><span class="p">])</span>
@@ -95,6 +95,10 @@
 
     <span class="n">indent</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;INDENT&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">autoindent</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
 
+    <span class="n">partial_string_info</span> <span class="o">=</span> <span class="n">check_for_partial_string</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">in_partial_string</span> <span class="o">=</span> <span class="p">(</span><span class="n">partial_string_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span>
+                         <span class="n">partial_string_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+
     <span class="c1"># indent after a colon</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">current_line_before_cursor</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="ow">and</span>
             <span class="n">at_end_of_line</span><span class="p">):</span>
@@ -119,6 +123,8 @@
                  <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">lines_from_current</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))):</span>
         <span class="n">b</span><span class="o">.</span><span class="n">newline</span><span class="p">(</span><span class="n">copy_margin</span><span class="o">=</span><span class="n">autoindent</span><span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="n">current_line_blank</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">can_compile</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">newline</span><span class="p">(</span><span class="n">copy_margin</span><span class="o">=</span><span class="n">autoindent</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">current_line_blank</span> <span class="ow">and</span> <span class="n">in_partial_string</span><span class="p">:</span>
         <span class="n">b</span><span class="o">.</span><span class="n">newline</span><span class="p">(</span><span class="n">copy_margin</span><span class="o">=</span><span class="n">autoindent</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">b</span><span class="o">.</span><span class="n">accept_action</span><span class="o">.</span><span class="n">validate_and_handle</span><span class="p">(</span><span class="n">cli</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></div>
@@ -160,6 +166,15 @@
         <span class="n">last_line</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">is_cursor_at_the_end</span>
 
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">at_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">last_line</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ShouldConfirmCompletion"><a class="viewcode-back" href="../../../api/ptk/key_bindings.html#xonsh.ptk.key_bindings.ShouldConfirmCompletion">[docs]</a><span class="k">class</span> <span class="nc">ShouldConfirmCompletion</span><span class="p">(</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if completion needs confirmation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cli</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;COMPLETIONS_CONFIRM&#39;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">cli</span><span class="o">.</span><span class="n">current_buffer</span><span class="o">.</span><span class="n">complete_state</span><span class="p">)</span></div>
 
 
 <span class="c1"># Copied from prompt-toolkit&#39;s key_binding/bindings/basic.py</span>
@@ -227,6 +242,16 @@
         <span class="sd">&quot;&quot;&quot; Wrapper around carriage_return multiline parser &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">current_buffer</span>
         <span class="n">carriage_return</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">cli</span><span class="p">)</span>
+
+    <span class="nd">@handle</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">ControlJ</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">ShouldConfirmCompletion</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">enter_confirm_completion</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ignore &lt;enter&gt; (confirm completion)&quot;&quot;&quot;</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">current_buffer</span><span class="o">.</span><span class="n">complete_state</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@handle</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">Escape</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">ShouldConfirmCompletion</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">esc_cancel_completion</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use &lt;ESC&gt; to cancel completion&quot;&quot;&quot;</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">current_buffer</span><span class="o">.</span><span class="n">cancel_completion</span><span class="p">()</span>
 
     <span class="nd">@handle</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">Left</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="n">BeginningOfLine</span><span class="p">())</span>
     <span class="k">def</span> <span class="nf">wrap_cursor_back</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
@@ -309,16 +334,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

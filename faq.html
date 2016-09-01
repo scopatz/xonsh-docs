@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Frequently Asked Questions &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>Frequently Asked Questions &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
     <link rel="next" title="Wishlist &amp; To-Dos" href="todo.html" />
     <link rel="prev" title="Xonsh 0.1 Release Notes" href="previous/0.1_release_notes.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="previous/0.1_release_notes.html" title="Xonsh 0.1 Release Notes"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -127,9 +127,10 @@ Python-mode or subprocess-mode. For example, most people will look at
 Python variables, this could be transformed to the equivalent (Python)
 expressions <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-</span> <span class="pre">l</span></code> or <code class="docutils literal"><span class="pre">ls-l</span></code>.  Neither of which are valid listing
 commands.</p>
-<p>What xonsh does to overcome such ambiguity is to check if the left-most
-name (<code class="docutils literal"><span class="pre">ls</span></code> above) is in the present Python context. If it is, then it takes
-the line to be valid xonsh as written. If the left-most name cannot be found,
+<p>What xonsh does to overcome such ambiguity is to check if the names in the
+expression (<code class="docutils literal"><span class="pre">ls</span></code> and <code class="docutils literal"><span class="pre">l</span></code> above) are in the present Python context. If they are,
+then it takes
+the line to be valid xonsh as written. If one of the names cannot be found,
 then xonsh assumes that the left-most name is an external command. It thus
 attempts to parse the line after wrapping it in an uncaptured subprocess
 call <code class="docutils literal"><span class="pre">![]</span></code>.  If wrapped version successfully parses, the <code class="docutils literal"><span class="pre">![]</span></code> version
@@ -300,15 +301,15 @@ as recursive globbing is <a class="reference external" href="https://docs.python
         <li class="right" >
           <a href="previous/0.1_release_notes.html" title="Xonsh 0.1 Release Notes"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

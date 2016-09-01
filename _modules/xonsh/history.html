@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.history &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>xonsh.history &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -69,17 +69,16 @@
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
+<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">cabc</span>
 
 <span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">lazyobject</span>
 <span class="kn">from</span> <span class="nn">xonsh.lazyjson</span> <span class="k">import</span> <span class="n">LazyJSON</span><span class="p">,</span> <span class="n">ljdump</span><span class="p">,</span> <span class="n">LJNode</span>
-<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">ensure_slice</span><span class="p">,</span> <span class="n">to_history_tuple</span><span class="p">,</span>
-                         <span class="n">expanduser_abs_path</span><span class="p">,</span> <span class="n">ensure_timestamp</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">ensure_slice</span><span class="p">,</span> <span class="n">to_history_tuple</span><span class="p">,</span> <span class="n">is_string</span><span class="p">,</span>
+                         <span class="n">get_portions</span><span class="p">,</span> <span class="n">expanduser_abs_path</span><span class="p">,</span> <span class="n">ensure_timestamp</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">xonsh.diff_history</span> <span class="k">import</span> <span class="n">_dh_create_parser</span><span class="p">,</span> <span class="n">_dh_main_action</span>
 
 
@@ -239,7 +238,7 @@
             <span class="n">ljdump</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="CommandField"><a class="viewcode-back" href="../../api/history.html#xonsh.history.CommandField">[docs]</a><span class="k">class</span> <span class="nc">CommandField</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+<div class="viewcode-block" id="CommandField"><a class="viewcode-back" href="../../api/history.html#xonsh.history.CommandField">[docs]</a><span class="k">class</span> <span class="nc">CommandField</span><span class="p">(</span><span class="n">cabc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A field in the &#39;cmds&#39; portion of history.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -323,7 +322,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns all history as found in XONSH_DATA_DIR.</span>
 
-<span class="sd">    return format: (name, start_time, index)</span>
+<span class="sd">    return format: (cmd, start_time, index)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data_dir</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_DATA_DIR&#39;</span><span class="p">)</span>
     <span class="n">data_dir</span> <span class="o">=</span> <span class="n">expanduser_abs_path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
@@ -346,14 +345,11 @@
 <span class="k">def</span> <span class="nf">_curr_session_parser</span><span class="p">(</span><span class="n">hist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take in History object and return command list tuple with</span>
-<span class="sd">    format: (name, start_time, index)</span>
+<span class="sd">    format: (cmd, start_time, index)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">hist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">hist</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_history__</span>
-    <span class="n">start_times</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">tss</span><span class="p">)</span>
-    <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">inps</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)):</span>
-        <span class="k">yield</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_zsh_hist_parser</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -455,20 +451,6 @@
     <span class="k">return</span> <span class="n">p</span>
 
 
-<span class="k">def</span> <span class="nf">_hist_get_portion</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">slices</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Yield from portions of history commands.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">slices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">yield from</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># islice failed</span>
-            <span class="k">pass</span>
-    <span class="n">commands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">:</span>
-        <span class="k">yield from</span> <span class="n">commands</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
-
-
 <span class="k">def</span> <span class="nf">_hist_filter_ts</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Yield only the commands between start and end time.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
@@ -500,7 +482,7 @@
     <span class="k">if</span> <span class="n">slices</span><span class="p">:</span>
         <span class="c1"># transform/check all slices</span>
         <span class="n">slices</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensure_slice</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">]</span>
-        <span class="n">cmds</span> <span class="o">=</span> <span class="n">_hist_get_portion</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">slices</span><span class="p">)</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="n">get_portions</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">slices</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">start_time</span> <span class="ow">or</span> <span class="n">end_time</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">start_time</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -548,6 +530,37 @@
 <span class="c1"># Interface to History</span>
 <div class="viewcode-block" id="History"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History">[docs]</a><span class="k">class</span> <span class="nc">History</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Xonsh session history.</span>
+
+<span class="sd">    Indexing</span>
+<span class="sd">    --------</span>
+<span class="sd">    History object acts like a sequence that can be indexed in a special way</span>
+<span class="sd">    that adds extra functionality. At the moment only history from the</span>
+<span class="sd">    current session can be retrieved. Note that the most recent command</span>
+<span class="sd">    is the last item in history.</span>
+
+<span class="sd">    The index acts as a filter with two parts, command and argument,</span>
+<span class="sd">    separated by comma.  Based on the type of each part different</span>
+<span class="sd">    filtering can be achieved,</span>
+
+<span class="sd">        for the command part:</span>
+
+<span class="sd">            - an int returns the command in that position.</span>
+<span class="sd">            - a slice returns a list of commands.</span>
+<span class="sd">            - a string returns the most recent command containing the string.</span>
+
+<span class="sd">        for the argument part:</span>
+
+<span class="sd">            - an int returns the argument of the command in that position.</span>
+<span class="sd">            - a slice returns a part of the command based on the argument</span>
+<span class="sd">              position.</span>
+
+<span class="sd">    The argument part of the filter can be omitted but the command part is</span>
+<span class="sd">    required.</span>
+
+<span class="sd">    Command arguments are separated by white space.</span>
+
+<span class="sd">    If the filtering produces only one result it is</span>
+<span class="sd">    returned as a string else a list of strings is returned.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -666,16 +679,66 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">hf</span></div>
 
-<div class="viewcode-block" id="History.show"><a class="viewcode-back" href="../../api/history.html#xonsh.history.History.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return shell history as a list</span>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current session history.</span>
 
-<span class="sd">        Valid options:</span>
-<span class="sd">            `session` - returns xonsh history from current session</span>
-<span class="sd">            `xonsh`   - returns xonsh history from all sessions</span>
-<span class="sd">            `zsh`     - returns all zsh history</span>
-<span class="sd">            `bash`    - returns all bash history</span>
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            ``tuple`` of the form (cmd, start_time, index).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_hist_get</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div></div>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tss</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inps</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve history parts based on filtering rules,</span>
+<span class="sd">        see ``History`` docs for more info. Accepts one of</span>
+<span class="sd">        int, string, slice or tuple of length two.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">cmd_pat</span><span class="p">,</span> <span class="n">arg_pat</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmd_pat</span><span class="p">,</span> <span class="n">arg_pat</span> <span class="o">=</span> <span class="n">item</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_filter</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">cmd_pat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">arg_pat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cmds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args_filter</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">arg_pat</span><span class="p">)</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cmds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cmds</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_cmd_filter</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">pat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">ensure_slice</span><span class="p">(</span><span class="n">pat</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="n">get_portions</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_string</span><span class="p">(</span><span class="n">pat</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cmds</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">pat</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">command</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Command filter must be &#39;</span>
+                            <span class="s1">&#39;string, int or slice&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_args_filter</span><span class="p">(</span><span class="n">cmds</span><span class="p">,</span> <span class="n">pat</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">ensure_slice</span><span class="p">(</span><span class="n">pat</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="n">s</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Argument filter must be &#39;</span>
+                            <span class="s1">&#39;int or slice&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">PermissionError</span><span class="p">(</span><span class="s1">&#39;You cannot change history! &#39;</span>
+                              <span class="s1">&#39;you can create new though.&#39;</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_hist_info</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">hist</span><span class="p">):</span>
@@ -789,16 +852,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

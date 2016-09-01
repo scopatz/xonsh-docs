@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.foreign_shells &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>xonsh.foreign_shells &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -65,14 +65,15 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">cabc</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">LazyObject</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">lazyobject</span>
 <span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">ensure_string</span>
 <span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">ON_CYGWIN</span>
 
@@ -139,8 +140,11 @@
 <span class="s2">fi</span>
 <span class="s2">echo $</span><span class="si">{namefile}</span><span class="s2">&quot;&quot;&quot;</span>
 
+
 <span class="c1"># mapping of shell name alises to keys in other lookup dictionaries.</span>
-<span class="n">CANON_SHELL_NAMES</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">CANON_SHELL_NAMES</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;bash&#39;</span><span class="p">,</span>
     <span class="s1">&#39;/bin/bash&#39;</span><span class="p">:</span> <span class="s1">&#39;bash&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;zsh&#39;</span><span class="p">,</span>
@@ -148,55 +152,79 @@
     <span class="s1">&#39;/usr/bin/zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;zsh&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;cmd&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd.exe&#39;</span><span class="p">:</span> <span class="s1">&#39;cmd&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;CANON_SHELL_NAMES&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_ENVCMDS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_ENVCMDS</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;env&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;env&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_ENVCMDS&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_ALIASCMDS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_ALIASCMDS</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;alias&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;alias -L&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_ALIASCMDS&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_FUNCSCMDS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_FUNCSCMDS</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="n">DEFAULT_BASH_FUNCSCMD</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="n">DEFAULT_ZSH_FUNCSCMD</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_FUNCSCMDS&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_SOURCERS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_SOURCERS</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;call&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_SOURCERS&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_TMPFILE_EXT</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_TMPFILE_EXT</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;.sh&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;.zsh&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;.bat&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_TMPFILE_EXT&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_RUNCMD</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_RUNCMD</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;/C&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_RUNCMD&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_SETERRPREVCMD</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_SETERRPREVCMD</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;set -e&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;set -e&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;@echo off&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_SETERRPREVCMD&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="n">DEFAULT_SETERRPOSTCMD</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">DEFAULT_SETERRPOSTCMD</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
     <span class="s1">&#39;bash&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;zsh&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;if errorlevel 1 exit 1&#39;</span><span class="p">,</span>
-<span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;DEFAULT_SETERRPOSTCMD&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
 
 
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">()</span>
@@ -322,12 +350,16 @@
     <span class="k">return</span> <span class="n">env</span><span class="p">,</span> <span class="n">aliases</span></div>
 
 
-<span class="n">ENV_RE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_ENV_BEG__</span><span class="se">\n</span><span class="s1">(.*)&#39;</span>
-                                       <span class="s1">&#39;__XONSH_ENV_END__&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span>
-                    <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;ENV_RE&#39;</span><span class="p">)</span>
-<span class="n">ENV_SPLIT_RE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^([^=]+)=([^=]*|[^</span><span class="se">\n</span><span class="s1">]*)$&#39;</span><span class="p">,</span>
-                                             <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">),</span>
-                          <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;ENV_SPLIT_RE&#39;</span><span class="p">)</span>
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">ENV_RE</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_ENV_BEG__</span><span class="se">\n</span><span class="s1">(.*)&#39;</span>
+                      <span class="s1">&#39;__XONSH_ENV_END__&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">ENV_SPLIT_RE</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^([^=]+)=([^=]*|[^</span><span class="se">\n</span><span class="s1">]*)$&#39;</span><span class="p">,</span>
+                      <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="parse_env"><a class="viewcode-back" href="../../api/foreign_shells.html#xonsh.foreign_shells.parse_env">[docs]</a><span class="k">def</span> <span class="nf">parse_env</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -341,10 +373,11 @@
     <span class="k">return</span> <span class="n">env</span></div>
 
 
-<span class="n">ALIAS_RE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_ALIAS_BEG__</span><span class="se">\n</span><span class="s1">(.*)&#39;</span>
-                                         <span class="s1">&#39;__XONSH_ALIAS_END__&#39;</span><span class="p">,</span>
-                                         <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span>
-                      <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;ALIAS_RE&#39;</span><span class="p">)</span>
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">ALIAS_RE</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_ALIAS_BEG__</span><span class="se">\n</span><span class="s1">(.*)&#39;</span>
+                      <span class="s1">&#39;__XONSH_ALIAS_END__&#39;</span><span class="p">,</span>
+                      <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="parse_aliases"><a class="viewcode-back" href="../../api/foreign_shells.html#xonsh.foreign_shells.parse_aliases">[docs]</a><span class="k">def</span> <span class="nf">parse_aliases</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -373,10 +406,11 @@
     <span class="k">return</span> <span class="n">aliases</span></div>
 
 
-<span class="n">FUNCS_RE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_FUNCS_BEG__</span><span class="se">\n</span><span class="s1">(.+)</span><span class="se">\n</span><span class="s1">&#39;</span>
-                                         <span class="s1">&#39;__XONSH_FUNCS_END__&#39;</span><span class="p">,</span>
-                                         <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">),</span>
-                      <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;FUNCS_RE&#39;</span><span class="p">)</span>
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">FUNCS_RE</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__XONSH_FUNCS_BEG__</span><span class="se">\n</span><span class="s1">(.+)</span><span class="se">\n</span><span class="s1">&#39;</span>
+                      <span class="s1">&#39;__XONSH_FUNCS_END__&#39;</span><span class="p">,</span>
+                      <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="parse_funcs"><a class="viewcode-back" href="../../api/foreign_shells.html#xonsh.foreign_shells.parse_funcs">[docs]</a><span class="k">def</span> <span class="nf">parse_funcs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">shell</span><span class="p">,</span> <span class="n">sourcer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -404,8 +438,8 @@
         <span class="k">else</span> <span class="n">sourcer</span>
     <span class="n">funcs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">funcname</span><span class="p">,</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">namefiles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">funcname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
-            <span class="k">continue</span>  <span class="c1"># skip private functions</span>
+        <span class="k">if</span> <span class="n">funcname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c1"># skip private functions and invalid files</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">wrapper</span> <span class="o">=</span> <span class="n">ForeignShellFunctionAlias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">funcname</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="n">shell</span><span class="p">,</span>
@@ -475,16 +509,18 @@
         <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="kc">True</span></div>
 
 
-<span class="n">VALID_SHELL_PARAMS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">([</span>
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">VALID_SHELL_PARAMS</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">frozenset</span><span class="p">([</span>
     <span class="s1">&#39;shell&#39;</span><span class="p">,</span> <span class="s1">&#39;interactive&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;envcmd&#39;</span><span class="p">,</span>
     <span class="s1">&#39;aliascmd&#39;</span><span class="p">,</span> <span class="s1">&#39;extra_args&#39;</span><span class="p">,</span> <span class="s1">&#39;currenv&#39;</span><span class="p">,</span> <span class="s1">&#39;safe&#39;</span><span class="p">,</span>
     <span class="s1">&#39;prevcmd&#39;</span><span class="p">,</span> <span class="s1">&#39;postcmd&#39;</span><span class="p">,</span> <span class="s1">&#39;funcscmd&#39;</span><span class="p">,</span> <span class="s1">&#39;sourcer&#39;</span><span class="p">,</span>
-<span class="p">]),</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;VALID_SHELL_PARAMS&#39;</span><span class="p">)</span>
+    <span class="p">])</span>
 
 
 <div class="viewcode-block" id="ensure_shell"><a class="viewcode-back" href="../../api/foreign_shells.html#xonsh.foreign_shells.ensure_shell">[docs]</a><span class="k">def</span> <span class="nf">ensure_shell</span><span class="p">(</span><span class="n">shell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Ensures that a mapping follows the shell specification.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">cabc</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">):</span>
         <span class="n">shell</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">shell</span><span class="p">)</span>
     <span class="n">shell_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">shell</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">shell_keys</span> <span class="o">&lt;=</span> <span class="n">VALID_SHELL_PARAMS</span><span class="p">):</span>
@@ -505,9 +541,9 @@
         <span class="n">shell</span><span class="p">[</span><span class="s1">&#39;extra_args&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">ensure_string</span><span class="p">,</span> <span class="n">shell</span><span class="p">[</span><span class="s1">&#39;extra_args&#39;</span><span class="p">]))</span>
     <span class="k">if</span> <span class="s1">&#39;currenv&#39;</span> <span class="ow">in</span> <span class="n">shell_keys</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shell</span><span class="p">[</span><span class="s1">&#39;currenv&#39;</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="n">ce</span> <span class="o">=</span> <span class="n">shell</span><span class="p">[</span><span class="s1">&#39;currenv&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ce</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ce</span><span class="p">,</span> <span class="n">cabc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
             <span class="n">ce</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([(</span><span class="n">ensure_string</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ce</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ce</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ce</span><span class="p">,</span> <span class="n">cabc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="n">ce</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([(</span><span class="n">ensure_string</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ce</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unrecognized type for currenv&#39;</span><span class="p">)</span>
@@ -601,11 +637,17 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">shells</span> <span class="o">=</span> <span class="n">_get_shells</span><span class="p">(</span><span class="n">shells</span><span class="o">=</span><span class="n">shells</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">issue_warning</span><span class="o">=</span><span class="n">issue_warning</span><span class="p">)</span>
     <span class="n">aliases</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">xonsh_aliases</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">aliases</span>
     <span class="k">for</span> <span class="n">shell</span> <span class="ow">in</span> <span class="n">shells</span><span class="p">:</span>
         <span class="n">shell</span> <span class="o">=</span> <span class="n">ensure_shell</span><span class="p">(</span><span class="n">shell</span><span class="p">)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">shaliases</span> <span class="o">=</span> <span class="n">foreign_shell_data</span><span class="p">(</span><span class="o">**</span><span class="n">shell</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">shaliases</span><span class="p">:</span>
-            <span class="n">aliases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">shaliases</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">shaliases</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">xonsh_aliases</span><span class="p">):</span>
+            <span class="k">del</span> <span class="n">shaliases</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;aliases: alias </span><span class="si">{!r}</span><span class="s1"> of shell </span><span class="si">{!r}</span><span class="s1"> &#39;</span>
+                  <span class="s1">&#39;tries to override xonsh alias, &#39;</span>
+                  <span class="s1">&#39;xonsh wins!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="n">shell</span><span class="p">[</span><span class="s1">&#39;shell&#39;</span><span class="p">]),</span>
+                  <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">aliases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">shaliases</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">aliases</span></div>
 </pre></div>
 
@@ -642,16 +684,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

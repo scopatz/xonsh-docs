@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>Tutorial &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
     <link rel="next" title="Tutorial: History" href="tutorial_hist.html" />
     <link rel="prev" title="Additional Setup" href="add_to_shell.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="add_to_shell.html" title="Additional Setup"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -85,8 +85,8 @@ used a command prompt or interactive interpreter.</p>
 <p>Assuming you have successfully installed xonsh (see <a class="reference external" href="http://xon.sh">http://xon.sh</a>),
 you can start up the xonsh interpreter via the <code class="docutils literal"><span class="pre">xonsh</span></code> command. Suppose
 you are in a lesser terminal:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>bash $ xonsh
-snail@home ~ $
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xonsh
+<span class="gp">snail@home ~ $</span>
 </pre></div>
 </div>
 <p>Now we are in a xonsh shell. Our username happens to be <code class="docutils literal"><span class="pre">snail</span></code>, our
@@ -298,11 +298,11 @@ most command line utilities looking a lot like Python operators.</p>
 have also been written as <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-</span> <span class="pre">l</span></code> or <code class="docutils literal"><span class="pre">ls-l</span></code>.  So how does xonsh know
 that <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></code> is meant to be run in subprocess-mode?</p>
 <p>For any given line that only contains an expression statement (expr-stmt,
-see the Python AST docs for more information), if the left-most name cannot
-be found as a current variable name xonsh will try to parse the line as a
-subprocess command instead.  In the above, if <code class="docutils literal"><span class="pre">ls</span></code> is not a variable,
-then subprocess mode will be attempted. If parsing in subprocess mode fails,
-then the line is left in Python-mode.</p>
+see the Python AST docs for more information), if all the names cannot
+be found as current variables xonsh will try to parse the line as a
+subprocess command instead.  In the above, if <code class="docutils literal"><span class="pre">ls</span></code> and <code class="docutils literal"><span class="pre">l</span></code> are not
+variables, then subprocess mode will be attempted. If parsing in subprocess
+mode fails, then the line is left in Python-mode.</p>
 <p>In the following example, we will list the contents of the directory
 with <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></code>. Then we&#8217;ll make new variable names <code class="docutils literal"><span class="pre">ls</span></code> and <code class="docutils literal"><span class="pre">l</span></code> and then
 subtract them. Finally, we will delete <code class="docutils literal"><span class="pre">ls</span></code> and <code class="docutils literal"><span class="pre">l</span></code> and be able to list
@@ -311,7 +311,7 @@ the directories again.</p>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="go"></span>
 <span class="go">total 0</span>
 <span class="go">-rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh</span><span class="gp"></span>
-<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># set an ls variable to force python-mode</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># set ls and l variables to force python-mode</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">ls</span> <span class="o">=</span> <span class="mi">44</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">2</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="go"></span>
@@ -1230,8 +1230,8 @@ ordinary format string. What we&#8217;re doing here is equivalent to this expres
 <h2>Executing Commands and Scripts<a class="headerlink" href="#executing-commands-and-scripts" title="Permalink to this headline">¶</a></h2>
 <p>When started with the <code class="docutils literal"><span class="pre">-c</span></code> flag and a command, xonsh will execute that command
 and exit, instead of entering the command loop.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>bash $ xonsh -c <span class="s2">&quot;echo @(7+3)&quot;</span>
-10
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xonsh -c <span class="s2">&quot;echo @(7+3)&quot;</span>
+<span class="go">10</span>
 </pre></div>
 </div>
 <p>Longer scripts can be run either by specifying a filename containing the script,
@@ -1255,21 +1255,21 @@ script, stored in <code class="docutils literal"><span class="pre">test.xsh</spa
 </pre></div>
 </div>
 <p>This script could be run by piping its contents to xonsh:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>bash $ cat test.xsh <span class="p">|</span> xonsh
-file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  test_script.sh
-removing files
-test_script.sh
-adding files
-file0.txt file1.txt file2.txt file3.txt file4.txt test_script.sh
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cat test.xsh <span class="p">|</span> xonsh
+<span class="go">file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  test_script.sh</span>
+<span class="go">removing files</span>
+<span class="go">test_script.sh</span>
+<span class="go">adding files</span>
+<span class="go">file0.txt file1.txt file2.txt file3.txt file4.txt test_script.sh</span>
 </pre></div>
 </div>
 <p>or by invoking xonsh with its filename as an argument:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>bash $ xonsh test.xsh
-file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  test_script.sh
-removing files
-test_script.sh
-adding files
-file0.txt file1.txt file2.txt file3.txt file4.txt test_script.sh
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xonsh test.xsh
+<span class="go">file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  test_script.sh</span>
+<span class="go">removing files</span>
+<span class="go">test_script.sh</span>
+<span class="go">adding files</span>
+<span class="go">file0.txt file1.txt file2.txt file3.txt file4.txt test_script.sh</span>
 </pre></div>
 </div>
 <p>xonsh scripts can also accept arguments.  These arguments are made available to
@@ -1301,16 +1301,16 @@ operates on a given argument, rather than on the string <code class="docutils li
 <span class="k">print</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>bash $ xonsh test2.xsh snails
-<span class="o">[</span><span class="s1">&#39;test_script.sh&#39;</span>, <span class="s1">&#39;snails&#39;</span><span class="o">]</span>
-file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  test_script.sh
-removing files
-test_script.sh
-adding files
-file0.txt file1.txt file2.txt file3.txt file4.txt file5.txt test_script.sh
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xonsh test2.xsh snails
+<span class="go">[&#39;test_script.sh&#39;, &#39;snails&#39;]</span>
+<span class="go">file0.txt  file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  test_script.sh</span>
+<span class="go">removing files</span>
+<span class="go">test_script.sh</span>
+<span class="go">adding files</span>
+<span class="go">file0.txt file1.txt file2.txt file3.txt file4.txt file5.txt test_script.sh</span>
 
-bash $ <span class="nb">echo</span> @<span class="o">(</span><span class="s1">&#39; &#39;</span>.join<span class="o">(</span><span class="k">$(</span>cat @<span class="o">(</span><span class="s1">&#39;file%d.txt&#39;</span> % i<span class="k">)</span><span class="o">)</span>.strip<span class="o">()</span> <span class="k">for</span> i in range<span class="o">(</span>6<span class="o">)))</span>
-s n a i l s
+<span class="gp">$</span> <span class="nb">echo</span> @<span class="o">(</span><span class="s1">&#39; &#39;</span>.join<span class="o">(</span><span class="k">$(</span>cat @<span class="o">(</span><span class="s1">&#39;file%d.txt&#39;</span> % i<span class="k">)</span><span class="o">)</span>.strip<span class="o">()</span> <span class="k">for</span> i in range<span class="o">(</span>6<span class="o">)))</span>
+<span class="go">s n a i l s</span>
 </pre></div>
 </div>
 <p>Additionally, if the script should exit if a command fails, set the
@@ -1457,15 +1457,15 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
         <li class="right" >
           <a href="add_to_shell.html" title="Additional Setup"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

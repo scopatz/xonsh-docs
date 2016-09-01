@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Developer’s Guide &mdash; xonsh 0.4.5.dev2 documentation</title>
+    <title>Developer’s Guide &#8212; xonsh 0.4.6 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.5.dev2',
+        VERSION:     '0.4.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,9 +29,9 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.5.dev2 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
     <link rel="next" title="Previous Versions" href="previous/index.html" />
-    <link rel="prev" title="Vox (xontrib.voxapi)" href="api/vox.html" /> 
+    <link rel="prev" title="Advanced Events" href="advanced_events.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -50,9 +50,9 @@
           <a href="previous/index.html" title="Previous Versions"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="api/vox.html" title="Vox (xontrib.voxapi)"
+          <a href="advanced_events.html" title="Advanced Events"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -316,7 +316,7 @@ We uses the sphinx tool to manage and generate the documentation, which
 you can learn about from <a class="reference external" href="http://sphinx-doc.org/">the sphinx website</a>.
 If you want to generate the documentation, first xonsh itself must be installed
 and then you may run the following command from the <code class="docutils literal"><span class="pre">docs</span></code> dir:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>~/xonsh/docs $ make html
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">~/xonsh/docs $ make html</span>
 </pre></div>
 </div>
 <p>For each new
@@ -449,7 +449,7 @@ created by unit testing by running:</p>
 $ rm -f xonsh/lexer_test_table.py xonsh/parser_test_table.py
 $ rm -f xonsh/*.pyc tests/*.pyc
 $ rm -f xonsh/*.rej tests/*.rej
-$rm -fr build
+$ rm -fr build
 </pre></div>
 </div>
 </div>
@@ -457,19 +457,19 @@ $rm -fr build
 <h3>Performing the Release<a class="headerlink" href="#performing-the-release" title="Permalink to this headline">¶</a></h3>
 <p>To perform the release, run these commands for the following tasks:</p>
 <p><strong>pip upload:</strong></p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./setup.py sdist upload
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./setup.py sdist upload
 </pre></div>
 </div>
 <p><strong>conda upload:</strong></p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ rm -f /path/to/conda/conda-bld/src_cache/xonsh.tar.gz
-$ conda build --no-test recipe
-$ conda convert -p all -o /path/to/conda/conda-bld /path/to/conda/conda-bld/linux-64/xonsh-X.X.X-0.tar.bz2
-$ binstar upload /path/to/conda/conda-bld/*/xonsh-X.X.X*.tar.bz2
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> rm -f /path/to/conda/conda-bld/src_cache/xonsh.tar.gz
+<span class="gp">$</span> conda build --no-test recipe
+<span class="gp">$</span> conda convert -p all -o /path/to/conda/conda-bld /path/to/conda/conda-bld/linux-64/xonsh-X.X.X-0.tar.bz2
+<span class="gp">$</span> binstar upload /path/to/conda/conda-bld/*/xonsh-X.X.X*.tar.bz2
 </pre></div>
 </div>
 <p><strong>website:</strong></p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
-$ make clean html push-root
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> docs
+<span class="gp">$</span> make clean html push-root
 </pre></div>
 </div>
 </div>
@@ -539,8 +539,8 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
   </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="api/vox.html"
-                          title="Previous page">&larr; Vox (<code class="docutils literal"><span class="pre">xontrib.voxapi</span></code>)</a></p>
+    <p class="topless"><a href="advanced_events.html"
+                          title="Previous page">&larr; Advanced Events</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
@@ -583,17 +583,17 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
           <a href="previous/index.html" title="Previous Versions"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="api/vox.html" title="Vox (xontrib.voxapi)"
+          <a href="advanced_events.html" title="Advanced Events"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.5.dev2 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
