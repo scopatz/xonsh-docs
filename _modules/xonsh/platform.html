@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.platform &#8212; xonsh 0.4.6 documentation</title>
+    <title>xonsh.platform &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -340,7 +340,10 @@
                <span class="s1">&#39;/usr/local/etc/bash_completion&#39;</span><span class="p">)</span>  <span class="c1"># v1.x</span>
     <span class="k">elif</span> <span class="n">ON_WINDOWS</span> <span class="ow">and</span> <span class="n">git_for_windows_path</span><span class="p">():</span>
         <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">git_for_windows_path</span><span class="p">(),</span>
-                            <span class="s1">&#39;usr</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">bash-completion&#39;</span><span class="p">),</span> <span class="p">)</span>
+                            <span class="s1">&#39;usr</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">bash-completion&#39;</span><span class="p">),</span>
+               <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">git_for_windows_path</span><span class="p">(),</span>
+                            <span class="s1">&#39;mingw64</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">git</span><span class="se">\\</span><span class="s1">completion</span><span class="se">\\</span><span class="s1">&#39;</span>
+                            <span class="s1">&#39;git-completion.bash&#39;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">bcd</span> <span class="o">=</span> <span class="p">()</span>
     <span class="k">return</span> <span class="n">bcd</span>
@@ -402,16 +405,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

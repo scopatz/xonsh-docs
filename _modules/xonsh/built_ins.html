@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.built_ins &#8212; xonsh 0.4.6 documentation</title>
+    <title>xonsh.built_ins &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -169,8 +169,11 @@
     <span class="c1"># first &#39;=&#39;&quot;. See the following for more details.</span>
     <span class="c1"># https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html</span>
     <span class="n">pre</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">post</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="k">if</span> <span class="n">char</span> <span class="k">else</span> <span class="n">s</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">char</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span> <span class="o">+</span> <span class="n">char</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">,</span> <span class="n">post</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s</span></div>
 
 
@@ -810,7 +813,7 @@
         <span class="n">kind</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">kind</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">kind</span> <span class="o">=</span> <span class="n">_convert_kind_flag</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">kind</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">kind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">raw_arg</span>  <span class="c1"># short circut since there is nothing else to do</span>
     <span class="c1"># select from kind and convert</span>
     <span class="n">execer</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_execer__</span>
@@ -825,7 +828,7 @@
         <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span> <span class="ow">or</span> <span class="s1">&#39;eval&#39;</span>
         <span class="n">arg</span> <span class="o">=</span> <span class="n">execer</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">raw_arg</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">glbs</span><span class="o">=</span><span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="o">=</span><span class="n">locs</span><span class="p">,</span>
                              <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">kind</span> <span class="ow">is</span> <span class="nb">eval</span> <span class="ow">or</span> <span class="n">kind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="ow">is</span> <span class="nb">eval</span><span class="p">:</span>
         <span class="n">arg</span> <span class="o">=</span> <span class="n">execer</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">raw_arg</span><span class="p">,</span> <span class="n">glbs</span><span class="o">=</span><span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="o">=</span><span class="n">locs</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">kind</span> <span class="ow">is</span> <span class="n">exec</span><span class="p">:</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span> <span class="ow">or</span> <span class="s1">&#39;exec&#39;</span>
@@ -844,7 +847,7 @@
 
 
 <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-<div class="viewcode-block" id="macro_context"><a class="viewcode-back" href="../../api/built_ins.html#xonsh.built_ins.macro_context">[docs]</a><span class="k">def</span> <span class="nf">macro_context</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">):</span>
+<div class="viewcode-block" id="in_macro_call"><a class="viewcode-back" href="../../api/built_ins.html#xonsh.built_ins.in_macro_call">[docs]</a><span class="k">def</span> <span class="nf">in_macro_call</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Attaches macro globals and locals temporarily to function as a</span>
 <span class="sd">    context manager.</span>
 
@@ -899,13 +902,13 @@
             <span class="k">break</span>
         <span class="n">kind</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">annotation</span>
         <span class="k">if</span> <span class="n">kind</span> <span class="ow">is</span> <span class="n">empty</span> <span class="ow">or</span> <span class="n">kind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">kind</span> <span class="o">=</span> <span class="nb">eval</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="nb">str</span>
         <span class="n">arg</span> <span class="o">=</span> <span class="n">convert_macro_arg</span><span class="p">(</span><span class="n">raw_arg</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                                 <span class="n">macroname</span><span class="o">=</span><span class="n">macroname</span><span class="p">)</span>
         <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
     <span class="n">reg_args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_eval_regular_args</span><span class="p">(</span><span class="n">raw_args</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">+=</span> <span class="n">reg_args</span>
-    <span class="k">with</span> <span class="n">macro_context</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">in_macro_call</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">):</span>
         <span class="n">rtn</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">rtn</span></div>
 
@@ -940,6 +943,47 @@
         <span class="n">both</span> <span class="o">=</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">argstr</span><span class="p">,</span> <span class="n">kwargstr</span><span class="p">)</span>
         <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">execer</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">both</span><span class="p">,</span> <span class="n">glbs</span><span class="o">=</span><span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="o">=</span><span class="n">locs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+
+
+<div class="viewcode-block" id="enter_macro"><a class="viewcode-back" href="../../api/built_ins.html#xonsh.built_ins.enter_macro">[docs]</a><span class="k">def</span> <span class="nf">enter_macro</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">raw_block</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prepares to enter a context manager macro by attaching the contents</span>
+<span class="sd">    of the macro block, globals, and locals to the object. These modifications</span>
+<span class="sd">    are made in-place and the original object is returned.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : context manager</span>
+<span class="sd">        The object that is about to be entered via a with-statement.</span>
+<span class="sd">    raw_block : str</span>
+<span class="sd">        The str of the block that is the context body.</span>
+<span class="sd">        This string will be parsed, compiled, evaled, or left as</span>
+<span class="sd">        a string dependending on the return annotation of obj.__enter__.</span>
+<span class="sd">    glbs : Mapping</span>
+<span class="sd">        The globals from the context site.</span>
+<span class="sd">    locs : Mapping or None</span>
+<span class="sd">        The locals from the context site.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    obj : context manager</span>
+<span class="sd">        The same context manager but with the new macro information applied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># recurse down sequences</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">cabc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="n">enter_macro</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">raw_block</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span>
+    <span class="c1"># convert block as needed</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__xonsh_block__&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">macroname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;context&gt;&#39;</span><span class="p">)</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">convert_macro_arg</span><span class="p">(</span><span class="n">raw_block</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">glbs</span><span class="p">,</span> <span class="n">locs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&lt;with!&gt;&#39;</span><span class="p">,</span>
+                              <span class="n">macroname</span><span class="o">=</span><span class="n">macroname</span><span class="p">)</span>
+    <span class="c1"># attach attrs</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">macro_globals</span> <span class="o">=</span> <span class="n">glbs</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">macro_locals</span> <span class="o">=</span> <span class="n">locs</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">macro_block</span> <span class="o">=</span> <span class="n">block</span>
+    <span class="k">return</span> <span class="n">obj</span></div>
 
 
 <div class="viewcode-block" id="load_builtins"><a class="viewcode-back" href="../../api/built_ins.html#xonsh.built_ins.load_builtins">[docs]</a><span class="k">def</span> <span class="nf">load_builtins</span><span class="p">(</span><span class="n">execer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">login</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -978,6 +1022,7 @@
     <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_list_of_strs_or_callables__</span> <span class="o">=</span> <span class="n">list_of_strs_or_callables</span>
     <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_completers__</span> <span class="o">=</span> <span class="n">xonsh</span><span class="o">.</span><span class="n">completers</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">default_completers</span><span class="p">()</span>
     <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_call_macro__</span> <span class="o">=</span> <span class="n">call_macro</span>
+    <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_enter_macro__</span> <span class="o">=</span> <span class="n">enter_macro</span>
     <span class="c1"># public built-ins</span>
     <span class="n">builtins</span><span class="o">.</span><span class="n">XonshError</span> <span class="o">=</span> <span class="n">XonshError</span>
     <span class="n">builtins</span><span class="o">.</span><span class="n">XonshBlockError</span> <span class="o">=</span> <span class="n">XonshBlockError</span>
@@ -1045,6 +1090,7 @@
              <span class="s1">&#39;__xonsh_commands_cache__&#39;</span><span class="p">,</span>
              <span class="s1">&#39;__xonsh_completers__&#39;</span><span class="p">,</span>
              <span class="s1">&#39;__xonsh_call_macro__&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;__xonsh_enter_macro__&#39;</span><span class="p">,</span>
              <span class="s1">&#39;XonshError&#39;</span><span class="p">,</span>
              <span class="s1">&#39;XonshBlockError&#39;</span><span class="p">,</span>
              <span class="s1">&#39;XonshCalledProcessError&#39;</span><span class="p">,</span>
@@ -1106,16 +1152,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

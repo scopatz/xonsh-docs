@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.ast &#8212; xonsh 0.4.6 documentation</title>
+    <title>xonsh.ast &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -169,6 +169,30 @@
     <span class="k">return</span> <span class="n">rtn</span></div>
 
 
+<div class="viewcode-block" id="get_id_ctx"><a class="viewcode-back" href="../../api/ast.html#xonsh.ast.get_id_ctx">[docs]</a><span class="k">def</span> <span class="nf">get_id_ctx</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the id and attribute of a node, or returns a default.&quot;&quot;&quot;</span>
+    <span class="n">nid</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">nid</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gather_load_store_names"><a class="viewcode-back" href="../../api/ast.html#xonsh.ast.gather_load_store_names">[docs]</a><span class="k">def</span> <span class="nf">gather_load_store_names</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the names present in the node&#39;s tree in a set of load nodes and</span>
+<span class="sd">    a set of store nodes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">load</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">nid</span><span class="p">,</span> <span class="n">ctx</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">get_id_ctx</span><span class="p">,</span> <span class="n">walk</span><span class="p">(</span><span class="n">node</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">Load</span><span class="p">):</span>
+            <span class="n">load</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">load</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="has_elts"><a class="viewcode-back" href="../../api/ast.html#xonsh.ast.has_elts">[docs]</a><span class="k">def</span> <span class="nf">has_elts</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tests if x is an AST node with elements.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">AST</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;elts&#39;</span><span class="p">)</span></div>
@@ -287,7 +311,8 @@
 
 <div class="viewcode-block" id="CtxAwareTransformer.is_in_scope"><a class="viewcode-back" href="../../api/ast.html#xonsh.ast.CtxAwareTransformer.is_in_scope">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines whether or not the current node is in scope.&quot;&quot;&quot;</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="n">gather_names</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">names</span><span class="p">,</span> <span class="n">store</span> <span class="o">=</span> <span class="n">gather_load_store_names</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">-=</span> <span class="n">store</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="n">inscope</span> <span class="o">=</span> <span class="kc">False</span>
@@ -482,10 +507,7 @@
 <div class="viewcode-block" id="CtxAwareTransformer.visit_For"><a class="viewcode-back" href="../../api/ast.html#xonsh.ast.CtxAwareTransformer.visit_For">[docs]</a>    <span class="k">def</span> <span class="nf">visit_For</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handle visiting a for statement.&quot;&quot;&quot;</span>
         <span class="n">targ</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">target</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targ</span><span class="p">,</span> <span class="p">(</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ctxupdate</span><span class="p">(</span><span class="n">leftmostname</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span> <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">targ</span><span class="o">.</span><span class="n">elts</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ctxadd</span><span class="p">(</span><span class="n">leftmostname</span><span class="p">(</span><span class="n">targ</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctxupdate</span><span class="p">(</span><span class="n">gather_names</span><span class="p">(</span><span class="n">targ</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">node</span></div>
 
@@ -611,16 +633,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

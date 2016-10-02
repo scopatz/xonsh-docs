@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Environment (xonsh.environ) &#8212; xonsh 0.4.6 documentation</title>
+    <title>Environment (xonsh.environ) &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Aliases (xonsh.aliases)" href="aliases.html" />
     <link rel="prev" title="Built-Ins (xonsh.built_ins)" href="built_ins.html" /> 
@@ -53,9 +53,9 @@
         <li class="right" >
           <a href="built_ins.html" title="Built-Ins (xonsh.built_ins)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -153,6 +153,12 @@ default is not given here.</p>
 <dt id="xonsh.environ.Env.get_ensurer">
 <code class="descname">get_ensurer</code><span class="sig-paren">(</span><em>key</em>, <em>default=Ensurer(validate=&lt;function always_true&gt;</em>, <em>convert=None</em>, <em>detype=&lt;function ensure_string&gt;)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#Env.get_ensurer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.Env.get_ensurer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an ensurer for the given key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.environ.Env.help">
+<code class="descname">help</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#Env.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.Env.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about a specific enviroment variable.</p>
 </dd></dl>
 
 <dl class="method">
@@ -302,39 +308,9 @@ potentially other non-trivial data types. default, False.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.environ.branch_bg_color">
-<code class="descclassname">xonsh.environ.</code><code class="descname">branch_bg_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#branch_bg_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.branch_bg_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return red if the current branch is dirty, yellow if the dirtiness can
-not be determined, and green if it clean. These are bacground colors.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.branch_color">
-<code class="descclassname">xonsh.environ.</code><code class="descname">branch_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#branch_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.branch_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return red if the current branch is dirty, yellow if the dirtiness can
-not be determined, and green if it clean. These are bold, intense colors
-for the foreground.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.current_branch">
-<code class="descclassname">xonsh.environ.</code><code class="descname">current_branch</code><span class="sig-paren">(</span><em>pad=NotImplemented</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#current_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.current_branch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the branch for a current working directory. Returns an empty string
-if the cwd is not a repository.  This currently only works for git and hg
-and should be extended in the future.  If a timeout occurred, the string
-&#8216;&lt;branch-timeout&gt;&#8217; is returned.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="xonsh.environ.default_env">
 <code class="descclassname">xonsh.environ.</code><code class="descname">default_env</code><span class="sig-paren">(</span><em>env=None</em>, <em>config=None</em>, <em>login=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#default_env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.default_env" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a default xonsh environment.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.default_prompt">
-<code class="descclassname">xonsh.environ.</code><code class="descname">default_prompt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#default_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.default_prompt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a new instance of the default prompt.</p>
 </dd></dl>
 
 <dl class="function">
@@ -350,63 +326,15 @@ and should be extended in the future.  If a timeout occurred, the string
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.environ.dirty_working_directory">
-<code class="descclassname">xonsh.environ.</code><code class="descname">dirty_working_directory</code><span class="sig-paren">(</span><em>cwd=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#dirty_working_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.dirty_working_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a boolean as to whether there are uncommitted files in version
-control repository we are inside. If this cannot be determined, returns
-None. Currently supports git and hg.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.env_name">
-<code class="descclassname">xonsh.environ.</code><code class="descname">env_name</code><span class="sig-paren">(</span><em>pre_chars='('</em>, <em>post_chars=')'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#env_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.env_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract the current environment name from $VIRTUAL_ENV or
-$CONDA_DEFAULT_ENV if that is set</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="xonsh.environ.foreign_env_fixes">
 <code class="descclassname">xonsh.environ.</code><code class="descname">foreign_env_fixes</code><span class="sig-paren">(</span><em>ctx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#foreign_env_fixes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.foreign_env_fixes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Environment fixes for all operating systems</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.environ.get_git_branch">
-<code class="descclassname">xonsh.environ.</code><code class="descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#get_git_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.get_git_branch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attempts to find the current git branch.  If no branch is found, then
-an empty string is returned. If a timeout occured, the timeout exception
-(subprocess.TimeoutExpired) is returned.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.get_hg_branch">
-<code class="descclassname">xonsh.environ.</code><code class="descname">get_hg_branch</code><span class="sig-paren">(</span><em>cwd=None</em>, <em>root=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#get_hg_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.get_hg_branch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.git_dirty_working_directory">
-<code class="descclassname">xonsh.environ.</code><code class="descname">git_dirty_working_directory</code><span class="sig-paren">(</span><em>cwd=None</em>, <em>include_untracked=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#git_dirty_working_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.git_dirty_working_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether or not the git directory is dirty. If this could not
-be determined (timeout, file not sound, etc.) then this returns None.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.hg_dirty_working_directory">
-<code class="descclassname">xonsh.environ.</code><code class="descname">hg_dirty_working_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#hg_dirty_working_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.hg_dirty_working_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes whether or not the mercurial working directory is dirty or not.
-If this cannot be deterimined, None is returned.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="xonsh.environ.is_callable_default">
 <code class="descclassname">xonsh.environ.</code><code class="descname">is_callable_default</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#is_callable_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.is_callable_default" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a value is a callable default.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.is_template_string">
-<code class="descclassname">xonsh.environ.</code><code class="descname">is_template_string</code><span class="sig-paren">(</span><em>template</em>, <em>formatter_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#is_template_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.is_template_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether or not the string is a valid template.</p>
 </dd></dl>
 
 <dl class="function">
@@ -429,32 +357,10 @@ current environment.  Optionally may pass in configuration file name.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.environ.multiline_prompt">
-<code class="descclassname">xonsh.environ.</code><code class="descname">multiline_prompt</code><span class="sig-paren">(</span><em>curr=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#multiline_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.multiline_prompt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the filler text for the prompt in multiline scenarios.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.partial_format_prompt">
-<code class="descclassname">xonsh.environ.</code><code class="descname">partial_format_prompt</code><span class="sig-paren">(</span><em>template='{env_name:{} }{BOLD_GREEN}{user}&#64;{hostname}{BOLD_BLUE} {cwd}{branch_color}{curr_branch: {}}{NO_COLOR} {BOLD_BLUE}{prompt_end}{NO_COLOR} '</em>, <em>formatter_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#partial_format_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.partial_format_prompt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Formats a xonsh prompt template string.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="xonsh.environ.to_debug">
 <code class="descclassname">xonsh.environ.</code><code class="descname">to_debug</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#to_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.to_debug" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts value using to_bool_or_int() and sets this value on as the
 execer&#8217;s debug level.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.environ.vte_new_tab_cwd">
-<code class="descclassname">xonsh.environ.</code><code class="descname">vte_new_tab_cwd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/environ.html#vte_new_tab_cwd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.environ.vte_new_tab_cwd" title="Permalink to this definition">¶</a></dt>
-<dd><p>This prints an escape squence that tells VTE terminals the hostname
-and pwd. This should not be needed in most cases, but sometimes is for
-certain Linux terminals that do not read the PWD from the environment
-on startup. Note that this does not return a string, it simply prints
-and flushes the escape sequence to stdout directly.</p>
 </dd></dl>
 
 <dl class="function">
@@ -546,16 +452,16 @@ and flushes the escape sequence to stdout directly.</p>
         <li class="right" >
           <a href="built_ins.html" title="Built-Ins (xonsh.built_ins)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

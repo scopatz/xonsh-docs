@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Xonsh Change Log &#8212; xonsh 0.4.6 documentation</title>
+    <title>Xonsh Change Log &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
     <link rel="up" title="Previous Versions" href="index.html" />
     <link rel="next" title="Xonsh 0.2 Release Notes" href="0.2_release_notes.html" />
     <link rel="prev" title="Previous Versions" href="index.html" /> 
@@ -53,9 +53,9 @@
         <li class="right" >
           <a href="index.html" title="Previous Versions"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Previous Versions</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Previous Versions</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -68,6 +68,115 @@
             
   <div class="section" id="xonsh-change-log">
 <h1>Xonsh Change Log<a class="headerlink" href="#xonsh-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-4-7">
+<h2>v0.4.7<a class="headerlink" href="#v0-4-7" title="Permalink to this headline">¶</a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li>Define alias for &#8216;echo&#8217; on startup for Windows only.</li>
+<li>New coredev <a class="reference external" href="https://github.com/astronouth7303">astronouth7303</a> added</li>
+<li><code class="docutils literal"><span class="pre">which</span> <span class="pre">-a</span></code> now searches in <code class="docutils literal"><span class="pre">__xonsh_ctx__</span></code> too</li>
+<li>Info about the xontrib cookiecutter template on xontrib tutorial</li>
+<li>xonsh&#8217;s optional dependencies may now be installed with the pip extras <code class="docutils literal"><span class="pre">ptk</span></code>, <code class="docutils literal"><span class="pre">proctitle</span></code>, <code class="docutils literal"><span class="pre">linux</span></code>, <code class="docutils literal"><span class="pre">mac</span></code>, and <code class="docutils literal"><span class="pre">win</span></code>.</li>
+<li>Env <code class="docutils literal"><span class="pre">help</span></code> method to format and print the vardocs for an envvar</li>
+<li>test_news fails if no empty line before a category</li>
+<li>more info on test_news failures</li>
+<li>Added <code class="docutils literal"><span class="pre">on_precommand</span></code> and <code class="docutils literal"><span class="pre">on_postcommand</span></code> <a class="reference external" href="/events.html">events</a></li>
+<li>New <code class="docutils literal"><span class="pre">FORMATTER_DICT</span></code> entry <code class="docutils literal"><span class="pre">gitstatus</span></code> to provides informative git status</li>
+<li>FOREIGN_ALIASES_OVERRIDE envvar to control whether foreign aliases should
+override xonsh aliases with the same name.</li>
+<li>Warning on tutorial about foreign aliases being ignored if a xonsh alias
+exist with the same name if not FOREIGN_ALIASES_OVERRIDE.</li>
+<li>The prompt-toolkit shell now auto-inserts matching parentheses, brackets, and quotes. Enabled via the <code class="docutils literal"><span class="pre">XONSH_AUTOPAIR</span></code> environment variable</li>
+<li>Better syntax highlights in prompt-toolkit, including valid command / path highlighting, macro syntax highlighting, and more</li>
+<li>More info on tutorial about history interaction</li>
+<li>Entry on bash_to_xsh</li>
+<li>Macro context managers are now available via the <code class="docutils literal"><span class="pre">with!</span></code>
+syntax.</li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li>Devguide reflects the current process of releasing through <code class="docutils literal"><span class="pre">release.xsh</span></code></li>
+<li>moved <code class="docutils literal"><span class="pre">which</span></code> from <code class="docutils literal"><span class="pre">xonsh.aliases</span></code> into <code class="docutils literal"><span class="pre">xoreutils.which</span></code></li>
+<li><code class="docutils literal"><span class="pre">xonsh.prompt.gitstatus.gitstatus</span></code> now returns a namedtuple</li>
+<li>implementation of <code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.get_git_branch</span></code> and
+<code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code> to use &#8216;git status &#8211;procelain&#8217;</li>
+<li>moved prompt formatting specific functions from <code class="docutils literal"><span class="pre">xonsh.environ</span></code>
+to <code class="docutils literal"><span class="pre">xonsh.prompt.base</span></code></li>
+<li>All prompt formatter functions moved to <code class="docutils literal"><span class="pre">xonsh.prompt</span></code> subpackage</li>
+<li>Printing the message about foreign aliases being ingored happens only
+if XONSH_DEBUG is set.</li>
+<li>Use <code class="docutils literal"><span class="pre">SetConsoleTitleW()</span></code> on Windows instead of a process call.</li>
+<li>Tutorial to reflect the current history command argument functionality</li>
+<li>Macro function arguments now default to <code class="docutils literal"><span class="pre">str</span></code>, rather than <code class="docutils literal"><span class="pre">eval</span></code>,
+for consistentcy with other parts of the macro system.</li>
+</ul>
+<p><strong>Removed:</strong></p>
+<ul class="simple">
+<li>aliases that use &#8216;!&#8217; in their name cause they clash with the macro syntax</li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul>
+<li><p class="first">Fix regression where bash git completions where not loaded
+automatically when GitForWindows is installed.</p>
+</li>
+<li><p class="first">More tokens are now supported in subproc args, such as <code class="docutils literal"><span class="pre">==</span></code>.</p>
+</li>
+<li><p class="first">Python completions now work without space delimiters, e.g. <code class="docutils literal"><span class="pre">a=matpl&lt;TAB&gt;</span></code>
+will complete to <code class="docutils literal"><span class="pre">a=matplotlib</span></code></p>
+</li>
+<li><p class="first">Parser would fail on nested, captured suprocess macros. Now, it works,
+hooray!?</p>
+</li>
+<li><p class="first">now fires chdir event if OS change in working directory is detected.</p>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code></dt>
+<dd><p class="first last">uses <code class="docutils literal"><span class="pre">porcelain</span></code> option instead of using the bytestring
+<code class="docutils literal"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code> to find out if a git directory is dirty</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Fix bug where know commands where not highlighed on windows.</p>
+</li>
+<li><p class="first">Fixed completer showing executable in upper case on windows.</p>
+</li>
+<li><p class="first">Fixed issue where tilde expansion was occuring more than once before an
+equals sign.</p>
+</li>
+<li><p class="first">test_dirstack test_cdpath_expansion leaving stray testing dirs</p>
+</li>
+<li><p class="first">Better completer display for long completions in prompt-toolkit</p>
+</li>
+<li><p class="first">Automatucally append newine to target of <code class="docutils literal"><span class="pre">source</span></code> alias, so that it may
+be exec&#8217;d.</p>
+</li>
+<li><p class="first">test_news fails when single graves around word</p>
+</li>
+<li><p class="first">Slashes in virtual environment names work in vox</p>
+</li>
+<li><p class="first">non string type value in $FORMATTER_DICT turning prompt ugly</p>
+</li>
+<li><p class="first">whole prompt turning useless when one formatting function raises an exception</p>
+</li>
+<li><p class="first">Fix completion after alias expansion</p>
+</li>
+<li><p class="first">Fix hard crash when foreign shell functions fails to run. #1715</p>
+</li>
+<li><p class="first">Bug where non-default locations for <code class="docutils literal"><span class="pre">XDG_DATA_HOME</span></code> and <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>
+would not expand <code class="docutils literal"><span class="pre">~</span></code> into the home directory</p>
+</li>
+<li><p class="first">Auto quote path completions if path contains &#8216;and&#8217; or &#8216;or&#8217;</p>
+</li>
+<li><p class="first">Completion now works on subcommands after pipe, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> and so on.</p>
+</li>
+<li><p class="first">cd . and cd &lt;singleCharacter&gt; now work.  Fix indexerror in AUTO_PUSHD case, too.</p>
+</li>
+<li><p class="first">Fixed issue with accidentally wrapping generators inside of function calls.</p>
+</li>
+<li><p class="first">History indexing with string returns most recent command.</p>
+</li>
+</ul>
+</div>
 <div class="section" id="v0-4-6">
 <h2>v0.4.6<a class="headerlink" href="#v0-4-6" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
@@ -83,7 +192,7 @@ syntax.</li>
 <li>howto install sections for Debian/Ubuntu and Fedora.</li>
 <li><code class="docutils literal"><span class="pre">History</span></code> methods <code class="docutils literal"><span class="pre">__iter__</span></code> and <code class="docutils literal"><span class="pre">__getitem__</span></code></li>
 <li><code class="docutils literal"><span class="pre">tools.get_portions</span></code> that yields parts of an iterable</li>
-<li>Added a py.test plugin to collect <cite>test_*.xsh</cite> files and run <cite>test_*()</cite> functions.</li>
+<li>Added a py.test plugin to collect <code class="docutils literal"><span class="pre">test_*.xsh</span></code> files and run <code class="docutils literal"><span class="pre">test_*()</span></code> functions.</li>
 <li><code class="docutils literal"><span class="pre">__repr__</span></code> and <code class="docutils literal"><span class="pre">__str__</span></code> magic method on LazyObject</li>
 </ul>
 <p><strong>Changed:</strong></p>
@@ -93,23 +202,24 @@ syntax.</li>
 <li>Foreign aliases that match xonsh builtin aliases are now ignored with a warning.</li>
 <li><code class="docutils literal"><span class="pre">prompt_toolkit</span></code> completions now only show the rightmost portion
 of a given completion in the dropdown</li>
-<li>The value of <code class="docutils literal"><span class="pre">'none'</span></code> is no longer allowed for <code class="docutils literal"><span class="pre">$SHELL_TYPE</span></code> just during the initial load from the environment. <code class="docutils literal"><span class="pre">-D</span></code>, later times, and other sources still work.</li>
+<li>The value of <code class="docutils literal"><span class="pre">'none'</span></code> is no longer allowed for <code class="docutils literal"><span class="pre">$SHELL_TYPE</span></code> just during the initial
+load from the environment. <code class="docutils literal"><span class="pre">-D</span></code>, later times, and other sources still work.</li>
 <li><code class="docutils literal"><span class="pre">yacc_debug=True</span></code> now load the parser on the same thread that the
 Parser instance is created. <code class="docutils literal"><span class="pre">setup.py</span></code> now uses this synchronous
 form as it was causing the parser table to be missed by some package
 managers.</li>
-<li>Tilde expansion dor the home directory now has the same semantics as Bash.
+<li>Tilde expansion for the home directory now has the same semantics as Bash.
 Previously it only matched leading tildes.</li>
 <li>Context sensitive AST transformation now checks that all names in an
 expression are in scope. If they are, then Python mode is retained. However,
 if even one is missing, subprocess wrapping is attempted. Previously, only the
 left-most name was examined for being within scope.</li>
-<li><code class="docutils literal"><span class="pre">dirstack.pushd</span></code> and <code class="docutils literal"><span class="pre">dirstack.popd</span></code> now handle UNC paths (of form <cite>\&lt;server&gt;&lt;share&gt;...</cite>), but only on Windows.
+<li><code class="docutils literal"><span class="pre">dirstack.pushd</span></code> and <code class="docutils literal"><span class="pre">dirstack.popd</span></code> now handle UNC paths (of form <code class="docutils literal"><span class="pre">\\&lt;server&gt;\&lt;share&gt;\...</span></code>), but only on Windows.
 They emulate behavior of <cite>CMD.EXE</cite> by creating a temporary mapped drive letter (starting from z: down) to replace
-the <cite>\&lt;server&gt;&lt;share&gt;</cite> portion of the path, on the <code class="docutils literal"><span class="pre">pushd</span></code> and unmapping the drive letter when all references
+the <code class="docutils literal"><span class="pre">\\&lt;server&gt;\&lt;share&gt;</span></code> portion of the path, on the <code class="docutils literal"><span class="pre">pushd</span></code> and unmapping the drive letter when all references
 to it are popped.</li>
 <li>And <code class="docutils literal"><span class="pre">dirstack</span></code> suppresses this temporary drive mapping funky jive if registry entry
-<cite>HKCUsoftwaremicrosoftcommand processorDisableUNCCheck</cite> (or HKLM...) is a DWORD value 1.  This allows Xonsh
+<code class="docutils literal"><span class="pre">HKCU\software\microsoft\command</span> <span class="pre">processor\DisableUNCCheck</span></code> (or HKLM...) is a DWORD value 1.  This allows Xonsh
 to show the actual UNC path in your prompt string and <em>also</em> allows subprocess commands invoking <cite>CMD.EXE</cite> to run in
 the expected working directory. See <a class="reference external" href="https://support.microsoft.com/en-us/kb/156276">https://support.microsoft.com/en-us/kb/156276</a> to satisfy any lingering curiosity.</li>
 <li><code class="docutils literal"><span class="pre">lazy_locate_binary</span></code> handles binary on different drive letter than current working directory (on Windows).</li>
@@ -117,6 +227,7 @@ the expected working directory. See <a class="reference external" href="https://
 <li>New implementation of bash completer with better performance and compatibility.</li>
 <li><code class="docutils literal"><span class="pre">$COMPLETIONS_BRACKETS</span></code> is now available to determine whether or not to
 include opening brackets in Python completions</li>
+<li><code class="docutils literal"><span class="pre">xonsh.bat</span></code> tries to use <a class="reference external" href="https://www.python.org/dev/peps/pep-0397/">pylauncher</a> when available.</li>
 </ul>
 <p><strong>Removed:</strong></p>
 <ul class="simple">
@@ -153,10 +264,6 @@ creating false expectations.</li>
 <li><code class="docutils literal"><span class="pre">sys.stdin</span></code>, <code class="docutils literal"><span class="pre">sys.stdout</span></code>, <code class="docutils literal"><span class="pre">sys.stderr</span></code> no longer complete with
 opening square brackets</li>
 <li>xonsh now properly handles syntax error messages arising from using values in inappropriate contexts (e.g., <code class="docutils literal"><span class="pre">del</span> <span class="pre">7</span></code>).</li>
-</ul>
-<p><strong>Changed:</strong></p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">xonsh.bat</span></code> tries to use <a class="reference external" href="https://www.python.org/dev/peps/pep-0397/">pylauncher</a> when available.</li>
 </ul>
 </div>
 <div class="section" id="v0-4-5">
@@ -1040,6 +1147,7 @@ with a decoding error.</li>
     <h3><a href="../index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xonsh Change Log</a><ul>
+<li><a class="reference internal" href="#v0-4-7">v0.4.7</a></li>
 <li><a class="reference internal" href="#v0-4-6">v0.4.6</a></li>
 <li><a class="reference internal" href="#v0-4-5">v0.4.5</a></li>
 <li><a class="reference internal" href="#v0-4-4">v0.4.4</a></li>
@@ -1112,16 +1220,16 @@ with a decoding error.</li>
         <li class="right" >
           <a href="index.html" title="Previous Versions"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Previous Versions</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Previous Versions</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

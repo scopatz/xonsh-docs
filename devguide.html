@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Developer’s Guide &#8212; xonsh 0.4.6 documentation</title>
+    <title>Developer’s Guide &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="index.html" />
     <link rel="next" title="Previous Versions" href="previous/index.html" />
     <link rel="prev" title="Advanced Events" href="advanced_events.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="advanced_events.html" title="Advanced Events"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -412,64 +412,33 @@ full release.</p>
 <p>The release candidate procedure here only applies to major and minor releases.
 Micro releases may be pushed and released directly without having a release
 candidate.</p>
-<div class="section" id="checklist">
-<h3>Checklist<a class="headerlink" href="#checklist" title="Permalink to this headline">¶</a></h3>
-<p>When releasing xonsh, make sure to do the following items in order:</p>
-<ol class="arabic simple">
-<li>Review <strong>ALL</strong> issues in the issue tracker, reassigning or closing them as
-needed.</li>
-<li>Ensure that all issues in this release&#8217;s milestone have been closed. Moving issues
-to the next release&#8217;s milestone is a perfectly valid strategy for
-completing this milestone.</li>
-<li>Perform maintenance tasks for this project, see below.</li>
-<li>Write and commit the release notes.</li>
-<li>Review the current state of documentation and make appropriate updates.</li>
-<li>Bump the version (in code, documentation, etc.) and commit the change.</li>
-<li>If this is a release candidate, tag the release branch with a name that
-matches that of the release:<ul>
-<li>If this is the first release candidate, create a release branch called
-&#8216;vX.X.X-release&#8217; off of develop.  Tag this branch with the name
-&#8216;X.X.X-rc1&#8217;.</li>
-<li>If this is the second or later release candidate, tag the release branch
-with the name &#8216;X.X.X-rcX&#8217;.</li>
-</ul>
-</li>
-<li>If this is the full and final release (and not a release candidate),
-merge the release branch into the master branch.  Next, tag the master
-branch with the name &#8216;X.X.X&#8217;. Finally, delete the release branch.</li>
-<li>Push the tags upstream</li>
-<li>Update release information on the website.</li>
-</ol>
-</div>
 <div class="section" id="maintenance-tasks">
 <h3>Maintenance Tasks<a class="headerlink" href="#maintenance-tasks" title="Permalink to this headline">¶</a></h3>
 <p>You can cleanup your local repository of transient files such as *.pyc files
 created by unit testing by running:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ rm -f xonsh/lexer_table.py xonsh/parser_table.py
-$ rm -f xonsh/lexer_test_table.py xonsh/parser_test_table.py
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ rm -f xonsh/parser_table.py
 $ rm -f xonsh/*.pyc tests/*.pyc
-$ rm -f xonsh/*.rej tests/*.rej
 $ rm -fr build
 </pre></div>
 </div>
 </div>
 <div class="section" id="performing-the-release">
 <h3>Performing the Release<a class="headerlink" href="#performing-the-release" title="Permalink to this headline">¶</a></h3>
-<p>To perform the release, run these commands for the following tasks:</p>
-<p><strong>pip upload:</strong></p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./setup.py sdist upload
+<p>This is done through the <code class="docutils literal"><span class="pre">release.xsh</span></code> script. To get a list of the
+valid options use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ xonsh release.xsh --help
 </pre></div>
 </div>
-<p><strong>conda upload:</strong></p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> rm -f /path/to/conda/conda-bld/src_cache/xonsh.tar.gz
-<span class="gp">$</span> conda build --no-test recipe
-<span class="gp">$</span> conda convert -p all -o /path/to/conda/conda-bld /path/to/conda/conda-bld/linux-64/xonsh-X.X.X-0.tar.bz2
-<span class="gp">$</span> binstar upload /path/to/conda/conda-bld/*/xonsh-X.X.X*.tar.bz2
+<p>You can perform a full release:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ xonsh release.xsh
 </pre></div>
 </div>
-<p><strong>website:</strong></p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> docs
-<span class="gp">$</span> make clean html push-root
+<p>Or only a specific one:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ xonsh release.xsh --only-pip
+</pre></div>
+</div>
+<p>You can also exclude a release:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ xonsh release.xsh --no-conda
 </pre></div>
 </div>
 </div>
@@ -526,7 +495,6 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#branches-and-releases">Branches and Releases</a><ul>
-<li><a class="reference internal" href="#checklist">Checklist</a></li>
 <li><a class="reference internal" href="#maintenance-tasks">Maintenance Tasks</a></li>
 <li><a class="reference internal" href="#performing-the-release">Performing the Release</a></li>
 </ul>
@@ -585,15 +553,15 @@ Copyright 2011-2015, the PyNE Development Team. All rights reserved.</p>
         <li class="right" >
           <a href="advanced_events.html" title="Advanced Events"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

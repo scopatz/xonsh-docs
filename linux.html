@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Linux Guide &#8212; xonsh 0.4.6 documentation</title>
+    <title>Linux Guide &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="index.html" />
     <link rel="next" title="OSX Guide" href="osx.html" />
     <link rel="prev" title="Dependencies" href="dependencies.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -136,21 +136,25 @@ to add xonsh to <cite>/etc/shells</cite>.</p>
 <div><ol class="arabic simple">
 <li>Python v3.4+</li>
 <li>PLY (optional, included with xonsh)</li>
-<li>prompt-toolkit (optional, requires <cite>pygments</cite>):
-<em>advanced readline library, syntax-highlighting, line-editing</em></li>
-<li>Jupyter (optional): <em>in-browser REPL, run xonsh in jupyter notebook</em></li>
-<li>setproctitle (optional): <em>change the title of terminal to reflect the current subprocess</em></li>
-<li>distro (optional): <em>linux specific platform information</em></li>
 </ol>
 </div></blockquote>
-<p><em>Documentation:</em></p>
+<p>Pip supports &#8220;extra&#8221; dependendcies in the form of <code class="docutils literal"><span class="pre">xonsh[ptk,linux]</span></code>, where the list in the brackets identify the optional featues</p>
+<p>Xonsh currently has the following extras</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> (which uses  <a class="reference external" href="http://sphinx-doc.org/rest.html">reStructuredText</a>)</li>
-<li>Numpydoc</li>
-<li>Cloud Sphinx Theme</li>
+<li><code class="docutils literal"><span class="pre">ptk</span></code>: prompt-toolkit, <cite>pygments</cite>:
+<em>advanced readline library, syntax-highlighting, line-editing</em></li>
+<li><code class="docutils literal"><span class="pre">proctitle</span></code>: setproctitle: <em>change the title of terminal to reflect the current subprocess</em></li>
+<li><code class="docutils literal"><span class="pre">linux</span></code>: distro: <em>linux specific platform information</em></li>
+<li><code class="docutils literal"><span class="pre">mac</span></code>: gnureadline: <em>GNU&#8217;s featureful version of readline</em></li>
+<li><code class="docutils literal"><span class="pre">win</span></code>: win_unicode_console: <em>enables the use of Unicode in windows consoles</em></li>
 </ol>
 </div></blockquote>
+<p>In addition, xonsh integrates with Jupyter, an in-browser REPL, enabling the use of xonsh in jupyter notebooks</p>
+<div class="section" id="development-dependencies">
+<h3>Development Dependencies<a class="headerlink" href="#development-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>If you want to develop xonsh, it is extremely recommended to install the depdencies listed in <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-docs.txt">requirements-docs.txt</a> (to generate documentation) and <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-tests.txt">requirements-tests.txt</a> (to run the test suite).</p>
+</div>
 </div>
 <div class="section" id="possible-conflicts-with-bash">
 <h2>Possible conflicts with Bash<a class="headerlink" href="#possible-conflicts-with-bash" title="Permalink to this headline">¶</a></h2>
@@ -247,7 +251,10 @@ then choose <code class="docutils literal"><span class="pre">Open</span> <span c
 <li><a class="reference internal" href="#">Linux Guide</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#additional-setup">Additional Setup</a></li>
-<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#development-dependencies">Development Dependencies</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#possible-conflicts-with-bash">Possible conflicts with Bash</a></li>
 <li><a class="reference internal" href="#default-ubuntu-bashrc-breaks-foreign-shell-functions">Default Ubuntu .bashrc breaks Foreign Shell Functions</a></li>
 <li><a class="reference internal" href="#new-terminal-tabs-do-not-start-in-correct-directory">New Terminal Tabs Do Not Start in Correct Directory</a></li>
@@ -306,15 +313,15 @@ then choose <code class="docutils literal"><span class="pre">Open</span> <span c
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

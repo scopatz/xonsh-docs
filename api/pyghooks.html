@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Pygments Hooks (xonsh.pyghooks) &#8212; xonsh 0.4.6 documentation</title>
+    <title>Pygments Hooks (xonsh.pyghooks) &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Jupyter Kernel (xonsh.jupyter_kernel)" href="jupyter_kernel.html" />
     <link rel="prev" title="Command Line Interface (xonsh.main)" href="main.html" /> 
@@ -53,9 +53,9 @@
         <li class="right" >
           <a href="main.html" title="Command Line Interface (xonsh.main)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -78,7 +78,7 @@ from the lookup.</p>
 
 <dl class="class">
 <dt id="xonsh.pyghooks.XonshConsoleLexer">
-<em class="property">class </em><code class="descclassname">xonsh.pyghooks.</code><code class="descname">XonshConsoleLexer</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshConsoleLexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshConsoleLexer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">xonsh.pyghooks.</code><code class="descname">XonshConsoleLexer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshConsoleLexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshConsoleLexer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Xonsh console lexer for pygments.</p>
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshConsoleLexer.aliases">
@@ -97,15 +97,22 @@ from the lookup.</p>
 
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshConsoleLexer.tokens">
-<code class="descname">tokens</code><em class="property"> = {'root': [('^(&gt;&gt;&gt;|\\.\\.\\.) ', Token.Generic.Prompt), ('\\n(&gt;&gt;&gt;|\\.\\.\\.)', Token.Generic.Prompt), ('\\n(?![&gt;.][&gt;.][&gt;.] )([^\\n]*)', Token.Generic.Output), ('\\n(?![&gt;.][&gt;.][&gt;.] )(.*?)$', Token.Generic.Output), ('\\?', Token.Keyword), ('\\$\\w+', Token.Name.Variable), ('\\$\\{', Token.Keyword, ('pymode',)), ('[\\!\\$]\\(', Token.Keyword, ('subproc',)), ('[\\!\\$]\\[', Token.Keyword, ('subproc',)), ('&#64;\\$\\(', Token.Keyword, ('subproc',)), ('&#64;\\(', Token.Keyword, ('pymode',)), inherit], 'subproc': [('(.+)(\\))', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop'), ('(.+)(\\])', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop')], 'pymode': [('(.+)(\\))', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop'), ('(.+)(\\})', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop')]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshConsoleLexer.tokens" title="Permalink to this definition">¶</a></dt>
+<code class="descname">tokens</code><em class="property"> = {'root': [('^(&gt;&gt;&gt;|\\.\\.\\.) ', Token.Generic.Prompt), ('\\n(&gt;&gt;&gt;|\\.\\.\\.)', Token.Generic.Prompt), ('\\n(?![&gt;.][&gt;.][&gt;.] )([^\\n]*)', Token.Generic.Output), ('\\n(?![&gt;.][&gt;.][&gt;.] )(.*?)$', Token.Generic.Output), inherit]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshConsoleLexer.tokens" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="xonsh.pyghooks.XonshLexer">
-<em class="property">class </em><code class="descclassname">xonsh.pyghooks.</code><code class="descname">XonshLexer</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshLexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshLexer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">xonsh.pyghooks.</code><code class="descname">XonshLexer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshLexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshLexer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Xonsh console lexer for pygments.</p>
+<dl class="method">
+<dt id="xonsh.pyghooks.XonshLexer.get_tokens_unprocessed">
+<code class="descname">get_tokens_unprocessed</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshLexer.get_tokens_unprocessed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.get_tokens_unprocessed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check first command, then call super.get_tokens_unprocessed
+with root or subproc state</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshLexer.aliases">
 <code class="descname">aliases</code><em class="property"> = ['xonsh', 'xsh']</em><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.aliases" title="Permalink to this definition">¶</a></dt>
@@ -123,7 +130,7 @@ from the lookup.</p>
 
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshLexer.tokens">
-<code class="descname">tokens</code><em class="property"> = {'root': [('\\?', Token.Keyword), ('\\$\\w+', Token.Name.Variable), ('\\$\\{', Token.Keyword, ('pymode',)), ('[\\!\\$]\\(', Token.Keyword, ('subproc',)), ('[\\!\\$]\\[', Token.Keyword, ('subproc',)), ('&#64;\\$\\(', Token.Keyword, ('subproc',)), ('&#64;\\(', Token.Keyword, ('pymode',)), inherit], 'subproc': [('(.+)(\\))', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop'), ('(.+)(\\])', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop')], 'pymode': [('(.+)(\\))', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop'), ('(.+)(\\})', &lt;function bygroups.&lt;locals&gt;.callback&gt;, '#pop')]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.tokens" title="Permalink to this definition">¶</a></dt>
+<code class="descname">tokens</code><em class="property"> = {'subproc_start': [('\\s+', Token.Text.Whitespace), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;!]+(?=\\s|$|\\)|\\]|\\}|!)', &lt;function subproc_cmd_callback&gt;, '#pop'), ('', Token.Text.Whitespace, '#pop')], 'root': [('\\?', Token.Keyword), ('(?&lt;=\\w)!', Token.Keyword), ('\\$\\w+', Token.Name.Variable), ('\\(', Token.Punctuation, 'py_bracket'), ('\\{', Token.Punctuation, 'py_curly_bracket'), 'mode_switch_brackets', inherit], 'py_curly_bracket': [('\\}', Token.Punctuation, '#pop'), 'root'], 'py_bracket': [('\\)', Token.Punctuation, '#pop'), 'root'], 'subproc_bracket': [('\\)', Token.Punctuation, '#pop'), 'subproc'], 'mode_switch_brackets': [('(\\$)(\\{)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_curly_bracket'), ('(&#64;)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_bracket'), ('([\\!\\$])(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('(&#64;\\$)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('([\\!\\$])(\\[)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_square_bracket', 'subproc_start')), ('(g?)(`)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'backtick_re')], 'subproc_square_bracket': [('\\]', Token.Punctuation, '#pop'), 'subproc'], 'subproc_macro': [('(\\s*)([^\\n]+)', &lt;function bygroups.&lt;locals&gt;.callback&gt;), ('', Token.Text.Whitespace, '#pop')], 'backtick_re': [('[\\.\\^\\$\\*\\+\\?\\[\\]\\|]', Token.Literal.String.Regex), ('({[0-9]+}|{[0-9]+,[0-9]+})\\??', Token.Literal.String.Regex), ('\\\\([0-9]+|[AbBdDsSwWZabfnrtuUvx\\\\])', Token.Literal.String.Escape), ('`', Token.Literal.String.Backtick, '#pop'), ('[^`\\.\\^\\$\\*\\+\\?\\[\\]\\|]+', Token.Literal.String.Backtick)], 'subproc': ['mode_switch_brackets', ('&amp;&amp;|\\|\\|', Token.Operator, 'subproc_start'), ('&quot;(\\\\\\\\|\\\\[0-7]+|\\\\.|[^&quot;\\\\])*&quot;', Token.Literal.String.Double), (&quot;'(\\\\\\\\|\\\\[0-7]+|\\\\.|[^'\\\\])*'&quot;, Token.Literal.String.Single), ('(?&lt;=\\w|\\s)!', Token.Keyword, 'subproc_macro'), ('^!', Token.Keyword, 'subproc_macro'), (';', Token.Punctuation, 'subproc_start'), ('&amp;|=', Token.Punctuation), ('\\|', Token.Punctuation, 'subproc_start'), ('\\s+', Token.Text), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;]+', &lt;function subproc_arg_callback&gt;), ('&lt;', Token.Text), ('\\$\\w+', Token.Name.Variable)]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.tokens" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -157,22 +164,6 @@ are changed to CYAN and intence red.</p>
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshStyle.style_name">
 <code class="descname">style_name</code><a class="headerlink" href="#xonsh.pyghooks.XonshStyle.style_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="xonsh.pyghooks.XonshSubprocLexer">
-<em class="property">class </em><code class="descclassname">xonsh.pyghooks.</code><code class="descname">XonshSubprocLexer</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#XonshSubprocLexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.XonshSubprocLexer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lexer for xonsh subproc mode.</p>
-<dl class="attribute">
-<dt id="xonsh.pyghooks.XonshSubprocLexer.name">
-<code class="descname">name</code><em class="property"> = 'Xonsh subprocess lexer'</em><a class="headerlink" href="#xonsh.pyghooks.XonshSubprocLexer.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.pyghooks.XonshSubprocLexer.tokens">
-<code class="descname">tokens</code><em class="property"> = {'root': [('(\\$\\{)(.*)(\\})', &lt;function bygroups.&lt;locals&gt;.callback&gt;), ('(&#64;\\()(.+)(\\))', &lt;function bygroups.&lt;locals&gt;.callback&gt;), ('((?:[rg]|&#64;\\w*)?)`([^\\n`\\\\]*(?:\\\\.[^\\n`\\\\]*)*)`', Token.Literal.String.Backtick), inherit]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshSubprocLexer.tokens" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -262,6 +253,19 @@ These sub-strings maybe templates themselves.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="xonsh.pyghooks.subproc_arg_callback">
+<code class="descclassname">xonsh.pyghooks.</code><code class="descname">subproc_arg_callback</code><span class="sig-paren">(</span><em>_</em>, <em>match</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#subproc_arg_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.subproc_arg_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if match contains valid path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.pyghooks.subproc_cmd_callback">
+<code class="descclassname">xonsh.pyghooks.</code><code class="descname">subproc_cmd_callback</code><span class="sig-paren">(</span><em>_</em>, <em>match</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#subproc_cmd_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.subproc_cmd_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield Builtin token if match contains valid command,
+otherwise fallback to fallback lexer.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="xonsh.pyghooks.xonsh_style_proxy">
 <code class="descclassname">xonsh.pyghooks.</code><code class="descname">xonsh_style_proxy</code><span class="sig-paren">(</span><em>styler</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#xonsh_style_proxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.xonsh_style_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Factory for a proxy class to a xonsh style.</p>
@@ -326,16 +330,16 @@ These sub-strings maybe templates themselves.</p>
         <li class="right" >
           <a href="main.html" title="Command Line Interface (xonsh.main)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

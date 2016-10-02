@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Built-Ins (xonsh.built_ins) &#8212; xonsh 0.4.6 documentation</title>
+    <title>Built-Ins (xonsh.built_ins) &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
     <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Environment (xonsh.environ)" href="environ.html" />
     <link rel="prev" title="Import Hooks (xonsh.imphooks)" href="imphooks.html" /> 
@@ -53,9 +53,9 @@
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -151,6 +151,46 @@ a string dependending on the annotations of f.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="xonsh.built_ins.enter_macro">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">enter_macro</code><span class="sig-paren">(</span><em>obj</em>, <em>raw_block</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#enter_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.enter_macro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares to enter a context manager macro by attaching the contents
+of the macro block, globals, and locals to the object. These modifications
+are made in-place and the original object is returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obj</strong> : context manager</p>
+<blockquote>
+<div><p>The object that is about to be entered via a with-statement.</p>
+</div></blockquote>
+<p><strong>raw_block</strong> : str</p>
+<blockquote>
+<div><p>The str of the block that is the context body.
+This string will be parsed, compiled, evaled, or left as
+a string dependending on the return annotation of obj.__enter__.</p>
+</div></blockquote>
+<p><strong>glbs</strong> : Mapping</p>
+<blockquote>
+<div><p>The globals from the context site.</p>
+</div></blockquote>
+<p><strong>locs</strong> : Mapping or None</p>
+<blockquote>
+<div><p>The locals from the context site.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>obj</strong> : context manager</p>
+<blockquote class="last">
+<div><p>The same context manager but with the new macro information applied.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="xonsh.built_ins.expand_path">
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">expand_path</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#expand_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.expand_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a string path and expands ~ to home and environment vars.</p>
@@ -176,21 +216,8 @@ PermissionError if the script is not executable.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.built_ins.list_of_strs_or_callables">
-<code class="descclassname">xonsh.built_ins.</code><code class="descname">list_of_strs_or_callables</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#list_of_strs_or_callables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.list_of_strs_or_callables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ensures that x is a list of strings or functions</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.built_ins.load_builtins">
-<code class="descclassname">xonsh.built_ins.</code><code class="descname">load_builtins</code><span class="sig-paren">(</span><em>execer=None</em>, <em>config=None</em>, <em>login=False</em>, <em>ctx=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#load_builtins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.load_builtins" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the xonsh builtins into the Python builtins. Sets the
-BUILTINS_LOADED variable to True.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="xonsh.built_ins.macro_context">
-<code class="descclassname">xonsh.built_ins.</code><code class="descname">macro_context</code><span class="sig-paren">(</span><em>f</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#macro_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.macro_context" title="Permalink to this definition">¶</a></dt>
+<dt id="xonsh.built_ins.in_macro_call">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">in_macro_call</code><span class="sig-paren">(</span><em>f</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#in_macro_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.in_macro_call" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attaches macro globals and locals temporarily to function as a
 context manager.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -213,6 +240,19 @@ context manager.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.list_of_strs_or_callables">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">list_of_strs_or_callables</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#list_of_strs_or_callables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.list_of_strs_or_callables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that x is a list of strings or functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.load_builtins">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">load_builtins</code><span class="sig-paren">(</span><em>execer=None</em>, <em>config=None</em>, <em>login=False</em>, <em>ctx=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#load_builtins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.load_builtins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the xonsh builtins into the Python builtins. Sets the
+BUILTINS_LOADED variable to True.</p>
 </dd></dl>
 
 <dl class="function">
@@ -370,16 +410,16 @@ scope. Likely useful in testing.</p>
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xontrib.voxapi &#8212; xonsh 0.4.6 documentation</title>
+    <title>xontrib.voxapi &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -70,12 +70,13 @@
 <span class="sd">* ``vox_on_delete(env: str) -&gt; None``</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">venv</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
 <span class="kn">import</span> <span class="nn">collections.abc</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">scandir</span>
+<span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_WINDOWS</span>
 
 <span class="c1"># This is because builtins aren&#39;t globally created during testing.</span>
 <span class="c1"># FIXME: Is there a better way?</span>
@@ -107,7 +108,45 @@
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
 
 
-<span class="n">VirtualEnvironment</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;VirtualEnvironment&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">])</span>
+<span class="n">VirtualEnvironment</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;VirtualEnvironment&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;lib&#39;</span><span class="p">,</span> <span class="s1">&#39;inc&#39;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_subdir_names</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the names of the special dirs in a venv.</span>
+
+<span class="sd">    This is not necessarily exhaustive of all the directories that could be in a venv, and there</span>
+<span class="sd">    may additional logic to get to useful places.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Scripts&#39;</span><span class="p">,</span> <span class="s1">&#39;Lib&#39;</span><span class="p">,</span> <span class="s1">&#39;Include&#39;</span>
+    <span class="k">elif</span> <span class="n">ON_POSIX</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;lib&#39;</span><span class="p">,</span> <span class="s1">&#39;include&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s1">&#39;This OS is not supported.&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_mkvenv</span><span class="p">(</span><span class="n">env_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constructs a VirtualEnvironment based on the given base path.</span>
+
+<span class="sd">    This only cares about the platform. No filesystem calls are made.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">env_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">env_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
+        <span class="n">binname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;Scripts&#39;</span><span class="p">)</span>
+        <span class="n">incpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;Include&#39;</span><span class="p">)</span>
+        <span class="n">libpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;Lib&#39;</span><span class="p">,</span> <span class="s1">&#39;site-packages&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ON_POSIX</span><span class="p">:</span>
+        <span class="n">binname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">)</span>
+        <span class="n">incpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;include&#39;</span><span class="p">)</span>
+        <span class="n">libpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="s1">&#39;lib&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;python</span><span class="si">%d</span><span class="s1">.</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span>
+                               <span class="s1">&#39;site-packages&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s1">&#39;This OS is not supported.&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">VirtualEnvironment</span><span class="p">(</span><span class="n">env_dir</span><span class="p">,</span> <span class="n">binname</span><span class="p">,</span> <span class="n">libpath</span><span class="p">,</span> <span class="n">incpath</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="EnvironmentInUse"><a class="viewcode-back" href="../../api/vox.html#xontrib.voxapi.EnvironmentInUse">[docs]</a><span class="k">class</span> <span class="nc">EnvironmentInUse</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -199,15 +238,6 @@
         <span class="c1"># Ok, do what we came here to do.</span>
         <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">upgrade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">)</span></div>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_binname</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;Scripts&#39;</span>
-        <span class="k">elif</span> <span class="n">ON_POSIX</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;bin&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s1">&#39;This OS is not supported.&#39;</span><span class="p">)</span>
-
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get information about a virtual environment.</span>
 
@@ -223,21 +253,39 @@
             <span class="n">env_path</span> <span class="o">=</span> <span class="n">name</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">bin_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_binname</span><span class="p">()</span>
-        <span class="n">bin_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">bin_dir</span><span class="p">)</span>
+
+        <span class="n">ve</span> <span class="o">=</span> <span class="n">_mkvenv</span><span class="p">(</span><span class="n">env_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ve</span><span class="o">.</span><span class="n">env</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_subdir_names</span><span class="p">():</span>  <span class="c1"># FIXME: Check the inner components, too</span>
+            <span class="c1"># Don&#39;t allow a venv that could be a venv special dir</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
+
         <span class="c1"># Actually check if this is an actual venv or just a organizational directory</span>
         <span class="c1"># eg, if &#39;spam/eggs&#39; is a venv, reject &#39;spam&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">bin_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ve</span><span class="o">.</span><span class="n">bin</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">VirtualEnvironment</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">bin_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ve</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="c1"># For some reason, MutableMapping seems to do this against iter, which is just silly.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;List available virtual environments found in $VIRTUALENV_HOME.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># FIXME: Handle subdirs--this won&#39;t discover eg ``spam/eggs``</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">scandir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-                <span class="k">yield</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">bin_</span><span class="p">,</span> <span class="n">lib</span><span class="p">,</span> <span class="n">inc</span> <span class="o">=</span> <span class="n">_subdir_names</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">bin_</span> <span class="ow">in</span> <span class="n">dirnames</span> <span class="ow">and</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">dirnames</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">dirpath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># +1 is to remove the separator</span>
+                <span class="c1"># Don&#39;t recurse in to the special dirs</span>
+                <span class="n">dirnames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">bin_</span><span class="p">)</span>
+                <span class="n">dirnames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>  <span class="c1"># This one in particular is likely to be quite large.</span>
+                <span class="n">dirnames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Counts known virtual environments, using the same rules as iter().</span>
@@ -275,13 +323,13 @@
 <span class="sd">            Virtual environment name or absolute path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
-        <span class="n">env_path</span><span class="p">,</span> <span class="n">bin_path</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">ve</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">if</span> <span class="s1">&#39;VIRTUAL_ENV&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="p">()</span>
 
         <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PATH&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">])}</span>
-        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bin_path</span><span class="p">)</span>
-        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env_path</span>
+        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ve</span><span class="o">.</span><span class="n">bin</span><span class="p">)</span>
+        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ve</span><span class="o">.</span><span class="n">env</span>
         <span class="k">if</span> <span class="s1">&#39;PYTHONHOME&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
             <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">oldvars</span><span class="p">[</span><span class="s1">&#39;PYTHONHOME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;PYTHONHOME&#39;</span><span class="p">)</span>
 
@@ -295,7 +343,6 @@
         <span class="k">if</span> <span class="s1">&#39;VIRTUAL_ENV&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NoEnvironmentActive</span><span class="p">(</span><span class="s1">&#39;No environment currently active.&#39;</span><span class="p">)</span>
 
-        <span class="n">env_path</span><span class="p">,</span> <span class="n">bin_path</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
         <span class="n">env_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s1">&#39;oldvars&#39;</span><span class="p">):</span>
@@ -362,16 +409,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

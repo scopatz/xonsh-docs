@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.xonfig &#8212; xonsh 0.4.6 documentation</title>
+    <title>xonsh.xonfig &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="../../index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -45,9 +45,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -78,7 +78,7 @@
 
 <span class="kn">import</span> <span class="nn">xonsh.wizard</span> <span class="k">as</span> <span class="nn">wiz</span>
 <span class="kn">from</span> <span class="nn">xonsh</span> <span class="k">import</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">XONSH_VERSION</span>
-<span class="kn">from</span> <span class="nn">xonsh.environ</span> <span class="k">import</span> <span class="n">is_template_string</span>
+<span class="kn">from</span> <span class="nn">xonsh.prompt.base</span> <span class="k">import</span> <span class="n">is_template_string</span>
 <span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="p">(</span><span class="n">is_readline_available</span><span class="p">,</span> <span class="n">ptk_version</span><span class="p">,</span>
                             <span class="n">PYTHON_VERSION_INFO</span><span class="p">,</span> <span class="n">pygments_version</span><span class="p">,</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_LINUX</span><span class="p">,</span> <span class="n">linux_distro</span><span class="p">,</span>
                             <span class="n">ON_DARWIN</span><span class="p">,</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">ON_CYGWIN</span><span class="p">,</span> <span class="n">DEFAULT_ENCODING</span><span class="p">,</span> <span class="n">githash</span><span class="p">)</span>
@@ -492,17 +492,25 @@
     <span class="k">return</span> <span class="n">toks</span>
 
 
-<span class="k">def</span> <span class="nf">_colors</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span>
-    <span class="n">cols</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
-        <span class="n">cols</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">cmap</span> <span class="o">=</span> <span class="n">color_style</span><span class="p">()</span>
-    <span class="n">akey</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">cmap</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">_colors</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">columns</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span>
+    <span class="n">columns</span> <span class="o">-=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ON_WINDOWS</span><span class="p">)</span>
+    <span class="n">style_stash</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">style</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">style</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">color_style_names</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Invalid style: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">style</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">style</span>
+
+    <span class="n">color_map</span> <span class="o">=</span> <span class="n">color_style</span><span class="p">()</span>
+    <span class="n">akey</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">color_map</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">akey</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">_str_colors</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">_str_colors</span><span class="p">(</span><span class="n">color_map</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">_tok_colors</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">_tok_colors</span><span class="p">(</span><span class="n">color_map</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
     <span class="n">print_color</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">style_stash</span>
 
 
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -514,8 +522,8 @@
                                          <span class="s1">&#39;default action&#39;</span><span class="p">))</span>
     <span class="n">info</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--json&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;reports results as json&#39;</span><span class="p">)</span>
-    <span class="n">wiz</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;wizard&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;displays configuration information, &#39;</span>
-                                          <span class="s1">&#39;default action&#39;</span><span class="p">))</span>
+    <span class="n">wiz</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;wizard&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;displays configuration information, &#39;</span>
+                                         <span class="s1">&#39;default action&#39;</span><span class="p">)</span>
     <span class="n">wiz</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--file&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;config file location, default=$XONSHCONFIG&#39;</span><span class="p">)</span>
     <span class="n">wiz</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--confirm&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -523,8 +531,9 @@
     <span class="n">sty</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;styles&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;prints available xonsh color styles&#39;</span><span class="p">)</span>
     <span class="n">sty</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--json&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;reports results as json&#39;</span><span class="p">)</span>
-    <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;colors&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;displays the color palette for &#39;</span>
-                                    <span class="s1">&#39;the current xonsh color style&#39;</span><span class="p">))</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;colors&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;preview color style&#39;</span><span class="p">)</span>
+    <span class="n">colors</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;style to preview, default: &lt;current&gt;&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">p</span>
 
 
@@ -581,16 +590,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

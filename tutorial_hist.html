@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial: History &#8212; xonsh 0.4.6 documentation</title>
+    <title>Tutorial: History &mdash; xonsh 0.4.7 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.6',
+        VERSION:     '0.4.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.6 documentation" href="index.html" />
+    <link rel="top" title="xonsh 0.4.7 documentation" href="index.html" />
     <link rel="next" title="Tutorial: Macros" href="tutorial_macros.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -142,7 +142,7 @@ the <code class="docutils literal"><span class="pre">show</span></code> action, 
 <h2><code class="docutils literal"><span class="pre">show</span></code> action<a class="headerlink" href="#show-action" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">show</span></code> action for the history command mimics what the <code class="docutils literal"><span class="pre">history</span></code> command does
 in other shells.  Namely, it displays the past inputs along with the index of these
-inputs. This operates on the current session only and is the default action for
+inputs. This operates on the current session by default and is the default action for
 the <code class="docutils literal"><span class="pre">history</span></code> command. For example,</p>
 <div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="go"></span>
 <span class="go">2</span><span class="gp"></span>
@@ -165,12 +165,13 @@ only the even indices from above, you could write:</p>
 <span class="go"> 2  history</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">xonsh</span></code> action displays the past inputs along with the index from all
+<p>One can also use many slice/integer arguments to get different portions of history</p>
+<p>After <code class="docutils literal"><span class="pre">show</span></code> an option that indicates which history to be returned can be used:</p>
+<p><code class="docutils literal"><span class="pre">xonsh</span></code> displays the past inputs from all
 valid json files found in <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>. As such, this operates on all
 past and present xonsh sessions.</p>
-<p>The <code class="docutils literal"><span class="pre">all</span></code> action is an alias for <code class="docutils literal"><span class="pre">xonsh</span></code>.</p>
-<p>The <code class="docutils literal"><span class="pre">xonsh</span></code> action accepts the same arguments as <code class="docutils literal"><span class="pre">show</span></code>.</p>
-<p>The <code class="docutils literal"><span class="pre">zsh</span></code> action will display all history from the history file specified
+<p><code class="docutils literal"><span class="pre">all</span></code> is an alias for <code class="docutils literal"><span class="pre">xonsh</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">zsh</span></code> will display all history from the history file specified
 by the <code class="docutils literal"><span class="pre">HISTFILE</span></code> environmental variable in zsh.
 By default this is <code class="docutils literal"><span class="pre">~/.zsh_history</span></code>. However, they can also be respectively
 specified in both <code class="docutils literal"><span class="pre">~/.zshrc</span></code> and <code class="docutils literal"><span class="pre">~/.zprofile</span></code>. Xonsh will parse these files
@@ -180,13 +181,10 @@ by the <code class="docutils literal"><span class="pre">HISTFILE</span></code> e
 By default this is <code class="docutils literal"><span class="pre">~/.bash_history</span></code>. However, they can also be respectively
 specified in both <code class="docutils literal"><span class="pre">~/.bashrc</span></code> and <code class="docutils literal"><span class="pre">~/.bash_profile</span></code>. Xonsh will parse these
 files (rc file first) to check if <code class="docutils literal"><span class="pre">HISTFILE</span></code> has been set.</p>
-<p>The <code class="docutils literal"><span class="pre">__xonsh_history__.show(action)</span></code> method can be returns history a list
-with each item in the format: (name, start_time, index). The action parameter
-can be a string of the following types: <code class="docutils literal"><span class="pre">session</span></code>, <code class="docutils literal"><span class="pre">show</span></code>, <code class="docutils literal"><span class="pre">all</span></code>,
-<code class="docutils literal"><span class="pre">xonsh</span></code>,``zsh``, <code class="docutils literal"><span class="pre">bash</span></code>, where <code class="docutils literal"><span class="pre">session</span></code> is an alias of <code class="docutils literal"><span class="pre">show</span></code> and
-<code class="docutils literal"><span class="pre">all</span></code> is an alias of <code class="docutils literal"><span class="pre">xonsh</span></code>.</p>
-<p>In the future, <code class="docutils literal"><span class="pre">show</span></code> may also be used to display outputs, return values, and time stamps.
-But the default behavior will remain as shown here.</p>
+<p><code class="docutils literal"><span class="pre">show</span></code> also accepts other options for more control over history output,
+the <code class="docutils literal"><span class="pre">-n</span></code> option is used to enumerate the commands,
+the <code class="docutils literal"><span class="pre">-t</span></code> option is used to show the timestamps,
+and more, try out <code class="docutils literal"><span class="pre">history</span> <span class="pre">show</span> <span class="pre">--help</span></code> for a list of options.</p>
 </div>
 <div class="section" id="id-action">
 <h2><code class="docutils literal"><span class="pre">id</span></code> action<a class="headerlink" href="#id-action" title="Permalink to this headline">¶</a></h2>
@@ -245,7 +243,7 @@ Call this the <code class="docutils literal"><span class="pre">orig</span></code
 <div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">temp</span><span class="o">/</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">cd</span> <span class="n">temp</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">random</span><span class="gp"></span>
-<span class="gp">&gt;&gt;&gt;</span> <span class="n">touch</span> <span class="k">@(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span><span class="k">)</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">touch</span> <span class="k">@</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">ls</span><span class="go"></span>
 <span class="go">2</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">history</span> <span class="nb">file</span><span class="go"></span>
@@ -405,6 +403,48 @@ you could run the following command:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="history-indexing">
+<h2>History Indexing<a class="headerlink" href="#history-indexing" title="Permalink to this headline">¶</a></h2>
+<p>History object (<code class="docutils literal"><span class="pre">__xonsh_history__</span></code>) acts like a sequence that can be indexed in a special way
+that adds extra functionality. At the moment only history from the
+current session can be retrieved. Note that the most recent command
+is the last item in history.</p>
+<p>The index acts as a filter with two parts, command and argument,
+separated by comma. Based on the type of each part different
+filtering can be achieved,</p>
+<dl class="docutils">
+<dt>for the command part:</dt>
+<dd><ul class="first last simple">
+<li>an int returns the command in that position.</li>
+<li>a slice returns a list of commands.</li>
+<li>a string returns the most recent command containing the string.</li>
+</ul>
+</dd>
+<dt>for the argument part:</dt>
+<dd><ul class="first last simple">
+<li>an int returns the argument of the command in that position.</li>
+<li>a slice returns a part of the command based on the argument
+position.</li>
+</ul>
+</dd>
+</dl>
+<p>The argument part of the filter can be omitted but the command part is
+required.</p>
+<p>Command arguments are separated by white space.</p>
+<p>If the filtering produces only one result it is
+returned as a string else a list of strings is returned.</p>
+<p>examples:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">echo</span> <span class="n">mkdir</span> <span class="k">with</span><span class="o">/</span><span class="n">a</span><span class="o">/</span><span class="n">huge</span><span class="o">/</span><span class="n">name</span><span class="o">/</span><span class="go"></span>
+<span class="go">mkdir with/a/huge/name</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">__xonsh_history__</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="go"></span>
+<span class="go">&#39;with/a/huge/name/&#39;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">__xonsh_history__</span><span class="p">[</span><span class="s1">&#39;mkdir&#39;</span><span class="p">]</span><span class="go"></span>
+<span class="go">&#39;echo mkdir with/a/huge/name&#39;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">__xonsh_history__</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span><span class="go"></span>
+<span class="go">&#39;mkdir with/a/huge/name&#39;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="exciting-technical-detail-lazy-json">
 <h2>Exciting Technical Detail: Lazy JSON<a class="headerlink" href="#exciting-technical-detail-lazy-json" title="Permalink to this headline">¶</a></h2>
 <p>So now you know how to inspect, run, and remove history. But what <em>is</em> a history file exactly?
@@ -471,6 +511,7 @@ implemented:</p>
 <li><a class="reference internal" href="#replay-action"><code class="docutils literal"><span class="pre">replay</span></code> action</a></li>
 <li><a class="reference internal" href="#diff-action"><code class="docutils literal"><span class="pre">diff</span></code> action</a></li>
 <li><a class="reference internal" href="#gc-action"><code class="docutils literal"><span class="pre">gc</span></code> action</a></li>
+<li><a class="reference internal" href="#history-indexing">History Indexing</a></li>
 <li><a class="reference internal" href="#exciting-technical-detail-lazy-json">Exciting Technical Detail: Lazy JSON</a></li>
 <li><a class="reference internal" href="#exciting-technical-detail-teeing-and-pseudo-terminals">Exciting Technical Detail: Teeing and Pseudo Terminals</a></li>
 <li><a class="reference internal" href="#fun-ideas-for-history-data">Fun ideas for history data</a></li>
@@ -527,15 +568,15 @@ implemented:</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.6 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
