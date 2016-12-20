@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Platform-specific constants and implementations (xonsh.platform) &mdash; xonsh 0.4.7 documentation</title>
+    <title>Platform-specific constants and implementations (xonsh.platform) &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -29,11 +30,14 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
-    <link rel="up" title="Xonsh API" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Lazy JSON Files (xonsh.lazyjson)" href="lazyjson.html" />
-    <link rel="prev" title="Tools (xonsh.tools)" href="tools.html" /> 
+    <link rel="prev" title="Tools (xonsh.tools)" href="tools.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/api/platform.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -53,9 +57,9 @@
         <li class="right" >
           <a href="tools.html" title="Tools (xonsh.tools)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,6 +75,27 @@
 <p>Module for platform-specific constants and implementations, as well as
 compatibility layers to make use of the &#8216;best&#8217; implementation available
 on a platform.</p>
+<dl class="function">
+<dt id="xonsh.platform.pathbasename">
+<code class="descclassname">xonsh.platform.</code><code class="descname">pathbasename</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/platform.html#pathbasename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.platform.pathbasename" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a safe version of os.path.basename(), which does not work on
+input without a drive.  This version does.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.platform.pathsplit">
+<code class="descclassname">xonsh.platform.</code><code class="descname">pathsplit</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/platform.html#pathsplit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.platform.pathsplit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a safe version of os.path.split(), which does not work on input
+without a drive.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="xonsh.platform.CAN_RESIZE_WINDOW">
+<code class="descclassname">xonsh.platform.</code><code class="descname">CAN_RESIZE_WINDOW</code><em class="property"> = &lt;xonsh.lazyasd.LazyBool object&gt;</em><a class="headerlink" href="#xonsh.platform.CAN_RESIZE_WINDOW" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">True</span></code> if we can resize terminal window, as provided by the presense of
+signal.SIGWINCH, else <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
 <dl class="data">
 <dt id="xonsh.platform.DEFAULT_ENCODING">
 <code class="descclassname">xonsh.platform.</code><code class="descname">DEFAULT_ENCODING</code><em class="property"> = 'utf-8'</em><a class="headerlink" href="#xonsh.platform.DEFAULT_ENCODING" title="Permalink to this definition">¶</a></dt>
@@ -157,7 +182,8 @@ on a platform.</p>
 <dl class="attribute">
 <dt id="xonsh.platform.githash">
 <code class="descclassname">xonsh.platform.</code><code class="descname">githash</code><a class="reference internal" href="../_modules/xonsh/platform.html#githash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.platform.githash" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a tuple contains two strings: the hash and the date.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="xonsh.platform.has_prompt_toolkit">
@@ -251,7 +277,7 @@ that are commonly used for filtering.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/platform.txt"
+      <li><a href="../_sources/api/platform.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -286,16 +312,16 @@ that are commonly used for filtering.</p>
         <li class="right" >
           <a href="tools.html" title="Tools (xonsh.tools)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

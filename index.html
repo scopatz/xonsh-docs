@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>the xonsh shell &mdash; xonsh 0.4.7 documentation</title>
+    <title>the xonsh shell &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -29,9 +30,13 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="#" />
-    <link rel="next" title="Dependencies" href="dependencies.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dependencies" href="dependencies.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/index.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -48,7 +53,7 @@
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
-    <li><a href="#">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="#">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -99,6 +104,7 @@ var taglines = [
     "People xonshtantly mispronounce these things",
     "WHAT...is your favorite shell?",
     "Conches for the xonsh god!",
+    "Python-powered, cross-platform, Unix-gazing shell",
     "Exploiting the workers and hanging on to outdated imperialist dogma since 2015."
     ];
 document.write(taglines[Math.floor(Math.random() * taglines.length)]);
@@ -107,26 +113,56 @@ document.write(taglines[Math.floor(Math.random() * taglines.length)]);
 <br />
 <br />
 </span>
-</p><p>Xonsh is a Python-ish, BASHwards-looking shell language and command prompt.
-The language is a superset of Python 3.4+ with additional shell primitives
-that you are used to from Bash and IPython. It works on all major systems including
-Linux, Mac OSX, and Windows. Xonsh is meant for the daily use of experts and novices
-alike.</p>
-<p><strong>At a glance</strong></p>
-<p style="text-align:center;"><script type="text/javascript"
-  src="https://asciinema.org/a/9kp21a67ahhng25wtzoep3pyx.js"
-  id="asciicast-9kp21a67ahhng25wtzoep3pyx" async
-  data-size="medium" data-speed="2"></script>
-</p><div class="section" id="contents">
+</p><p>Xonsh is a Python-powered, cross-platform, Unix-gazing shell language and
+command prompt. The language is a superset of Python 3.4+ with additional
+shell primitives that you are used to from Bash and IPython. It works on
+all major systems including Linux, Mac OSX, and Windows. Xonsh is meant
+for the daily use of experts and novices alike.</p>
+<p><strong>Try it out!</strong></p>
+<style>
+.tryitbutton {
+    background-color: #84A6C7;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 22px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    position:relative;
+    float: right;
+    right: 35%;
+    bottom: 240px;
+}
+</style>
+<div id="trydiv"><p style="text-align:center;">
+<iframe id="tryframe" data-src="http://hermit.astro73.com/"
+        src="_static/xonsh-live.png" width="80%" height="480px"
+        style="overflow:hidden;" scrolling="no">
+</iframe>
+<button class="tryitbutton" id="trybutton">Click to Try Xonsh!</button>
+<script>
+    $("#trybutton").click(function(){
+        var tryframe = $("#tryframe");
+        var trybutton = $("#trybutton");
+        tryframe.attr("src", tryframe.data("src"));
+        trybutton.remove();
+    });
+</script>
+</p>
+</div><div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <p><strong>Installation:</strong></p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html#development-dependencies">Development Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linux.html">Linux Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="osx.html">OSX Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="windows.html">Windows Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="add_to_shell.html">Additional Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customizing <code class="docutils literal"><span class="pre">xonsh</span></code></a></li>
 </ul>
 </div>
 <p><strong>Guides:</strong></p>
@@ -313,7 +349,10 @@ table lists features and capabilities that various tools may or may not share.</
 </ol>
 </div></blockquote>
 <p>In addition, xonsh integrates with Jupyter, an in-browser REPL, enabling the use of xonsh in jupyter notebooks</p>
-<p>If you want to develop xonsh, it is extremely recommended to install the depdencies listed in <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-docs.txt">requirements-docs.txt</a> (to generate documentation) and <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-tests.txt">requirements-tests.txt</a> (to run the test suite).</p>
+</div>
+<div class="section" id="development-dependencies">
+<h1>Development Dependencies<a class="headerlink" href="#development-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>If you want to develop xonsh, it is extremely recommended to install the dependencies listed in <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-docs.txt">requirements-docs.txt</a> (to generate documentation) and <a class="reference external" href="https://github.com/xonsh/xonsh/blob/master/requirements-tests.txt">requirements-tests.txt</a> (to run the test suite).</p>
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>We highly encourage contributions to xonsh!  If you would like to contribute,
@@ -341,7 +380,66 @@ open an issue on GitHub.
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
-<a href="https://github.com/xonsh/xonsh"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a></div>
+<a href="https://github.com/xonsh/xonsh" class='github-fork-ribbon' title='Fork me on GitHub'>Fork me on GitHub</a>
+
+<style>
+/*!
+ * Adapted from
+ * "Fork me on GitHub" CSS ribbon v0.2.0 | MIT License
+ * https://github.com/simonwhitaker/github-fork-ribbon-css
+ */
+
+.github-fork-ribbon, .github-fork-ribbon:hover, .github-fork-ribbon:hover:active {
+  background:none;
+  left: inherit;
+  width: 12.1em;
+  height: 12.1em;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  pointer-events: none;
+  text-decoration: none;
+  text-indent: -999999px;
+}
+
+.github-fork-ribbon:before, .github-fork-ribbon:after {
+  /* The right and left classes determine the side we attach our banner to */
+  position: absolute;
+  display: block;
+  width: 15.38em;
+  height: 1.54em;
+  top: 3.23em;
+  right: -3.23em;
+  box-sizing: content-box;
+  transform: rotate(45deg);
+}
+
+.github-fork-ribbon:before {
+  content: "";
+  padding: .38em 0;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+  box-shadow: 0 0.07em 0.4em 0 rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+.github-fork-ribbon:after {
+  content: attr(title);
+  color: #000;
+  font: 700 1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.54em;
+  text-decoration: none;
+  text-align: center;
+  text-indent: 0;
+  padding: .15em 0;
+  margin: .15em 0;
+  border-width: .08em 0;
+  border-style: dotted;
+  border-color: #777;
+}
+
+</style></div>
 </div>
 
 
@@ -362,7 +460,8 @@ open an issue on GitHub.
 <li><a class="reference internal" href="#comparison">Comparison</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#development-dependencies">Development Dependencies</a><ul>
 <li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#contact-us">Contact Us</a></li>
 <li><a class="reference internal" href="#helpful-links">Helpful Links</a></li>
@@ -379,7 +478,7 @@ open an issue on GitHub.
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -411,15 +510,15 @@ open an issue on GitHub.
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              >next</a> &nbsp; &nbsp;</li>
-    <li><a href="#">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="#">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

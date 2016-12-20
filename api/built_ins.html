@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Built-Ins (xonsh.built_ins) &mdash; xonsh 0.4.7 documentation</title>
+    <title>Built-Ins (xonsh.built_ins) &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -29,11 +30,14 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
-    <link rel="up" title="Xonsh API" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Environment (xonsh.environ)" href="environ.html" />
-    <link rel="prev" title="Import Hooks (xonsh.imphooks)" href="imphooks.html" /> 
+    <link rel="prev" title="Import Hooks (xonsh.imphooks)" href="imphooks.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/api/built_ins.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -53,9 +57,9 @@
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,6 +75,175 @@
 <p>The xonsh built-ins.</p>
 <p>Note that this module is named &#8216;built_ins&#8217; so as not to be confused with the
 special Python builtins module.</p>
+<dl class="class">
+<dt id="xonsh.built_ins.SubprocSpec">
+<em class="property">class </em><code class="descclassname">xonsh.built_ins.</code><code class="descname">SubprocSpec</code><span class="sig-paren">(</span><em>cmd</em>, <em>*</em>, <em>cls=&lt;class 'subprocess.Popen'&gt;</em>, <em>stdin=None</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>universal_newlines=False</em>, <em>captured=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec" title="Permalink to this definition">¶</a></dt>
+<dd><p>A container for specifiying how a subprocess command should be
+executed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cmd</strong> : list of str</p>
+<blockquote>
+<div><p>Command to be run.</p>
+</div></blockquote>
+<p><strong>cls</strong> : Popen-like</p>
+<blockquote>
+<div><p>Class to run the subprocess with.</p>
+</div></blockquote>
+<p><strong>stdin</strong> : file-like</p>
+<blockquote>
+<div><p>Popen file descriptor or flag for stdin.</p>
+</div></blockquote>
+<p><strong>stdout</strong> : file-like</p>
+<blockquote>
+<div><p>Popen file descriptor or flag for stdout.</p>
+</div></blockquote>
+<p><strong>stderr</strong> : file-like</p>
+<blockquote>
+<div><p>Popen file descriptor or flag for stderr.</p>
+</div></blockquote>
+<p><strong>universal_newlines</strong> : bool</p>
+<blockquote>
+<div><p>Whether or not to use universal newlines.</p>
+</div></blockquote>
+<p><strong>captured</strong> : bool or str, optional</p>
+<blockquote class="last">
+<div><p>The flag for if the subprocess is captured, may be one of:
+False for $[], &#8216;stdout&#8217; for $(), &#8216;hiddenobject&#8217; for ![], or
+&#8216;object&#8217; for !().</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>args</td>
+<td>(list of str) Arguments as originally supplied.</td>
+</tr>
+<tr class="row-even"><td>alias</td>
+<td>(list of str, callable, or None) The alias that was reolved for this command, if any.</td>
+</tr>
+<tr class="row-odd"><td>binary_loc</td>
+<td>(str or None) Path to binary to execute.</td>
+</tr>
+<tr class="row-even"><td>is_proxy</td>
+<td>(bool) Whether or not the subprocess is or should be run as a proxy.</td>
+</tr>
+<tr class="row-odd"><td>background</td>
+<td>(bool) Whether or not the subprocess should be started in the background.</td>
+</tr>
+<tr class="row-even"><td>threadable</td>
+<td>(bool) Whether or not the subprocess is able to be run in a background thread, rather than the main thread.</td>
+</tr>
+<tr class="row-odd"><td>last_in_pipeline</td>
+<td>(bool) Whether the subprocess is the last in the execution pipeline.</td>
+</tr>
+<tr class="row-even"><td>captured_stdout</td>
+<td>(file-like) Handle to captured stdin</td>
+</tr>
+<tr class="row-odd"><td>captured_stderr</td>
+<td>(file-like) Handle to captured stderr</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="xonsh.built_ins.SubprocSpec.build">
+<em class="property">classmethod </em><code class="descname">build</code><span class="sig-paren">(</span><em>kls</em>, <em>cmd</em>, <em>*</em>, <em>cls=&lt;class 'subprocess.Popen'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an instance of the subprocess command, with any
+modifcations and adjustments based on the actual cmd that
+was recieved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.prep_env">
+<code class="descname">prep_env</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.prep_env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.prep_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares the environment to use in the subprocess.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.prep_preexec_fn">
+<code class="descname">prep_preexec_fn</code><span class="sig-paren">(</span><em>kwargs</em>, <em>pipeline_group=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.prep_preexec_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.prep_preexec_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares the &#8216;preexec_fn&#8217; keyword argument</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.redirect_leading">
+<code class="descname">redirect_leading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.redirect_leading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.redirect_leading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage leading redirects such as with &#8216;&lt; input.txt COMMAND&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.redirect_trailing">
+<code class="descname">redirect_trailing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.redirect_trailing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.redirect_trailing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages trailing redirects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.resolve_alias">
+<code class="descname">resolve_alias</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.resolve_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.resolve_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets alias in command, if applicable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.resolve_alias_cls">
+<code class="descname">resolve_alias_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.resolve_alias_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.resolve_alias_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine which proxy class to run an alias with.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.resolve_auto_cd">
+<code class="descname">resolve_auto_cd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.resolve_auto_cd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.resolve_auto_cd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AUTO_CD functionality.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.resolve_binary_loc">
+<code class="descname">resolve_binary_loc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.resolve_binary_loc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.resolve_binary_loc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the binary location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.resolve_executable_commands">
+<code class="descname">resolve_executable_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.resolve_executable_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.resolve_executable_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve command executables, if applicable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.built_ins.SubprocSpec.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>*</em>, <em>pipeline_group=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#SubprocSpec.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches the subprocess and returns the object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xonsh.built_ins.SubprocSpec.kwnames">
+<code class="descname">kwnames</code><em class="property"> = ('stdin', 'stdout', 'stderr', 'universal_newlines')</em><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.kwnames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xonsh.built_ins.SubprocSpec.stderr">
+<code class="descname">stderr</code><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.stderr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xonsh.built_ins.SubprocSpec.stdin">
+<code class="descname">stdin</code><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.stdin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xonsh.built_ins.SubprocSpec.stdout">
+<code class="descname">stdout</code><a class="headerlink" href="#xonsh.built_ins.SubprocSpec.stdout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="xonsh.built_ins.call_macro">
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">call_macro</code><span class="sig-paren">(</span><em>f</em>, <em>raw_args</em>, <em>glbs</em>, <em>locs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#call_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.call_macro" title="Permalink to this definition">¶</a></dt>
@@ -101,6 +274,13 @@ a string dependending on the annotations of f.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.cmds_to_specs">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">cmds_to_specs</code><span class="sig-paren">(</span><em>cmds</em>, <em>captured=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#cmds_to_specs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.cmds_to_specs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of cmds to a list of SubprocSpec objects that are
+ready to be executed.</p>
 </dd></dl>
 
 <dl class="function">
@@ -142,6 +322,12 @@ a string dependending on the annotations of f.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.default_signal_pauser">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">default_signal_pauser</code><span class="sig-paren">(</span><em>n</em>, <em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#default_signal_pauser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.default_signal_pauser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pauses a signal, as needed.</p>
 </dd></dl>
 
 <dl class="function">
@@ -256,10 +442,23 @@ BUILTINS_LOADED variable to True.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="xonsh.built_ins.no_pg_xonsh_preexec_fn">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">no_pg_xonsh_preexec_fn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#no_pg_xonsh_preexec_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.no_pg_xonsh_preexec_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default subprocess preexec function for when there is no existing
+pipeline group.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.path_literal">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">path_literal</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#path_literal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.path_literal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="xonsh.built_ins.pathsearch">
-<code class="descclassname">xonsh.built_ins.</code><code class="descname">pathsearch</code><span class="sig-paren">(</span><em>func</em>, <em>s</em>, <em>pymode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#pathsearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.pathsearch" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">pathsearch</code><span class="sig-paren">(</span><em>func</em>, <em>s</em>, <em>pymode=False</em>, <em>pathobj=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#pathsearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.pathsearch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a string and returns a list of file paths that match (regex, glob,
-or arbitrary search function).</p>
+or arbitrary search function). If pathobj=True, the return is a list of
+pathlib.Path objects instead of strings.</p>
 </dd></dl>
 
 <dl class="function">
@@ -297,10 +496,22 @@ a special connecting character.  For example:</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="xonsh.built_ins.safe_close">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">safe_close</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#safe_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.safe_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safely attempts to close an object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.built_ins.safe_open">
+<code class="descclassname">xonsh.built_ins.</code><code class="descname">safe_open</code><span class="sig-paren">(</span><em>fname</em>, <em>mode</em>, <em>buffering=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#safe_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.safe_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safely attempts to open a file in for xonsh subprocs.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="xonsh.built_ins.subproc_captured_hiddenobject">
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">subproc_captured_hiddenobject</code><span class="sig-paren">(</span><em>*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#subproc_captured_hiddenobject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.subproc_captured_hiddenobject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs a subprocess, capturing the output. Returns an instance of
-<code class="docutils literal"><span class="pre">HiddenCompletedCommand</span></code> representing the completed command.</p>
+HiddenCommandPipeline representing the completed command.</p>
 </dd></dl>
 
 <dl class="function">
@@ -314,7 +525,7 @@ whitespace-separated strings in the stdout that was produced.</p>
 <dt id="xonsh.built_ins.subproc_captured_object">
 <code class="descclassname">xonsh.built_ins.</code><code class="descname">subproc_captured_object</code><span class="sig-paren">(</span><em>*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/built_ins.html#subproc_captured_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.built_ins.subproc_captured_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs a subprocess, capturing the output. Returns an instance of
-<code class="docutils literal"><span class="pre">CompletedCommand</span></code> representing the completed command.</p>
+CommandPipeline representing the completed command.</p>
 </dd></dl>
 
 <dl class="function">
@@ -375,7 +586,7 @@ scope. Likely useful in testing.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/built_ins.txt"
+      <li><a href="../_sources/api/built_ins.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -410,16 +621,16 @@ scope. Likely useful in testing.</p>
         <li class="right" >
           <a href="imphooks.html" title="Import Hooks (xonsh.imphooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

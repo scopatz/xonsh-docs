@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.prompt.gitstatus &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.prompt.gitstatus &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/prompt/gitstatus.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -74,6 +78,7 @@
                                    <span class="p">[</span><span class="s1">&#39;branch&#39;</span><span class="p">,</span> <span class="s1">&#39;num_ahead&#39;</span><span class="p">,</span> <span class="s1">&#39;num_behind&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;untracked&#39;</span><span class="p">,</span> <span class="s1">&#39;changed&#39;</span><span class="p">,</span> <span class="s1">&#39;conflicts&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;staged&#39;</span><span class="p">,</span> <span class="s1">&#39;stashed&#39;</span><span class="p">,</span> <span class="s1">&#39;operations&#39;</span><span class="p">])</span>
+
 
 <span class="k">def</span> <span class="nf">_check_output</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">(),</span>
@@ -180,8 +185,8 @@
     <span class="n">operations</span> <span class="o">=</span> <span class="n">_gitoperation</span><span class="p">(</span><span class="n">gitdir</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">GitStatus</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">num_ahead</span><span class="p">,</span> <span class="n">num_behind</span><span class="p">,</span>
-            <span class="n">untracked</span><span class="p">,</span> <span class="n">changed</span><span class="p">,</span> <span class="n">conflicts</span><span class="p">,</span> <span class="n">staged</span><span class="p">,</span> <span class="n">stashed</span><span class="p">,</span>
-            <span class="n">operations</span><span class="p">)</span></div>
+                     <span class="n">untracked</span><span class="p">,</span> <span class="n">changed</span><span class="p">,</span> <span class="n">conflicts</span><span class="p">,</span> <span class="n">staged</span><span class="p">,</span> <span class="n">stashed</span><span class="p">,</span>
+                     <span class="n">operations</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="gitstatus_prompt"><a class="viewcode-back" href="../../../api/prompt/gitstatus.html#xonsh.prompt.gitstatus.gitstatus_prompt">[docs]</a><span class="k">def</span> <span class="nf">gitstatus_prompt</span><span class="p">():</span>
@@ -249,16 +254,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Readline Shell (xonsh.readline_shell) &mdash; xonsh 0.4.7 documentation</title>
+    <title>Readline Shell (xonsh.readline_shell) &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -29,11 +30,14 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
-    <link rel="up" title="Xonsh API" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Prompt Toolkit Shell (xonsh.ptk.shell)" href="ptk/shell.html" />
-    <link rel="prev" title="Base Shell Class (xonsh.base_shell)" href="base_shell.html" /> 
+    <link rel="prev" title="Base Shell Class (xonsh.base_shell)" href="base_shell.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/api/readline_shell.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -53,9 +57,9 @@
         <li class="right" >
           <a href="base_shell.html" title="Base Shell Class (xonsh.base_shell)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -80,8 +84,9 @@ are included from the IPython project.  The IPython project is:</p>
 <dl class="class">
 <dt id="xonsh.readline_shell.ReadlineHistoryAdder">
 <em class="property">class </em><code class="descclassname">xonsh.readline_shell.</code><code class="descname">ReadlineHistoryAdder</code><span class="sig-paren">(</span><em>wait_for_gc=True</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineHistoryAdder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineHistoryAdder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thread responsible for adding inputs from history to the current readline
-instance. May wait for the history garbage collector to finish.</p>
+<dd><p>Thread responsible for adding inputs from history to the
+current readline instance. May wait for the history garbage
+collector to finish.</p>
 <dl class="method">
 <dt id="xonsh.readline_shell.ReadlineHistoryAdder.getName">
 <code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineHistoryAdder.getName" title="Permalink to this definition">¶</a></dt>
@@ -217,6 +222,13 @@ Columns are separated by two spaces (one was not legible enough).</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="xonsh.readline_shell.ReadlineShell.compile">
+<code class="descname">compile</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles source code and returns the (possibly modified) source and
+a valid code object.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="xonsh.readline_shell.ReadlineShell.complete">
 <code class="descname">complete</code><span class="sig-paren">(</span><em>text</em>, <em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.complete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the next possible completion for &#8216;text&#8217;.</p>
@@ -231,13 +243,13 @@ Otherwise try to call complete_&lt;command&gt; to get list of completions.</p>
 
 <dl class="method">
 <dt id="xonsh.readline_shell.ReadlineShell.completedefault">
-<code class="descname">completedefault</code><span class="sig-paren">(</span><em>text</em>, <em>line</em>, <em>begidx</em>, <em>endidx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineShell.completedefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.completedefault" title="Permalink to this definition">¶</a></dt>
+<code class="descname">completedefault</code><span class="sig-paren">(</span><em>prefix</em>, <em>line</em>, <em>begidx</em>, <em>endidx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineShell.completedefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.completedefault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements tab-completion for text.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xonsh.readline_shell.ReadlineShell.completenames">
-<code class="descname">completenames</code><span class="sig-paren">(</span><em>text</em>, <em>line</em>, <em>begidx</em>, <em>endidx</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.completenames" title="Permalink to this definition">¶</a></dt>
+<code class="descname">completenames</code><span class="sig-paren">(</span><em>prefix</em>, <em>line</em>, <em>begidx</em>, <em>endidx</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.completenames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements tab-completion for text.</p>
 </dd></dl>
 
@@ -261,8 +273,8 @@ Otherwise try to call complete_&lt;command&gt; to get list of completions.</p>
 
 <dl class="method">
 <dt id="xonsh.readline_shell.ReadlineShell.format_color">
-<code class="descname">format_color</code><span class="sig-paren">(</span><em>string</em>, <em>hide=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineShell.format_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.format_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Readline implementation of color formatting. This usesg ANSI color
+<code class="descname">format_color</code><span class="sig-paren">(</span><em>string</em>, <em>hide=False</em>, <em>force_string=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineShell.format_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.format_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readline implementation of color formatting. This usess ANSI color
 codes.</p>
 </dd></dl>
 
@@ -480,7 +492,7 @@ output may be used in an inputrc file.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/readline_shell.txt"
+      <li><a href="../_sources/api/readline_shell.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -515,16 +527,16 @@ output may be used in an inputrc file.</p>
         <li class="right" >
           <a href="base_shell.html" title="Base Shell Class (xonsh.base_shell)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

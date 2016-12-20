@@ -314,6 +314,28 @@ force xonsh to do so with the syntax that we will see in the following
 sections.
 
 
+Quoting
+=======
+
+Single or double quotes can be used to remove the special meaning
+of certain characters or words to xonsh. If a subprocess command
+contains characters that collide with xonsh syntax then quotes
+must be used to force xonsh to not interpret them.
+
+.. code-block:: xonshcon
+
+    >>> echo ${
+    ...
+    SyntaxError: <xonsh-code>:1:5: ('code: {',)
+    echo ${
+         ^
+    >>> echo '${'
+    ${
+
+.. warning:: There is no notion of an escaping character in xonsh like the
+             backslash (\) in bash.
+
+
 Captured Subprocess with ``$()`` and ``!()``
 ============================================
 The ``$(<expr>)`` operator in xonsh executes a subprocess command and
@@ -499,7 +521,7 @@ be used to generate any of the tokens in the subprocess command list.
 Thus, ``@()`` allows us to create complex commands in Python-mode and then
 feed them to a subprocess as needed.  For example:
 
-.. code-block:: xonsh
+.. code-block:: xonshcon
 
     for i in range(20):
         $[touch @('file%02d' % i)]
@@ -642,6 +664,9 @@ but, for compatibility purposes, xonsh also support Bash-like syntax.
 The basic operations are "write to" (``>``), "append to" (``>>``), and "read
 from" (``<``).  The details of these are perhaps best explained through
 examples.
+
+.. note:: The target of the redirection should be separated by a space,
+          otherwise xonsh will raise a SyntaxError.
 
 Redirecting ``stdout``
 ----------------------
@@ -931,6 +956,38 @@ The following example shows the form of these functions:
     ['aa', 'aaa', 'aab', 'aabb']
 
 
+Path Output
+-----------
+
+Using the ``p`` modifier with either regex or glob backticks changes the
+return type from a list of strings to a list of :class:`pathlib.Path` objects:
+
+.. code-block:: xonshcon
+
+    >>> p`.*`
+    [Path('foo'), Path('bar')]
+    >>> [x for x in pg`**` if x.is_symlink()]
+    [Path('a_link')]
+
+
+Path Literals
+-------------
+
+Path objects can be instantiated directly using *p-string* syntax. Path objects
+can be converted back to plain strings with `str()`, and this conversion is
+handled implicitly in subprocess mode.
+
+.. code-block:: xonshcon
+
+    >>> mypath = p'/foo/bar'
+    >>> mypath
+    Path('/foo/bar')
+    >>> mypath.stem
+    'bar'
+    >>> echo @(mypath)
+    /foo/bar
+
+
 Help & Superhelp with ``?`` & ``??``
 =====================================================
 From IPython, xonsh allows you to inspect objects with question marks.
@@ -1053,14 +1110,28 @@ Callable Aliases
 ----------------
 Lastly, if an alias value is a function (or other callable), then this
 function is called *instead* of going to a subprocess command. Such functions
-must have one of the following two signatures
+may have one of the following signatures:
 
 .. code-block:: python
 
-    def _mycmd(args, stdin=None):
-        """args will be a list of strings representing the arguments to this
-        command. stdin will be a string, if present. This is used to pipe
-        the output of the previous command into this one.
+    def mycmd0():
+        """This form takes no arguments but may return output or a return code.
+        """
+        return "some output."
+
+    def mycmd1(args):
+        """This form takes a single argument, args. This is a list of strings
+        representing the arguments to this command. Feel free to parse them
+        however you wish!
+        """
+        # perform some action.
+        return 0
+
+    def mycmd2(args, stdin=None):
+        """This form takes two arguments. The args list like above, as a well
+        as standard input. stdin will be a file like object that the command
+        can read from, if the user piped input to this command. If no input
+        was provided this will be None.
         """
         # do whatever you want! Anything you print to stdout or stderr
         # will be captured for you automatically. This allows callable
@@ -1092,13 +1163,21 @@ must have one of the following two signatures
         # examples the return code would be 0/success.
         return (None, "I failed", 2)
 
+    def mycmd3(args, stdin=None, stdout=None):
+        """This form has three parameters.  The first two are the same as above.
+        The last argument represents the standard output.  This is a file-like
+        object that the command may write too.
+        """
+        # you can either use stdout
+        stdout.write("Hello, ")
+        # or print()!
+        print("Mom!")
+        return
 
-.. code-block:: python
-
-    def _mycmd2(args, stdin, stdout, stderr):
-        """args will be a list of strings representing the arguments to this
-        command.  stdin is a read-only file-like object, and stdout and stderr
-        are write-only file-like objects
+    def mycmd4(args, stdin=None, stdout=None, stderr=None):
+        """The next form of subprocess callables takes all of the
+        arguments shown above as well as the standard error stream.
+        As with stdout, this is a write-only file-like object.
         """
         # This form allows "streaming" data to stdout and stderr
         import time
@@ -1109,6 +1188,23 @@ must have one of the following two signatures
         # In this form, the return value should be a single integer
         # representing the "return code" of the alias (zero if successful,
         # non-zero otherwise)
+        return 0
+
+    def mycmd5(args, stdin=None, stdout=None, stderr=None, spec=None):
+        """Lastly, the final form of subprocess callables takes all of the
+        arguments shown above as well as a subpcrocess specification
+        SubprocSpec object. This holds many attributes that dictate how
+        the command is being run.  For instance this can be useful for
+        knowing if the process is captured by $() or !().
+        """
+        import xonsh.proc
+        if spec.captured in xonsh.proc.STDOUT_CAPTURE_KINDS:
+            end = ''
+        else:
+            end = '\n'
+        # Now we'll get a newline if the user is at the terminal, and no
+        # newline if we are captured
+        print('Hi Mom!', end=end)
         return 0
 
 
@@ -1132,7 +1228,7 @@ with keyword arguments:
 
 .. code-block:: xonshcon
 
-    >>> aliases['banana'] = lambda args,stdin=None: "Banana for scale.\n"
+    >>> aliases['banana'] = lambda: "Banana for scale.\n"
     >>> banana
     Banana for scale.
 
@@ -1163,31 +1259,57 @@ as aliases, by wrapping them in ``@()``.  For example:
     hello world
 
 
-Foreground-only Aliases
+Unthreadable Aliases
 -----------------------
-Usually, callable alias commands will be run in a separate thread so that users
+Usually, callable alias commands will be run in a separate thread so that
 they may be run in the background.  However, some aliases may need to be
 executed on the thread that they were called from. This is mostly useful for
 debuggers and profilers. To make an alias run in the foreground, decorate its
-function with the ``xonsh.proc.foreground`` decorator.
+function with the ``xonsh.proc.unthreadable`` decorator.
 
 .. code-block:: python
 
-    from xonsh.proc import foreground
+    from xonsh.proc import unthreadable
 
-    @foreground
+    @unthreadable
     def _mycmd(args, stdin=None):
         return 'In your face!'
 
     aliases['mycmd'] = _mycmd
 
+Uncapturable Aliases
+-----------------------
+Also, callable aliases by default will be executed such that their output is
+captured (like most commands in xonsh that don't enter alternate mode).
+However, some aliases may want to run alternate-mode commands themselves.
+Thus the callable alias can't be captured without dire consequences (tm).
+To prevent this, you can declare a callable alias uncapturable. This is mostly
+useful for aliases that then open up text editors, pagers, or the like.
+To make an alias uncapturable, decorate its
+function with the ``xonsh.proc.uncapturable`` decorator. This is probably
+best used in conjunction with the ``unthreadable`` decorator.  For example:
+
+.. code-block:: python
+
+    from xonsh.proc import unthreadable, uncapturable
+
+    @uncapturable
+    @unthreadable
+    def _myvi():
+        vi my.txt
+
+    aliases['myvi'] = _myvi
+
+-------------
+
 Aliasing is a powerful way that xonsh allows you to seamlessly interact to
 with Python and subprocess.
 
-.. warning:: If ``FOREIGN_ALIASES_OVERRIDE`` enviroment variable is False (the default)
-             then foreign shell aliases that try to override xonsh aliases will be ignored.
-             Setting of this enviroment variable must happen in the static configuration
-             file ``$XONSH_CONFIG_DIR/config.json`` in the 'env' section.
+.. warning:: If ``FOREIGN_ALIASES_OVERRIDE`` enviroment variable is False
+             (the default) then foreign shell aliases that try to override
+             xonsh aliases will be ignored. Setting of this enviroment variable
+             must happen in the static configuration file
+             ``$XONSH_CONFIG_DIR/config.json`` in the 'env' section.
 
 
 Up, Down, Tab
@@ -1286,7 +1408,7 @@ or ``{BOLD_BLUE}``.  Colors have the form shown below:
   can use!
 
 You can make use of additional variables beyond these by adding them to the
-``FORMATTER_DICT`` environment variable.  The values in this dictionary
+``PROMPT_FIELDS`` environment variable.  The values in this dictionary
 should be strings (which will be inserted into the prompt verbatim), or
 functions of no arguments (which will be called each time the prompt is
 generated, and the results of those calls will be inserted into the prompt).
@@ -1294,11 +1416,11 @@ For example:
 
 .. code-block:: console
 
-    snail@home ~ $ $FORMATTER_DICT['test'] = "hey"
+    snail@home ~ $ $PROMPT_FIELDS['test'] = "hey"
     snail@home ~ $ $PROMPT = "{test} {cwd} $ "
     hey ~ $
     hey ~ $ import random
-    hey ~ $ $FORMATTER_DICT['test'] = lambda: random.randint(1,9)
+    hey ~ $ $PROMPT_FIELDS['test'] = lambda: random.randint(1,9)
     3 ~ $
     5 ~ $
     2 ~ $
@@ -1312,7 +1434,7 @@ prefix.  For example:
     snail@home ~ $ $PROMPT = "{$LANG} >"
     en_US.utf8 >
 
-Note that some entries of the ``$FORMATTER_DICT`` are not always applicable, for
+Note that some entries of the ``$PROMPT_FIELDS`` are not always applicable, for
 example, ``curr_branch`` returns ``None`` if the current directory is not in a
 repository. The ``None`` will be interpreted as an empty string.
 
@@ -1357,7 +1479,7 @@ Longer scripts can be run either by specifying a filename containing the script,
 or by feeding them to xonsh via stdin.  For example, consider the following
 script, stored in ``test.xsh``:
 
-.. code-block:: xonsh
+.. code-block:: xonshcon
 
     #!/usr/bin/env xonsh
 
@@ -1409,7 +1531,7 @@ operates on a given argument, rather than on the string ``'xonsh'`` (notice how
 ``$ARGS`` and ``$ARG1`` are used):
 
 
-.. code-block:: xonsh
+.. code-block:: xonshcon
 
     #!/usr/bin/env xonsh
 
@@ -1460,7 +1582,7 @@ the normal Python syntax.  Say you had a file called ``mine.xsh``, you could,
 therefore, perform a Bash-like source into your current shell with the
 following:
 
-.. code-block:: xonsh
+.. code-block:: xonshcon
 
     from mine import *
 

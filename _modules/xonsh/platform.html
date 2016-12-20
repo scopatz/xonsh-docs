@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.platform &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.platform &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/platform.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -65,6 +69,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">functools</span>
@@ -122,9 +127,14 @@
 <span class="n">PYTHON_VERSION_INFO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot; Version of Python interpreter as three-value tuple. &quot;&quot;&quot;</span>
 <span class="n">ON_ANACONDA</span> <span class="o">=</span> <span class="n">LazyBool</span><span class="p">(</span>
-    <span class="k">lambda</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;Anaconda&#39;</span><span class="p">,</span> <span class="s1">&#39;Continuum&#39;</span><span class="p">}),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;Anaconda&#39;</span><span class="p">,</span> <span class="s1">&#39;Continuum&#39;</span><span class="p">,</span> <span class="s1">&#39;conda-forge&#39;</span><span class="p">}),</span>
     <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;ON_ANACONDA&#39;</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot; ``True`` if executed in an Anaconda instance, else ``False``. &quot;&quot;&quot;</span>
+<span class="n">CAN_RESIZE_WINDOW</span> <span class="o">=</span> <span class="n">LazyBool</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="s1">&#39;SIGWINCH&#39;</span><span class="p">),</span>
+                             <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;CAN_RESIZE_WINDOW&#39;</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;``True`` if we can resize terminal window, as provided by the presense of</span>
+<span class="sd">signal.SIGWINCH, else ``False``.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 
 <span class="nd">@lazybool</span>
@@ -192,21 +202,51 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">seps</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;String of all path separators.&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">altsep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">altsep</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+
+<div class="viewcode-block" id="pathsplit"><a class="viewcode-back" href="../../api/platform.html#xonsh.platform.pathsplit">[docs]</a><span class="k">def</span> <span class="nf">pathsplit</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a safe version of os.path.split(), which does not work on input</span>
+<span class="sd">    without a drive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">p</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seps</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">pre</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">seps</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pre</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">pre</span><span class="p">,</span> <span class="n">post</span></div>
+
+
+<div class="viewcode-block" id="pathbasename"><a class="viewcode-back" href="../../api/platform.html#xonsh.platform.pathbasename">[docs]</a><span class="k">def</span> <span class="nf">pathbasename</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a safe version of os.path.basename(), which does not work on</span>
+<span class="sd">    input without a drive.  This version does.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pathsplit</span><span class="p">(</span><span class="n">p</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
 <span class="c1">#</span>
 <span class="c1"># Dev release info</span>
 <span class="c1">#</span>
 
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <div class="viewcode-block" id="githash"><a class="viewcode-back" href="../../api/platform.html#xonsh.platform.githash">[docs]</a><span class="k">def</span> <span class="nf">githash</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns a tuple contains two strings: the hash and the date.&quot;&quot;&quot;</span>
     <span class="n">install_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">sha</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">date_</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/dev.githash&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">install_base</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">sha</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">sha</span><span class="p">:</span>
-            <span class="n">sha</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">sha</span><span class="p">,</span> <span class="n">date_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="n">sha</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="n">sha</span></div>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">sha</span><span class="p">,</span> <span class="n">date_</span></div>
 
 
 <span class="c1">#</span>
@@ -331,16 +371,13 @@
 <span class="sd">    the current platform.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ON_LINUX</span> <span class="ow">or</span> <span class="n">ON_CYGWIN</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">linux_distro</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;arch&#39;</span><span class="p">:</span>
-            <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;/usr/share/bash-completion/bash_completion&#39;</span><span class="p">,</span> <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;/usr/share/bash-completion&#39;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;/usr/share/bash-completion/bash_completion&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="k">elif</span> <span class="n">ON_DARWIN</span><span class="p">:</span>
         <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;/usr/local/share/bash-completion/bash_completion&#39;</span><span class="p">,</span>  <span class="c1"># v2.x</span>
                <span class="s1">&#39;/usr/local/etc/bash_completion&#39;</span><span class="p">)</span>  <span class="c1"># v1.x</span>
     <span class="k">elif</span> <span class="n">ON_WINDOWS</span> <span class="ow">and</span> <span class="n">git_for_windows_path</span><span class="p">():</span>
         <span class="n">bcd</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">git_for_windows_path</span><span class="p">(),</span>
-                            <span class="s1">&#39;usr</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">bash-completion&#39;</span><span class="p">),</span>
+                            <span class="s1">&#39;usr</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">bash-completion</span><span class="se">\\</span><span class="s1">bash_completion&#39;</span><span class="p">),</span>
                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">git_for_windows_path</span><span class="p">(),</span>
                             <span class="s1">&#39;mingw64</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">git</span><span class="se">\\</span><span class="s1">completion</span><span class="se">\\</span><span class="s1">&#39;</span>
                             <span class="s1">&#39;git-completion.bash&#39;</span><span class="p">))</span>
@@ -405,16 +442,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

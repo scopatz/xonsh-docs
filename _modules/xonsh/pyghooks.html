@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.pyghooks &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.pyghooks &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/pyghooks.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -65,7 +69,6 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
-<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">ChainMap</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">MutableMapping</span>
@@ -82,11 +85,11 @@
 <span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="k">import</span> <span class="n">get_style_by_name</span>
 <span class="kn">import</span> <span class="nn">pygments.util</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">LazyObject</span><span class="p">,</span> <span class="n">LazyDict</span>
+<span class="kn">from</span> <span class="nn">xonsh.commands_cache</span> <span class="k">import</span> <span class="n">CommandsCache</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">LazyObject</span><span class="p">,</span> <span class="n">LazyDict</span><span class="p">,</span> <span class="n">lazyobject</span>
 <span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">intensify_colors_for_cmd_exe</span><span class="p">,</span>
                          <span class="n">expand_gray_colors_for_cmd_exe</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">xonsh.tokenize</span> <span class="k">import</span> <span class="n">SearchPath</span>
-
+<span class="kn">from</span> <span class="nn">xonsh.lazyimps</span> <span class="k">import</span> <span class="n">terminal256</span>
 
 <span class="n">load_module_in_background</span><span class="p">(</span><span class="s1">&#39;pkg_resources&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="s1">&#39;XONSH_DEBUG&#39;</span><span class="p">,</span>
                           <span class="n">replacements</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pygments.plugin&#39;</span><span class="p">:</span> <span class="s1">&#39;pkg_resources&#39;</span><span class="p">})</span>
@@ -99,7 +102,7 @@
 
 
 <span class="k">def</span> <span class="nf">_command_is_autocd</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AUTO_CD&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AUTO_CD&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="n">cmd_abspath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cmd_abspath</span><span class="p">)</span>
@@ -132,7 +135,16 @@
     <span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;*.xsh&#39;</span><span class="p">,</span> <span class="s1">&#39;*xonshrc&#39;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_commands_cache__</span><span class="o">.</span><span class="n">all_commands</span>
+        <span class="c1"># If the lexor is loaded as a pygment plugin, we have to mock</span>
+        <span class="c1"># __xonsh_env__ and __xonsh_commands_cache__</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="s1">&#39;__xonsh_env__&#39;</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="s1">&#39;__xonsh_env__&#39;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="k">if</span> <span class="n">ON_WINDOWS</span><span class="p">:</span>
+                <span class="n">pathext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PATHEXT&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;.EXE&#39;</span><span class="p">,</span> <span class="s1">&#39;.BAT&#39;</span><span class="p">,</span> <span class="s1">&#39;.CMD&#39;</span><span class="p">])</span>
+                <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;PATHEXT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pathext</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="s1">&#39;__xonsh_commands_cache__&#39;</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="s1">&#39;__xonsh_commands_cache__&#39;</span><span class="p">,</span> <span class="n">CommandsCache</span><span class="p">())</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_commands_cache__</span><span class="o">.</span><span class="n">all_commands</span>  <span class="c1"># NOQA</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">{</span>
@@ -479,10 +491,13 @@
             <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
             <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="n">cmap</span> <span class="o">=</span> <span class="n">STYLES</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span> <span class="o">=</span> <span class="n">get_style_by_name</span><span class="p">(</span><span class="n">value</span><span class="p">)()</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">pygments</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ClassNotFound</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span> <span class="o">=</span> <span class="n">XONSH_BASE_STYLE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span> <span class="o">=</span> <span class="n">get_style_by_name</span><span class="p">(</span><span class="n">value</span><span class="p">)()</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">pygments</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ClassNotFound</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span> <span class="o">=</span> <span class="n">XONSH_BASE_STYLE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="n">CompoundColorMap</span><span class="p">(</span><span class="n">ChainMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trap</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="n">PTK_STYLE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">styles</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trap</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="n">PTK_STYLE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">,</span> <span class="n">compound</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_style_name</span> <span class="o">=</span> <span class="n">value</span>
@@ -501,12 +516,15 @@
         <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
         <span class="c1"># Ensure we are not using ConEmu</span>
         <span class="k">if</span> <span class="s1">&#39;CONEMUANSI&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
-            <span class="c1"># Auto suggest needs to be a darker shade to be distinguishable</span>
-            <span class="c1"># from the default color</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">Token</span><span class="o">.</span><span class="n">AutoSuggestion</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;#444444&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">expand_gray_colors_for_cmd_exe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pygments</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="s1">&#39;ansicolors&#39;</span><span class="p">):</span>
+                <span class="c1"># Auto suggest needs to be a darker shade to be distinguishable</span>
+                <span class="c1"># from the default color</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">Token</span><span class="o">.</span><span class="n">AutoSuggestion</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;#444444&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">expand_gray_colors_for_cmd_exe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;INTENSIFY_COLORS_ON_WIN&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">intensify_colors_for_cmd_exe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">))</span></div></div>
+                <span class="n">has_ansi</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pygments</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="s1">&#39;ansicolors&#39;</span><span class="p">)</span>
+                <span class="n">newcolors</span> <span class="o">=</span> <span class="n">intensify_colors_for_cmd_exe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="p">,</span> <span class="n">ansi</span><span class="o">=</span><span class="n">has_ansi</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_smap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">newcolors</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="xonsh_style_proxy"><a class="viewcode-back" href="../../api/pyghooks.html#xonsh.pyghooks.xonsh_style_proxy">[docs]</a><span class="k">def</span> <span class="nf">xonsh_style_proxy</span><span class="p">(</span><span class="n">styler</span><span class="p">):</span>
@@ -523,55 +541,113 @@
     <span class="k">return</span> <span class="n">XonshStyleProxy</span></div>
 
 
-<span class="n">PTK_STYLE</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="o">.</span><span class="n">Current</span><span class="p">:</span> <span class="s1">&#39;bg:#00aaaa #000000&#39;</span><span class="p">,</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="p">:</span> <span class="s1">&#39;bg:#008888 #ffffff&#39;</span><span class="p">,</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">ProgressButton</span><span class="p">:</span> <span class="s1">&#39;bg:#003333&#39;</span><span class="p">,</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">:</span> <span class="s1">&#39;bg:#00aaaa&#39;</span><span class="p">,</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">AutoSuggestion</span><span class="p">:</span> <span class="s1">&#39;#666666&#39;</span><span class="p">,</span>
-    <span class="n">Token</span><span class="o">.</span><span class="n">Aborted</span><span class="p">:</span> <span class="s1">&#39;#888888&#39;</span><span class="p">,</span>
-<span class="p">}</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pygments</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="s1">&#39;ansicolors&#39;</span><span class="p">):</span>
+    <span class="n">PTK_STYLE</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="p">:</span> <span class="s1">&#39;bg:#ansilightgray #ansiblack&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="o">.</span><span class="n">Current</span><span class="p">:</span> <span class="s1">&#39;bg:#ansidarkgray #ansiwhite&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">:</span> <span class="s1">&#39;bg:#ansidarkgray&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="o">.</span><span class="n">Button</span><span class="p">:</span> <span class="s1">&#39;bg:#ansiblack&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="o">.</span><span class="n">Arrow</span><span class="p">:</span> <span class="s1">&#39;bg:#ansiblack #ansiwhite bold&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">AutoSuggestion</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Aborted</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">PTK_STYLE</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="p">:</span> <span class="s1">&#39;bg:#888888 #000000&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Menu</span><span class="o">.</span><span class="n">Completions</span><span class="o">.</span><span class="n">Completion</span><span class="o">.</span><span class="n">Current</span><span class="p">:</span> <span class="s1">&#39;bg:#555555 #ffffff&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">:</span> <span class="s1">&#39;bg:#555555&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="o">.</span><span class="n">Button</span><span class="p">:</span> <span class="s1">&#39;bg:#000000&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Scrollbar</span><span class="o">.</span><span class="n">Arrow</span><span class="p">:</span> <span class="s1">&#39;bg:#000000 #ffffff bold&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">AutoSuggestion</span><span class="p">:</span> <span class="s1">&#39;#666666&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="o">.</span><span class="n">Aborted</span><span class="p">:</span> <span class="s1">&#39;#666666&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
 
-<span class="n">XONSH_BASE_STYLE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">Whitespace</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">Comment</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
-    <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
-    <span class="n">Keyword</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Keyword</span><span class="o">.</span><span class="n">Pseudo</span><span class="p">:</span> <span class="s1">&#39;#008000&#39;</span><span class="p">,</span>
-    <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">Operator</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">Operator</span><span class="o">.</span><span class="n">Word</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Builtin</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span> <span class="s1">&#39;#000080&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Class</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Exception</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span> <span class="s1">&#39;#800000&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span> <span class="s1">&#39;#808000&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">.</span><span class="n">Decorator</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Doc</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Interpol</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Escape</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Regex</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Symbol</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">String</span><span class="o">.</span><span class="n">Other</span><span class="p">:</span> <span class="s1">&#39;#008000&#39;</span><span class="p">,</span>
-    <span class="n">Number</span><span class="p">:</span> <span class="s1">&#39;#800000&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Deleted</span><span class="p">:</span> <span class="s1">&#39;#800000&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Inserted</span><span class="p">:</span> <span class="s1">&#39;#008000&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Emph</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Prompt</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span> <span class="s1">&#39;#008080&#39;</span><span class="p">,</span>
-    <span class="n">Generic</span><span class="o">.</span><span class="n">Traceback</span><span class="p">:</span> <span class="s1">&#39;#800000&#39;</span><span class="p">,</span>
-    <span class="n">Error</span><span class="p">:</span> <span class="s1">&#39;#800000&#39;</span><span class="p">,</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pygments</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="s1">&#39;ansicolors&#39;</span><span class="p">):</span>
+    <span class="n">XONSH_BASE_STYLE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Whitespace</span><span class="p">:</span> <span class="s1">&#39;#ansilightgray&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="p">:</span> <span class="s1">&#39;underline #ansiteal&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span> <span class="s1">&#39;underline #ansibrown&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="p">:</span> <span class="s1">&#39;bold #ansidarkgreen&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Pseudo</span><span class="p">:</span> <span class="s1">&#39;nobold&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span> <span class="s1">&#39;nobold #ansidarkred&#39;</span><span class="p">,</span>
+        <span class="n">Operator</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
+        <span class="n">Operator</span><span class="o">.</span><span class="n">Word</span><span class="p">:</span> <span class="s1">&#39;bold #ansipurple&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Builtin</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgreen&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span> <span class="s1">&#39;#ansiblue&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Class</span><span class="p">:</span> <span class="s1">&#39;bold #ansiblue&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span> <span class="s1">&#39;bold #ansiblue&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Exception</span><span class="p">:</span> <span class="s1">&#39;bold #ansired&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span> <span class="s1">&#39;#ansidarkblue&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span> <span class="s1">&#39;#ansidarkred&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span> <span class="s1">&#39;#ansiyellow&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span> <span class="s1">&#39;bold #ansilightgray&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span> <span class="s1">&#39;#ansiyellow&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span> <span class="s1">&#39;bold #ansidarkgreen&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Decorator</span><span class="p">:</span> <span class="s1">&#39;#ansifuchsia&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="p">:</span> <span class="s1">&#39;#ansired&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Doc</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Interpol</span><span class="p">:</span> <span class="s1">&#39;bold #ansipurple&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Escape</span><span class="p">:</span> <span class="s1">&#39;bold #ansibrown&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Regex</span><span class="p">:</span> <span class="s1">&#39;#ansipurple&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Symbol</span><span class="p">:</span> <span class="s1">&#39;#ansibrown&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Other</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgreen&#39;</span><span class="p">,</span>
+        <span class="n">Number</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span> <span class="s1">&#39;bold #ansidarkblue&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s1">&#39;bold #ansipurple&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Deleted</span><span class="p">:</span> <span class="s1">&#39;#ansidarkred&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Inserted</span><span class="p">:</span> <span class="s1">&#39;#ansigreen&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span> <span class="s1">&#39;bold #ansired&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Emph</span><span class="p">:</span> <span class="s1">&#39;underline&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Prompt</span><span class="p">:</span> <span class="s1">&#39;bold #ansidarkblue&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span> <span class="s1">&#39;#ansidarkblue&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Traceback</span><span class="p">:</span> <span class="s1">&#39;#ansidarkblue&#39;</span><span class="p">,</span>
+        <span class="n">Error</span><span class="p">:</span> <span class="s1">&#39;#ansired&#39;</span><span class="p">,</span>
+        <span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;XONSH_BASE_STYLE&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">XONSH_BASE_STYLE</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Whitespace</span><span class="p">:</span> <span class="s2">&quot;#bbbbbb&quot;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="p">:</span> <span class="s2">&quot;italic #408080&quot;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span> <span class="s2">&quot;noitalic #BC7A00&quot;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="p">:</span> <span class="s2">&quot;bold #008000&quot;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Pseudo</span><span class="p">:</span> <span class="s2">&quot;nobold&quot;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span>   <span class="s2">&quot;nobold #B00040&quot;</span><span class="p">,</span>
+        <span class="n">Operator</span><span class="p">:</span>   <span class="s2">&quot;#666666&quot;</span><span class="p">,</span>
+        <span class="n">Operator</span><span class="o">.</span><span class="n">Word</span><span class="p">:</span>  <span class="s2">&quot;bold #AA22FF&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Builtin</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span> <span class="s2">&quot;#0000FF&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Class</span><span class="p">:</span> <span class="s2">&quot;bold #0000FF&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span> <span class="s2">&quot;bold #0000FF&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Exception</span><span class="p">:</span> <span class="s2">&quot;bold #D2413A&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span> <span class="s2">&quot;#19177C&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span> <span class="s2">&quot;#880000&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span> <span class="s2">&quot;#A0A000&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span> <span class="s2">&quot;bold #999999&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span> <span class="s2">&quot;#7D9029&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span> <span class="s2">&quot;bold #008000&quot;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Decorator</span><span class="p">:</span> <span class="s2">&quot;#AA22FF&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="p">:</span> <span class="s2">&quot;#BA2121&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Doc</span><span class="p">:</span> <span class="s2">&quot;italic&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Interpol</span><span class="p">:</span> <span class="s2">&quot;bold #BB6688&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Escape</span><span class="p">:</span> <span class="s2">&quot;bold #BB6622&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Regex</span><span class="p">:</span> <span class="s2">&quot;#BB6688&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Symbol</span><span class="p">:</span> <span class="s2">&quot;#19177C&quot;</span><span class="p">,</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">Other</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
+        <span class="n">Number</span><span class="p">:</span> <span class="s2">&quot;#666666&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span> <span class="s2">&quot;bold #000080&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s2">&quot;bold #800080&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Deleted</span><span class="p">:</span> <span class="s2">&quot;#A00000&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Inserted</span><span class="p">:</span> <span class="s2">&quot;#00A000&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span> <span class="s2">&quot;#FF0000&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Emph</span><span class="p">:</span> <span class="s2">&quot;italic&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Strong</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Prompt</span><span class="p">:</span> <span class="s2">&quot;bold #000080&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;#888&quot;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Traceback</span><span class="p">:</span> <span class="s2">&quot;#04D&quot;</span><span class="p">,</span>
+        <span class="n">Error</span><span class="p">:</span> <span class="s2">&quot;border:#FF0000&quot;</span>
     <span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;XONSH_BASE_STYLE&#39;</span><span class="p">)</span>
+
 
 <span class="n">KNOWN_COLORS</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">([</span>
     <span class="s1">&#39;BACKGROUND_BLACK&#39;</span><span class="p">,</span>
@@ -700,24 +776,24 @@
 <span class="k">def</span> <span class="nf">_default_style</span><span class="p">():</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pygments</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="s1">&#39;ansicolors&#39;</span><span class="p">):</span>
         <span class="n">style</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="p">:</span> <span class="s1">&#39;#ansiblue&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">CYAN</span><span class="p">:</span> <span class="s1">&#39;#ansiturquoise&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">:</span> <span class="s1">&#39;#ansigreen&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_BLACK</span><span class="p">:</span> <span class="s1">&#39;#ansiblack&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_BLUE</span><span class="p">:</span> <span class="s1">&#39;#ansidarkblue&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_CYAN</span><span class="p">:</span> <span class="s1">&#39;#ansiteal&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_GREEN</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgreen&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_PURPLE</span><span class="p">:</span> <span class="s1">&#39;#ansipurple&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_RED</span><span class="p">:</span> <span class="s1">&#39;#ansidarkred&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#ansilightgray&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_YELLOW</span><span class="p">:</span> <span class="s1">&#39;#ansibrown&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span> <span class="s1">&#39;#ansiblack&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="p">:</span> <span class="s1">&#39;#ansidarkblue&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">CYAN</span><span class="p">:</span> <span class="s1">&#39;#ansiteal&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgreen&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_BLACK</span><span class="p">:</span> <span class="s1">&#39;#ansidarkgray&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_BLUE</span><span class="p">:</span> <span class="s1">&#39;#ansiblue&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_CYAN</span><span class="p">:</span> <span class="s1">&#39;#ansiturquoise&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_GREEN</span><span class="p">:</span> <span class="s1">&#39;#ansigreen&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_PURPLE</span><span class="p">:</span> <span class="s1">&#39;#ansifuchsia&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_RED</span><span class="p">:</span> <span class="s1">&#39;#ansired&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#ansiwhite&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_YELLOW</span><span class="p">:</span> <span class="s1">&#39;#ansiyellow&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">NO_COLOR</span><span class="p">:</span> <span class="s1">&#39;noinherit&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">:</span> <span class="s1">&#39;#ansifuchsia&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="s1">&#39;#ansired&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#ansiwhite&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">:</span> <span class="s1">&#39;#ansiyellow&#39;</span><span class="p">,</span>
-            <span class="p">}</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">:</span> <span class="s1">&#39;#ansipurple&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="s1">&#39;#ansidarkred&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#ansilightgray&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">:</span> <span class="s1">&#39;#ansibrown&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
     <span class="k">elif</span> <span class="n">ON_WINDOWS</span> <span class="ow">and</span> <span class="s1">&#39;CONEMUANSI&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="c1"># These colors must match the color specification</span>
         <span class="c1"># in prompt_toolkit, so the colors are converted</span>
@@ -733,14 +809,14 @@
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_GREEN</span><span class="p">:</span> <span class="s1">&#39;#44FF44&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_PURPLE</span><span class="p">:</span> <span class="s1">&#39;#FF44FF&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_RED</span><span class="p">:</span> <span class="s1">&#39;#FF4444&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#888888&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#FFFFFF&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_YELLOW</span><span class="p">:</span> <span class="s1">&#39;#FFFF44&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">NO_COLOR</span><span class="p">:</span> <span class="s1">&#39;noinherit&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">:</span> <span class="s1">&#39;#AA00AA&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="s1">&#39;#AA0000&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#FFFFFF&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#888888&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">:</span> <span class="s1">&#39;#AAAA00&#39;</span><span class="p">,</span>
-            <span class="p">}</span>
+        <span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">style</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span> <span class="s1">&#39;#000000&#39;</span><span class="p">,</span>
@@ -753,14 +829,14 @@
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_GREEN</span><span class="p">:</span> <span class="s1">&#39;#00FF00&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_PURPLE</span><span class="p">:</span> <span class="s1">&#39;#FF00FF&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_RED</span><span class="p">:</span> <span class="s1">&#39;#FF0000&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#aaaaaa&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_WHITE</span><span class="p">:</span> <span class="s1">&#39;#ffffff&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">INTENSE_YELLOW</span><span class="p">:</span> <span class="s1">&#39;#FFFF55&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">NO_COLOR</span><span class="p">:</span> <span class="s1">&#39;noinherit&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">:</span> <span class="s1">&#39;#AA00AA&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="s1">&#39;#AA0000&#39;</span><span class="p">,</span>
-            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#ffffff&#39;</span><span class="p">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">:</span> <span class="s1">&#39;#aaaaaa&#39;</span><span class="p">,</span>
             <span class="n">Color</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">:</span> <span class="s1">&#39;#ffff00&#39;</span><span class="p">,</span>
-            <span class="p">}</span>
+        <span class="p">}</span>
     <span class="n">_expand_style</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">style</span>
 
@@ -1379,6 +1455,30 @@
      <span class="n">_murphy_style</span><span class="p">,</span> <span class="n">_native_style</span><span class="p">,</span> <span class="n">_paraiso_dark_style</span><span class="p">,</span> <span class="n">_paraiso_light_style</span><span class="p">,</span>
      <span class="n">_pastie_style</span><span class="p">,</span> <span class="n">_perldoc_style</span><span class="p">,</span> <span class="n">_rrt_style</span><span class="p">,</span> <span class="n">_tango_style</span><span class="p">,</span> <span class="n">_trac_style</span><span class="p">,</span>
      <span class="n">_vim_style</span><span class="p">,</span> <span class="n">_vs_style</span><span class="p">,</span> <span class="n">_xcode_style</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Formatter</span>
+<span class="c1">#</span>
+
+<span class="nd">@lazyobject</span>
+<div class="viewcode-block" id="XonshTerminal256Formatter"><a class="viewcode-back" href="../../api/pyghooks.html#xonsh.pyghooks.XonshTerminal256Formatter">[docs]</a><span class="k">def</span> <span class="nf">XonshTerminal256Formatter</span><span class="p">():</span>
+    <span class="k">class</span> <span class="nc">XonshTerminal256FormatterProxy</span><span class="p">(</span><span class="n">terminal256</span><span class="o">.</span><span class="n">Terminal256Formatter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Proxy class for xonsh terminal256 formatting that understands.</span>
+<span class="sd">        xonsh color tokens.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="c1"># just keep the opening token for colors.</span>
+            <span class="n">color_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Color</span><span class="o">.</span><span class="n">subtypes</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">opener</span><span class="p">,</span> <span class="n">closer</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_string</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">color_names</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">style_string</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">opener</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="c1"># special case NO_COLOR, because it is special.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">style_string</span><span class="p">[</span><span class="s1">&#39;Token.Color.NO_COLOR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\x1b</span><span class="s1">[39m&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">XonshTerminal256FormatterProxy</span></div>
 </pre></div>
 
           </div>
@@ -1414,16 +1514,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Prompt Toolkit Shell (xonsh.ptk.shell) &mdash; xonsh 0.4.7 documentation</title>
+    <title>Prompt Toolkit Shell (xonsh.ptk.shell) &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,11 +30,14 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Xonsh API" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Prompt Toolkit History Object (xonsh.ptk.history)" href="history.html" />
-    <link rel="prev" title="Readline Shell (xonsh.readline_shell)" href="../readline_shell.html" /> 
+    <link rel="prev" title="Readline Shell (xonsh.readline_shell)" href="../readline_shell.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/api/ptk/shell.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -53,9 +57,9 @@
         <li class="right" >
           <a href="../readline_shell.html" title="Readline Shell (xonsh.readline_shell)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -74,6 +78,13 @@
 <em class="property">class </em><code class="descclassname">xonsh.ptk.shell.</code><code class="descname">PromptToolkitShell</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell" title="Permalink to this definition">¶</a></dt>
 <dd><p>The xonsh shell.</p>
 <dl class="method">
+<dt id="xonsh.ptk.shell.PromptToolkitShell.bottom_toolbar_tokens">
+<code class="descname">bottom_toolbar_tokens</code><span class="sig-paren">(</span><em>cli</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.bottom_toolbar_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.bottom_toolbar_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of (token, str) tuples for the current bottom
+toolbar.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="xonsh.ptk.shell.PromptToolkitShell.cmdloop">
 <code class="descname">cmdloop</code><span class="sig-paren">(</span><em>intro=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.cmdloop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.cmdloop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enters a loop that reads and execute input from user.</p>
@@ -89,6 +100,13 @@
 <dt id="xonsh.ptk.shell.PromptToolkitShell.color_style_names">
 <code class="descname">color_style_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.color_style_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.color_style_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an iterable of all available style names.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xonsh.ptk.shell.PromptToolkitShell.compile">
+<code class="descname">compile</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles source code and returns the (possibly modified) source and
+a valid code object.</p>
 </dd></dl>
 
 <dl class="method">
@@ -111,9 +129,10 @@
 
 <dl class="method">
 <dt id="xonsh.ptk.shell.PromptToolkitShell.format_color">
-<code class="descname">format_color</code><span class="sig-paren">(</span><em>string</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.format_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.format_color" title="Permalink to this definition">¶</a></dt>
+<code class="descname">format_color</code><span class="sig-paren">(</span><em>string</em>, <em>hide=False</em>, <em>force_string=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.format_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.format_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formats a color string using Pygments. This, therefore, returns
-a list of (Token, str) tuples.</p>
+a list of (Token, str) tuples. If force_string is set to true, though,
+this will return a color fomtatted string.</p>
 </dd></dl>
 
 <dl class="method">
@@ -136,7 +155,7 @@ a list of (Token, str) tuples.</p>
 
 <dl class="method">
 <dt id="xonsh.ptk.shell.PromptToolkitShell.push">
-<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/xonsh/ptk/shell.html#PromptToolkitShell.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.push" title="Permalink to this definition">¶</a></dt>
+<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.ptk.shell.PromptToolkitShell.push" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pushes a line onto the buffer and compiles the code in a way that
 enables multiline input.</p>
 </dd></dl>
@@ -205,7 +224,7 @@ history.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/api/ptk/shell.txt"
+      <li><a href="../../_sources/api/ptk/shell.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -240,16 +259,16 @@ history.</p>
         <li class="right" >
           <a href="../readline_shell.html" title="Readline Shell (xonsh.readline_shell)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

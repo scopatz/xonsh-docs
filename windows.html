@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Windows Guide &mdash; xonsh 0.4.7 documentation</title>
+    <title>Windows Guide &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -29,10 +30,14 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="index.html" />
-    <link rel="next" title="Additional Setup" href="add_to_shell.html" />
-    <link rel="prev" title="OSX Guide" href="osx.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Customizing xonsh" href="customization.html" />
+    <link rel="prev" title="OSX Guide" href="osx.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/windows.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -47,12 +52,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="add_to_shell.html" title="Additional Setup"
+          <a href="customization.html" title="Customizing xonsh"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="osx.html" title="OSX Guide"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -117,21 +122,30 @@ snail@home ~ $
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="color-style">
 <h3>Color style<a class="headerlink" href="#color-style" title="Permalink to this headline">¶</a></h3>
-<p>The dark red and blue colors are complete unreadable in Windows&#8217; default
-terminal. To give new users the best experience Xonsh automatically
-replaces some of the dark colors with more readable alternatives (e.g. blue
-becomes cyan). The behaviour is controlled with the <code class="docutils literal"><span class="pre">$INTENSIFY_COLORS_ON_WIN</span></code>
+<p>The dark red and blue colors are completely unreadable in Windows&#8217; default
+terminal. To give new users, the best experience Xonsh automatically replaces
+some of the dark colors with more readable alternatives (e.g. blue becomes cyan).
+The behavior is controlled with the <code class="docutils literal"><span class="pre">$INTENSIFY_COLORS_ON_WIN</span></code>
 environment variable.</p>
-<p>It is possible to configure the Windows console with readable default colors.
-This following <a class="reference external" href="http://xon.sh/_static/xterm_colors.reg">console_colors.reg</a> registry file will configure the colors to
-more reable defaults.</p>
-<p>With better colors configured, <code class="docutils literal"><span class="pre">$INTENSIFY_COLORS_ON_WIN</span></code> can be disabled and
-the prompt can be changed to match how it looks on posix and mac.  Add the
-follwing to the xonsh run control file <code class="docutils literal"><span class="pre">.xonshrc</span></code>:</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nv">$INTENSIFY_COLORS_ON_WIN</span> <span class="o">=</span> <span class="bp">False</span><span class="gp"></span>
-<span class="gp">&gt;&gt;&gt;</span> <span class="nv">$PROMPT</span> <span class="o">=</span> <span class="nv">$PROMPT</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;INTENSE_&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;CYAN&#39;</span><span class="p">,</span><span class="s1">&#39;BLUE&#39;</span><span class="p">)</span><span class="go"></span>
+<a class="reference internal image-reference" href="_images/intensify-colors-on-win-false.png"><img alt="intensify-colors-win-false" class="align-center" src="_images/intensify-colors-on-win-false.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/intensify-colors-on-win-true.png"><img alt="intensify-colors-win-true" class="align-center" src="_images/intensify-colors-on-win-true.png" style="width: 100%;" /></a>
+<p>It is possible to configure the Windows console with readable default colors,
+but it is tedious to do manually. It can also be set through the windows registry,
+so to get good defaults you can download and run the registry file.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://xon.sh/_static/console_colors.reg">console_colors.reg</a></li>
+</ul>
+</div></blockquote>
+<p>With better colors configured, <code class="docutils literal"><span class="pre">$INTENSIFY_COLORS_ON_WIN</span></code> should be set to
+<code class="docutils literal"><span class="pre">False</span></code>, and the default prompt can be changed to match how it looks on POSIX and Mac.
+You can do this by adding the following to the xonsh run control file <code class="docutils literal"><span class="pre">.xonshrc</span></code>:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="nv">$INTENSIFY_COLORS_ON_WIN</span> <span class="o">=</span> <span class="bp">False</span><span class="go"></span>
+<span class="go">$PROMPT = $PROMPT.replace(&#39;INTENSE_&#39;,&#39;&#39;).replace(&#39;CYAN&#39;,&#39;BLUE&#39;)</span>
 </pre></div>
 </div>
+<p>With everything setup the console will look like this:</p>
+<a class="reference internal image-reference" href="_images/better_colors_windows.png"><img alt="better_colors_windows" class="align-center" src="_images/better_colors_windows.png" style="width: 100%;" /></a>
 </div>
 <div class="section" id="name-space-conflicts">
 <h3>Name space conflicts<a class="headerlink" href="#name-space-conflicts" title="Permalink to this headline">¶</a></h3>
@@ -212,13 +226,13 @@ available when xonsh starts.</p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="add_to_shell.html"
-                          title="Next page">&rarr; Additional Setup</a></p>
+    <p class="topless"><a href="customization.html"
+                          title="Next page">&rarr; Customizing <code class="docutils literal"><span class="pre">xonsh</span></code></a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/windows.txt"
+      <li><a href="_sources/windows.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -248,20 +262,20 @@ available when xonsh starts.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="add_to_shell.html" title="Additional Setup"
+          <a href="customization.html" title="Customizing xonsh"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="osx.html" title="OSX Guide"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

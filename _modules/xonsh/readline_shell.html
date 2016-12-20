@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.readline_shell &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.readline_shell &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/readline_shell.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -74,25 +78,19 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">cmd</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">select</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">collections</span>
 
-<span class="kn">from</span> <span class="nn">xonsh.lazyjson</span> <span class="k">import</span> <span class="n">LazyJSON</span>
 <span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">LazyObject</span>
 <span class="kn">from</span> <span class="nn">xonsh.base_shell</span> <span class="k">import</span> <span class="n">BaseShell</span>
 <span class="kn">from</span> <span class="nn">xonsh.ansi_colors</span> <span class="k">import</span> <span class="n">ansi_partial_color_format</span><span class="p">,</span> <span class="n">ansi_color_style_names</span><span class="p">,</span> <span class="n">ansi_color_style</span>
-<span class="kn">from</span> <span class="nn">xonsh.prompt.base</span> <span class="k">import</span> <span class="n">partial_format_prompt</span><span class="p">,</span> <span class="n">multiline_prompt</span>
-<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">print_exception</span>
+<span class="kn">from</span> <span class="nn">xonsh.prompt.base</span> <span class="k">import</span> <span class="n">multiline_prompt</span>
+<span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">print_exception</span><span class="p">,</span> <span class="n">check_for_partial_string</span>
 <span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_WINDOWS</span><span class="p">,</span> <span class="n">ON_CYGWIN</span><span class="p">,</span> <span class="n">ON_DARWIN</span>
 <span class="kn">from</span> <span class="nn">xonsh.lazyimps</span> <span class="k">import</span> <span class="n">pygments</span><span class="p">,</span> <span class="n">pyghooks</span>
-
-<span class="n">terminal256</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span>
-    <span class="k">lambda</span><span class="p">:</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;pygments.formatters.terminal256&#39;</span><span class="p">),</span>
-    <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;terminal&#39;</span><span class="p">)</span>
 
 <span class="n">readline</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">RL_COMPLETION_SUPPRESS_APPEND</span> <span class="o">=</span> <span class="n">RL_LIB</span> <span class="o">=</span> <span class="n">RL_STATE</span> <span class="o">=</span> <span class="kc">None</span>
@@ -316,22 +314,24 @@
         <span class="sd">&quot;&quot;&quot;Overridden to no-op.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">line</span></div>
 
-<div class="viewcode-block" id="ReadlineShell.completedefault"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineShell.completedefault">[docs]</a>    <span class="k">def</span> <span class="nf">completedefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">begidx</span><span class="p">,</span> <span class="n">endidx</span><span class="p">):</span>
+<div class="viewcode-block" id="ReadlineShell.completedefault"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineShell.completedefault">[docs]</a>    <span class="k">def</span> <span class="nf">completedefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">begidx</span><span class="p">,</span> <span class="n">endidx</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Implements tab-completion for text.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
         <span class="n">rl_completion_suppress_append</span><span class="p">()</span>  <span class="c1"># this needs to be called each time</span>
         <span class="n">_rebind_case_sensitive_completions</span><span class="p">()</span>
-
-        <span class="n">line</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">expand_alias</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">mline</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">offs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mline</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">_s</span><span class="p">,</span> <span class="n">_e</span><span class="p">,</span> <span class="n">_q</span> <span class="o">=</span> <span class="n">check_for_partial_string</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_e</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[</span><span class="n">_e</span><span class="p">:]:</span>
+                <span class="n">mline</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mline</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">_s</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">[</span><span class="n">offs</span><span class="p">:]</span> <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span>
-                                                  <span class="n">begidx</span><span class="p">,</span> <span class="n">endidx</span><span class="p">,</span>
-                                                  <span class="n">ctx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
-        <span class="k">return</span> <span class="n">x</span></div>
+            <span class="n">mline</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">offs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mline</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="n">offs</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span>
+                                                          <span class="n">begidx</span><span class="p">,</span> <span class="n">endidx</span><span class="p">,</span>
+                                                          <span class="n">ctx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span></div>
 
     <span class="c1"># tab complete on first index too</span>
     <span class="n">completenames</span> <span class="o">=</span> <span class="n">completedefault</span>
@@ -481,7 +481,7 @@
         <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>  <span class="c1"># pylint: disable=no-member</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PROMPT&#39;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">partial_format_prompt</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_formatter</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
             <span class="n">print_exception</span><span class="p">()</span>
         <span class="n">hide</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_hide</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_hide</span>
@@ -491,13 +491,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">settitle</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">p</span>
 
-<div class="viewcode-block" id="ReadlineShell.format_color"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineShell.format_color">[docs]</a>    <span class="k">def</span> <span class="nf">format_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Readline implementation of color formatting. This usesg ANSI color</span>
+<div class="viewcode-block" id="ReadlineShell.format_color"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineShell.format_color">[docs]</a>    <span class="k">def</span> <span class="nf">format_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force_string</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Readline implementation of color formatting. This usess ANSI color</span>
 <span class="sd">        codes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">hide</span> <span class="o">=</span> <span class="n">hide</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_hide</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_hide</span>
-        <span class="k">return</span> <span class="n">ansi_partial_color_format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="n">hide</span><span class="p">,</span>
-                                         <span class="n">style</span><span class="o">=</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">))</span></div>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ansi_partial_color_format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="n">hide</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReadlineShell.print_color"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineShell.print_color">[docs]</a>    <span class="k">def</span> <span class="nf">print_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -507,7 +507,7 @@
             <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="o">.</span><span class="n">style_name</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">)</span>
             <span class="n">style_proxy</span> <span class="o">=</span> <span class="n">pyghooks</span><span class="o">.</span><span class="n">xonsh_style_proxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="p">)</span>
-            <span class="n">formatter</span> <span class="o">=</span> <span class="n">terminal256</span><span class="o">.</span><span class="n">Terminal256Formatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style_proxy</span><span class="p">)</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">pyghooks</span><span class="o">.</span><span class="n">XonshTerminal256Formatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style_proxy</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">pygments</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -523,8 +523,9 @@
 
 <div class="viewcode-block" id="ReadlineHistoryAdder"><a class="viewcode-back" href="../../api/readline_shell.html#xonsh.readline_shell.ReadlineHistoryAdder">[docs]</a><span class="k">class</span> <span class="nc">ReadlineHistoryAdder</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wait_for_gc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Thread responsible for adding inputs from history to the current readline</span>
-<span class="sd">        instance. May wait for the history garbage collector to finish.</span>
+        <span class="sd">&quot;&quot;&quot;Thread responsible for adding inputs from history to the</span>
+<span class="sd">        current readline instance. May wait for the history garbage</span>
+<span class="sd">        collector to finish.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ReadlineHistoryAdder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
@@ -537,25 +538,17 @@
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">hist</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_history__</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_gc</span> <span class="ow">and</span> <span class="n">hist</span><span class="o">.</span><span class="n">gc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.011</span><span class="p">)</span>  <span class="c1"># gc sleeps for 0.01 secs, sleep a beat longer</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">gc</span><span class="o">.</span><span class="n">files</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">lj</span> <span class="o">=</span> <span class="n">LazyJSON</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">reopen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">lj</span><span class="p">[</span><span class="s1">&#39;cmds&#39;</span><span class="p">]:</span>
-                    <span class="n">inp</span> <span class="o">=</span> <span class="n">command</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;EOF&#39;</span><span class="p">:</span>
-                            <span class="k">continue</span>
-                        <span class="n">readline</span><span class="o">.</span><span class="n">add_history</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="n">RL_LIB</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="n">RL_LIB</span><span class="o">.</span><span class="n">history_set_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">lj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
-                <span class="k">continue</span></div></div>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hist</span><span class="o">.</span><span class="n">all_items</span><span class="p">():</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;inp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_history_item</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">readline</span><span class="o">.</span><span class="n">add_history</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">RL_LIB</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">RL_LIB</span><span class="o">.</span><span class="n">history_set_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
 </pre></div>
 
           </div>
@@ -591,16 +584,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

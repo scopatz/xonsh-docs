@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &mdash; xonsh 0.4.7 documentation</title>
+    <title>Tutorial &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -29,10 +30,14 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial: History" href="tutorial_hist.html" />
-    <link rel="prev" title="Additional Setup" href="add_to_shell.html" /> 
+    <link rel="prev" title="Customizing xonsh" href="customization.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/tutorial.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -50,9 +55,9 @@
           <a href="tutorial_hist.html" title="Tutorial: History"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="add_to_shell.html" title="Additional Setup"
+          <a href="customization.html" title="Customizing xonsh"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -336,6 +341,27 @@ impossible.</p>
 force xonsh to do so with the syntax that we will see in the following
 sections.</p>
 </div>
+<div class="section" id="quoting">
+<h2>Quoting<a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h2>
+<p>Single or double quotes can be used to remove the special meaning
+of certain characters or words to xonsh. If a subprocess command
+contains characters that collide with xonsh syntax then quotes
+must be used to force xonsh to not interpret them.</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">echo</span> <span class="k">$</span><span class="p">{</span><span class="gp"></span>
+<span class="gp">...</span><span class="go"></span>
+<span class="go">SyntaxError: &lt;xonsh-code&gt;:1:5: (&#39;code: {&#39;,)</span>
+<span class="go">echo ${</span>
+<span class="go">     ^</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">echo</span> <span class="s1">&#39;${&#39;</span><span class="go"></span>
+<span class="go">${</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There is no notion of an escaping character in xonsh like the
+backslash () in bash.</p>
+</div>
+</div>
 <div class="section" id="captured-subprocess-with-and">
 <h2>Captured Subprocess with <code class="docutils literal"><span class="pre">$()</span></code> and <code class="docutils literal"><span class="pre">!()</span></code><a class="headerlink" href="#captured-subprocess-with-and" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">$(&lt;expr&gt;)</span></code> operator in xonsh executes a subprocess command and
@@ -343,8 +369,8 @@ sections.</p>
 <p>The <code class="docutils literal"><span class="pre">$()</span></code> syntax captures and returns the standard output stream of the
 command as a Python string.  This is similar to how <code class="docutils literal"><span class="pre">$()</span></code> performs in Bash.
 For example,</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; $(ls -l)
-&#39;total 0\n-rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh\n&#39;
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">$</span><span class="p">(</span><span class="err">ls</span> -l<span class="p">)</span><span class="go"></span>
+<span class="go">&#39;total 0\n-rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh\n&#39;</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">!()</span></code> syntax captured more information about the command, as an instance
@@ -352,8 +378,8 @@ of a class called <code class="docutils literal"><span class="pre">CompletedComm
 about the result of the given command, including the return code, the process
 id, the standard output and standard error streams, and information about how
 input and output were redirected.  For example:</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; !(ls nonexistent_directory)
-CompletedCommand(stdin=None, stdout=&#39;&#39;, stderr=&#39;/bin/ls: cannot access nonexistent_directory: No such file or directory\n&#39;, pid=1862, returncode=2, args=[&#39;ls&#39;, &#39;nonexistent_directory&#39;], alias=[&#39;ls&#39;, &#39;--color=auto&#39;], stdin_redirect=None, stdout_redirect=None, stderr_redirect=None)
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">!</span><span class="p">(</span><span class="err">ls</span> nonexistent_directory<span class="p">)</span><span class="go"></span>
+<span class="go">CompletedCommand(stdin=None, stdout=&#39;&#39;, stderr=&#39;/bin/ls: cannot access nonexistent_directory: No such file or directory\n&#39;, pid=1862, returncode=2, args=[&#39;ls&#39;, &#39;nonexistent_directory&#39;], alias=[&#39;ls&#39;, &#39;--color=auto&#39;], stdin_redirect=None, stdout_redirect=None, stderr_redirect=None)</span>
 </pre></div>
 </div>
 <p>This object will be &#8220;truthy&#8221; if its return code was 0, and it is equal (via
@@ -411,15 +437,15 @@ had a nonzero return code.</p>
 <p>The <code class="docutils literal"><span class="pre">$()</span></code> and <code class="docutils literal"><span class="pre">!()</span></code> operators are expressions themselves. This means that
 we can assign the results to a variable or perform any other manipulations we
 want.</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; x = $(ls -l)
-&gt;&gt;&gt; print(x.upper())
-TOTAL 0
--RW-RW-R-- 1 SNAIL SNAIL 0 MAR  8 15:46 XONSH
-&gt;&gt;&gt; y = !(ls -l)
-&gt;&gt;&gt; print(y.returncode)
-0
-&gt;&gt;&gt; print(y.rtn)  # alias to returncode
-0
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="k">$</span><span class="p">(</span><span class="err">ls</span> -l<span class="p">)</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span><span class="go"></span>
+<span class="go">TOTAL 0</span>
+<span class="go">-RW-RW-R-- 1 SNAIL SNAIL 0 MAR  8 15:46 XONSH</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="k">!</span><span class="p">(</span><span class="err">ls</span> -l<span class="p">)</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span><span class="go"></span>
+<span class="go">0</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">rtn</span><span class="p">)</span>  <span class="c1"># alias to returncode</span><span class="go"></span>
+<span class="go">0</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -429,8 +455,8 @@ TOTAL 0
 <p>While in subprocess-mode or inside of a captured subprocess, we can always
 still query the environment with <code class="docutils literal"><span class="pre">$NAME</span></code> variables or the <code class="docutils literal"><span class="pre">${}</span></code> syntax,
 or inject Python values with the <code class="docutils literal"><span class="pre">&#64;()</span></code> operator:</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; $(echo $HOME)
-&#39;/home/snail\n&#39;
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">$</span><span class="p">(</span><span class="err">echo</span> <span class="nv">$HOME</span><span class="p">)</span><span class="go"></span>
+<span class="go">&#39;/home/snail\n&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -442,11 +468,11 @@ difference is that the subprocess&#8217;s stdout passes directly through xonsh a
 to the screen.  The return value of <code class="docutils literal"><span class="pre">$[]</span></code> is always <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p>In the following, we can see that the results of <code class="docutils literal"><span class="pre">$[]</span></code> are automatically
 printed, and the return value is not a string.</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; x = $[ls -l]
-total 0
--rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh
-&gt;&gt;&gt; x is None
-True
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="k">$</span><span class="p">[</span><span class="err">ls</span> -l<span class="p">]</span><span class="go"></span>
+<span class="go">total 0</span>
+<span class="go">-rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="go"></span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p>Previously when we automatically entered subprocess-mode, uncaptured
@@ -456,10 +482,10 @@ equivalent.</p>
 containing information about the result of executing the given command.
 However, its standard output and standard error streams are directed to the
 terminal, and the resulting object is not displayed.  For example</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; x = ![ls -l] and ![echo &quot;hi&quot;]
-total 0
--rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh
-hi
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="k">!</span><span class="p">[</span><span class="err">ls</span> -l<span class="p">]</span> <span class="ow">and</span> <span class="k">!</span><span class="p">[</span><span class="err">echo</span> <span class="s2">&quot;hi&quot;</span><span class="p">]</span><span class="go"></span>
+<span class="go">total 0</span>
+<span class="go">-rw-rw-r-- 1 snail snail 0 Mar  8 15:46 xonsh</span>
+<span class="go">hi</span>
 </pre></div>
 </div>
 </div>
@@ -487,17 +513,17 @@ result is automatically converted to a string. For example,</p>
 </div>
 <p>This syntax can be used inside of a captured or uncaptured subprocess, and can
 be used to generate any of the tokens in the subprocess command list.</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; out = $(echo @(x + &#39; &#39; + y))
-&gt;&gt;&gt; out
-&#39;xonsh party\n&#39;
-&gt;&gt;&gt; @(&quot;ech&quot; + &quot;o&quot;) &quot;hey&quot;
-hey
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="k">$</span><span class="p">(</span><span class="err">echo</span> <span class="k">@</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">y</span><span class="p">))</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">out</span><span class="go"></span>
+<span class="go">&#39;xonsh party\n&#39;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">@</span><span class="p">(</span><span class="s2">&quot;ech&quot;</span> <span class="o">+</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span> <span class="s2">&quot;hey&quot;</span><span class="go"></span>
+<span class="go">hey</span>
 </pre></div>
 </div>
 <p>Thus, <code class="docutils literal"><span class="pre">&#64;()</span></code> allows us to create complex commands in Python-mode and then
 feed them to a subprocess as needed.  For example:</p>
-<div class="highlight-xonsh"><div class="highlight"><pre><span></span>for i in range(20):
-    $[touch @(&#39;file%02d&#39; % i)]
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span><span class="go"></span>
+<span class="go">    $[touch @(&#39;file%02d&#39; % i)]</span>
 </pre></div>
 </div>
 </div>
@@ -508,22 +534,22 @@ command to replace the command itself (command substitution):
 <code class="docutils literal"><span class="pre">&#64;([i.strip()</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">$(cmd).split()])</span></code>.  Xonsh offers a
 short-hand syntax for this operation: <code class="docutils literal"><span class="pre">&#64;$(cmd)</span></code>.</p>
 <p>Consider the following example:</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span>&gt;&gt;&gt; # this returns a string representing stdout
-&gt;&gt;&gt; $(which ls)
-&#39;ls --color=auto\n&#39;
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># this returns a string representing stdout</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">$</span><span class="p">(</span><span class="err">which</span> ls<span class="p">)</span><span class="go"></span>
+<span class="go">&#39;ls --color=auto\n&#39;</span>
 
-&gt;&gt;&gt; # this attempts to run the command, but as one argument
-&gt;&gt;&gt; # (looks for &#39;ls --color=auto\n&#39; with spaces and newline)
-&gt;&gt;&gt; @($(which ls).strip())
-xonsh: subprocess mode: command not found: ls --color=auto
+<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># this attempts to run the command, but as one argument</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># (looks for &#39;ls --color=auto\n&#39; with spaces and newline)</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">@</span><span class="p">(</span><span class="k">$</span><span class="p">(</span><span class="err">which</span> ls<span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="go"></span>
+<span class="go">xonsh: subprocess mode: command not found: ls --color=auto</span>
 
-&gt;&gt;&gt; # this actually executes the intended command
-&gt;&gt;&gt; @([i.strip() for i in $(which ls).split()])
-some_file  some_other_file
+<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># this actually executes the intended command</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">@</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="k">$</span><span class="p">(</span><span class="err">which</span> ls<span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span><span class="go"></span>
+<span class="go">some_file  some_other_file</span>
 
-&gt;&gt;&gt; # this does the same thing, but is much more concise
-&gt;&gt;&gt; @$(which ls)
-some_file  some_other_file
+<span class="gp">&gt;&gt;&gt;</span> <span class="c1"># this does the same thing, but is much more concise</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="k">@$</span><span class="p">(</span><span class="err">which</span> ls<span class="p">)</span><span class="go"></span>
+<span class="go">some_file  some_other_file</span>
 </pre></div>
 </div>
 </div>
@@ -620,6 +646,11 @@ but, for compatibility purposes, xonsh also support Bash-like syntax.</p>
 <p>The basic operations are &#8220;write to&#8221; (<code class="docutils literal"><span class="pre">&gt;</span></code>), &#8220;append to&#8221; (<code class="docutils literal"><span class="pre">&gt;&gt;</span></code>), and &#8220;read
 from&#8221; (<code class="docutils literal"><span class="pre">&lt;</span></code>).  The details of these are perhaps best explained through
 examples.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The target of the redirection should be separated by a space,
+otherwise xonsh will raise a SyntaxError.</p>
+</div>
 <div class="section" id="redirecting-stdout">
 <h3>Redirecting <code class="docutils literal"><span class="pre">stdout</span></code><a class="headerlink" href="#redirecting-stdout" title="Permalink to this headline">¶</a></h3>
 <p>All of the following examples will execute <code class="docutils literal"><span class="pre">COMMAND</span></code> and write its regular
@@ -858,6 +889,32 @@ be used with backticks with the following syntax: <code class="docutils literal"
 </pre></div>
 </div>
 </div>
+<div class="section" id="path-output">
+<h3>Path Output<a class="headerlink" href="#path-output" title="Permalink to this headline">¶</a></h3>
+<p>Using the <code class="docutils literal"><span class="pre">p</span></code> modifier with either regex or glob backticks changes the
+return type from a list of strings to a list of <code class="xref py py-class docutils literal"><span class="pre">pathlib.Path</span></code> objects:</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="sb">`</span><span class="sr">.*</span><span class="sb">`</span><span class="go"></span>
+<span class="go">[Path(&#39;foo&#39;), Path(&#39;bar&#39;)]</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pg</span><span class="sb">`</span><span class="sr">**</span><span class="sb">`</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">()]</span><span class="go"></span>
+<span class="go">[Path(&#39;a_link&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="path-literals">
+<h3>Path Literals<a class="headerlink" href="#path-literals" title="Permalink to this headline">¶</a></h3>
+<p>Path objects can be instantiated directly using <em>p-string</em> syntax. Path objects
+can be converted back to plain strings with <cite>str()</cite>, and this conversion is
+handled implicitly in subprocess mode.</p>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mypath</span> <span class="o">=</span> <span class="n">p</span><span class="s1">&#39;/foo/bar&#39;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">mypath</span><span class="go"></span>
+<span class="go">Path(&#39;/foo/bar&#39;)</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">mypath</span><span class="o">.</span><span class="n">stem</span><span class="go"></span>
+<span class="go">&#39;bar&#39;</span><span class="gp"></span>
+<span class="gp">&gt;&gt;&gt;</span> <span class="n">echo</span> <span class="k">@</span><span class="p">(</span><span class="n">mypath</span><span class="p">)</span><span class="go"></span>
+<span class="go">/foo/bar</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="help-superhelp-with">
 <h2>Help &amp; Superhelp with <code class="docutils literal"><span class="pre">?</span></code> &amp; <code class="docutils literal"><span class="pre">??</span></code><a class="headerlink" href="#help-superhelp-with" title="Permalink to this headline">¶</a></h2>
@@ -966,11 +1023,25 @@ being executed.</p>
 <h3>Callable Aliases<a class="headerlink" href="#callable-aliases" title="Permalink to this headline">¶</a></h3>
 <p>Lastly, if an alias value is a function (or other callable), then this
 function is called <em>instead</em> of going to a subprocess command. Such functions
-must have one of the following two signatures</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_mycmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;args will be a list of strings representing the arguments to this</span>
-<span class="sd">    command. stdin will be a string, if present. This is used to pipe</span>
-<span class="sd">    the output of the previous command into this one.</span>
+may have one of the following signatures:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mycmd0</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This form takes no arguments but may return output or a return code.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;some output.&quot;</span>
+
+<span class="k">def</span> <span class="nf">mycmd1</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This form takes a single argument, args. This is a list of strings</span>
+<span class="sd">    representing the arguments to this command. Feel free to parse them</span>
+<span class="sd">    however you wish!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># perform some action.</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">mycmd2</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This form takes two arguments. The args list like above, as a well</span>
+<span class="sd">    as standard input. stdin will be a file like object that the command</span>
+<span class="sd">    can read from, if the user piped input to this command. If no input</span>
+<span class="sd">    was provided this will be None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># do whatever you want! Anything you print to stdout or stderr</span>
     <span class="c1"># will be captured for you automatically. This allows callable</span>
@@ -1001,12 +1072,22 @@ must have one of the following two signatures</p>
     <span class="c1"># return code indicating failure (&gt; 0 return code). In the previous</span>
     <span class="c1"># examples the return code would be 0/success.</span>
     <span class="k">return</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;I failed&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_mycmd2</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;args will be a list of strings representing the arguments to this</span>
-<span class="sd">    command.  stdin is a read-only file-like object, and stdout and stderr</span>
-<span class="sd">    are write-only file-like objects</span>
+
+<span class="k">def</span> <span class="nf">mycmd3</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This form has three parameters.  The first two are the same as above.</span>
+<span class="sd">    The last argument represents the standard output.  This is a file-like</span>
+<span class="sd">    object that the command may write too.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># you can either use stdout</span>
+    <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello, &quot;</span><span class="p">)</span>
+    <span class="c1"># or print()!</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Mom!&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">mycmd4</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The next form of subprocess callables takes all of the</span>
+<span class="sd">    arguments shown above as well as the standard error stream.</span>
+<span class="sd">    As with stdout, this is a write-only file-like object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># This form allows &quot;streaming&quot; data to stdout and stderr</span>
     <span class="kn">import</span> <span class="nn">time</span>
@@ -1017,6 +1098,23 @@ must have one of the following two signatures</p>
     <span class="c1"># In this form, the return value should be a single integer</span>
     <span class="c1"># representing the &quot;return code&quot; of the alias (zero if successful,</span>
     <span class="c1"># non-zero otherwise)</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">mycmd5</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Lastly, the final form of subprocess callables takes all of the</span>
+<span class="sd">    arguments shown above as well as a subpcrocess specification</span>
+<span class="sd">    SubprocSpec object. This holds many attributes that dictate how</span>
+<span class="sd">    the command is being run.  For instance this can be useful for</span>
+<span class="sd">    knowing if the process is captured by $() or !().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">xonsh.proc</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">captured</span> <span class="ow">in</span> <span class="n">xonsh</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">STDOUT_CAPTURE_KINDS</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="c1"># Now we&#39;ll get a newline if the user is at the terminal, and no</span>
+    <span class="c1"># newline if we are captured</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hi Mom!&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">0</span>
 </pre></div>
 </div>
@@ -1034,7 +1132,7 @@ built-in mapping.  Here is an example using a function value:</p>
 </div>
 <p>To redefine an alias, simply assign a new function, here using a python lambda
 with keyword arguments:</p>
-<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">args</span><span class="p">,</span><span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">:</span> <span class="s2">&quot;Banana for scale.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="gp"></span>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="s2">&quot;Banana for scale.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="gp"></span>
 <span class="gp">&gt;&gt;&gt;</span> <span class="n">banana</span><span class="go"></span>
 <span class="go">Banana for scale.</span>
 </pre></div>
@@ -1061,30 +1159,54 @@ as aliases, by wrapping them in <code class="docutils literal"><span class="pre"
 </pre></div>
 </div>
 </div>
-<div class="section" id="foreground-only-aliases">
-<h3>Foreground-only Aliases<a class="headerlink" href="#foreground-only-aliases" title="Permalink to this headline">¶</a></h3>
-<p>Usually, callable alias commands will be run in a separate thread so that users
+<div class="section" id="unthreadable-aliases">
+<h3>Unthreadable Aliases<a class="headerlink" href="#unthreadable-aliases" title="Permalink to this headline">¶</a></h3>
+<p>Usually, callable alias commands will be run in a separate thread so that
 they may be run in the background.  However, some aliases may need to be
 executed on the thread that they were called from. This is mostly useful for
 debuggers and profilers. To make an alias run in the foreground, decorate its
-function with the <code class="docutils literal"><span class="pre">xonsh.proc.foreground</span></code> decorator.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xonsh.proc</span> <span class="kn">import</span> <span class="n">foreground</span>
+function with the <code class="docutils literal"><span class="pre">xonsh.proc.unthreadable</span></code> decorator.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xonsh.proc</span> <span class="kn">import</span> <span class="n">unthreadable</span>
 
-<span class="nd">@foreground</span>
+<span class="nd">@unthreadable</span>
 <span class="k">def</span> <span class="nf">_mycmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="k">return</span> <span class="s1">&#39;In your face!&#39;</span>
 
 <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;mycmd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mycmd</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="uncapturable-aliases">
+<h3>Uncapturable Aliases<a class="headerlink" href="#uncapturable-aliases" title="Permalink to this headline">¶</a></h3>
+<p>Also, callable aliases by default will be executed such that their output is
+captured (like most commands in xonsh that don&#8217;t enter alternate mode).
+However, some aliases may want to run alternate-mode commands themselves.
+Thus the callable alias can&#8217;t be captured without dire consequences (tm).
+To prevent this, you can declare a callable alias uncapturable. This is mostly
+useful for aliases that then open up text editors, pagers, or the like.
+To make an alias uncapturable, decorate its
+function with the <code class="docutils literal"><span class="pre">xonsh.proc.uncapturable</span></code> decorator. This is probably
+best used in conjunction with the <code class="docutils literal"><span class="pre">unthreadable</span></code> decorator.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xonsh.proc</span> <span class="kn">import</span> <span class="n">unthreadable</span><span class="p">,</span> <span class="n">uncapturable</span>
+
+<span class="nd">@uncapturable</span>
+<span class="nd">@unthreadable</span>
+<span class="k">def</span> <span class="nf">_myvi</span><span class="p">():</span>
+    <span class="n">vi</span> <span class="n">my</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;myvi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_myvi</span>
+</pre></div>
+</div>
+<hr class="docutils" />
 <p>Aliasing is a powerful way that xonsh allows you to seamlessly interact to
 with Python and subprocess.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">If <code class="docutils literal"><span class="pre">FOREIGN_ALIASES_OVERRIDE</span></code> enviroment variable is False (the default)
-then foreign shell aliases that try to override xonsh aliases will be ignored.
-Setting of this enviroment variable must happen in the static configuration
-file <code class="docutils literal"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code> in the &#8216;env&#8217; section.</p>
+<p class="last">If <code class="docutils literal"><span class="pre">FOREIGN_ALIASES_OVERRIDE</span></code> enviroment variable is False
+(the default) then foreign shell aliases that try to override
+xonsh aliases will be ignored. Setting of this enviroment variable
+must happen in the static configuration file
+<code class="docutils literal"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code> in the &#8216;env&#8217; section.</p>
 </div>
 </div>
 </div>
@@ -1193,16 +1315,16 @@ can use!</p>
 </li>
 </ul>
 <p>You can make use of additional variables beyond these by adding them to the
-<code class="docutils literal"><span class="pre">FORMATTER_DICT</span></code> environment variable.  The values in this dictionary
+<code class="docutils literal"><span class="pre">PROMPT_FIELDS</span></code> environment variable.  The values in this dictionary
 should be strings (which will be inserted into the prompt verbatim), or
 functions of no arguments (which will be called each time the prompt is
 generated, and the results of those calls will be inserted into the prompt).
 For example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">snail@home ~ $</span> <span class="nv">$FORMATTER_DICT</span><span class="o">[</span><span class="s1">&#39;test&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;hey&quot;</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">snail@home ~ $</span> <span class="nv">$PROMPT_FIELDS</span><span class="o">[</span><span class="s1">&#39;test&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;hey&quot;</span>
 <span class="gp">snail@home ~ $</span> <span class="nv">$PROMPT</span> <span class="o">=</span> <span class="s2">&quot;{test} {cwd} </span>$<span class="s2"> &quot;</span>
 <span class="go">hey ~ $</span>
 <span class="go">hey ~ $ import random</span>
-<span class="go">hey ~ $ $FORMATTER_DICT[&#39;test&#39;] = lambda: random.randint(1,9)</span>
+<span class="go">hey ~ $ $PROMPT_FIELDS[&#39;test&#39;] = lambda: random.randint(1,9)</span>
 <span class="go">3 ~ $</span>
 <span class="go">5 ~ $</span>
 <span class="go">2 ~ $</span>
@@ -1215,7 +1337,7 @@ prefix.  For example:</p>
 <span class="go">en_US.utf8 &gt;</span>
 </pre></div>
 </div>
-<p>Note that some entries of the <code class="docutils literal"><span class="pre">$FORMATTER_DICT</span></code> are not always applicable, for
+<p>Note that some entries of the <code class="docutils literal"><span class="pre">$PROMPT_FIELDS</span></code> are not always applicable, for
 example, <code class="docutils literal"><span class="pre">curr_branch</span></code> returns <code class="docutils literal"><span class="pre">None</span></code> if the current directory is not in a
 repository. The <code class="docutils literal"><span class="pre">None</span></code> will be interpreted as an empty string.</p>
 <p>But let&#8217;s consider a problem:</p>
@@ -1250,21 +1372,21 @@ and exit, instead of entering the command loop.</p>
 <p>Longer scripts can be run either by specifying a filename containing the script,
 or by feeding them to xonsh via stdin.  For example, consider the following
 script, stored in <code class="docutils literal"><span class="pre">test.xsh</span></code>:</p>
-<div class="highlight-xonsh"><div class="highlight"><pre><span></span>#!/usr/bin/env xonsh
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env xonsh</span><span class="go"></span>
 
-ls
+<span class="go">ls</span>
 
-print(&#39;removing files&#39;)
-rm `file\d+.txt`
+<span class="go">print(&#39;removing files&#39;)</span>
+<span class="go">rm `file\d+.txt`</span>
 
-ls
+<span class="go">ls</span>
 
-print(&#39;adding files&#39;)
-# This is a comment
-for i, x in enumerate(&quot;xonsh&quot;):
-    echo @(x) &gt; @(&quot;file{0}.txt&quot;.format(i))
+<span class="go">print(&#39;adding files&#39;)</span>
+<span class="go"># This is a comment</span>
+<span class="go">for i, x in enumerate(&quot;xonsh&quot;):</span>
+<span class="go">    echo @(x) &gt; @(&quot;file{0}.txt&quot;.format(i))</span>
 
-print($(ls).replace(&#39;\n&#39;, &#39; &#39;))
+<span class="go">print($(ls).replace(&#39;\n&#39;, &#39; &#39;))</span>
 </pre></div>
 </div>
 <p>This script could be run by piping its contents to xonsh:</p>
@@ -1294,24 +1416,24 @@ the script in two different ways:</p>
 <p>For example, consider a slight variation of the example script from above that
 operates on a given argument, rather than on the string <code class="docutils literal"><span class="pre">'xonsh'</span></code> (notice how
 <code class="docutils literal"><span class="pre">$ARGS</span></code> and <code class="docutils literal"><span class="pre">$ARG1</span></code> are used):</p>
-<div class="highlight-xonsh"><div class="highlight"><pre><span></span>#!/usr/bin/env xonsh
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env xonsh</span><span class="go"></span>
 
-print($ARGS)
+<span class="go">print($ARGS)</span>
 
-ls
+<span class="go">ls</span>
 
-print(&#39;removing files&#39;)
-rm `file\d+.txt`
+<span class="go">print(&#39;removing files&#39;)</span>
+<span class="go">rm `file\d+.txt`</span>
 
-ls
+<span class="go">ls</span>
 
-print(&#39;adding files&#39;)
-# This is a comment
-for i, x in enumerate($ARG1):
-    echo @(x) &gt; @(&quot;file{0}.txt&quot;.format(i))
+<span class="go">print(&#39;adding files&#39;)</span>
+<span class="go"># This is a comment</span>
+<span class="go">for i, x in enumerate($ARG1):</span>
+<span class="go">    echo @(x) &gt; @(&quot;file{0}.txt&quot;.format(i))</span>
 
-print($(ls).replace(&#39;\n&#39;, &#39; &#39;))
-print()
+<span class="go">print($(ls).replace(&#39;\n&#39;, &#39; &#39;))</span>
+<span class="go">print()</span>
 </pre></div>
 </div>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xonsh test2.xsh snails
@@ -1340,7 +1462,7 @@ Bash&#8217;s <code class="docutils literal"><span class="pre">set</span> <span c
 the normal Python syntax.  Say you had a file called <code class="docutils literal"><span class="pre">mine.xsh</span></code>, you could,
 therefore, perform a Bash-like source into your current shell with the
 following:</p>
-<div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mine</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-xonshcon"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mine</span> <span class="kn">import</span> <span class="o">*</span><span class="go"></span>
 </pre></div>
 </div>
 </div>
@@ -1377,6 +1499,7 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 </li>
 <li><a class="reference internal" href="#running-commands">Running Commands</a></li>
 <li><a class="reference internal" href="#python-mode-vs-subprocess-mode">Python-mode vs Subprocess-mode</a></li>
+<li><a class="reference internal" href="#quoting">Quoting</a></li>
 <li><a class="reference internal" href="#captured-subprocess-with-and">Captured Subprocess with <code class="docutils literal"><span class="pre">$()</span></code> and <code class="docutils literal"><span class="pre">!()</span></code></a></li>
 <li><a class="reference internal" href="#uncaptured-subprocess-with-and">Uncaptured Subprocess with <code class="docutils literal"><span class="pre">$[]</span></code> and <code class="docutils literal"><span class="pre">![]</span></code></a></li>
 <li><a class="reference internal" href="#python-evaluation-with">Python Evaluation with <code class="docutils literal"><span class="pre">&#64;()</span></code></a></li>
@@ -1401,6 +1524,8 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 <li><a class="reference internal" href="#regular-expression-globbing">Regular Expression Globbing</a></li>
 <li><a class="reference internal" href="#normal-globbing">Normal Globbing</a></li>
 <li><a class="reference internal" href="#custom-path-searches">Custom Path Searches</a></li>
+<li><a class="reference internal" href="#path-output">Path Output</a></li>
+<li><a class="reference internal" href="#path-literals">Path Literals</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#help-superhelp-with">Help &amp; Superhelp with <code class="docutils literal"><span class="pre">?</span></code> &amp; <code class="docutils literal"><span class="pre">??</span></code></a></li>
@@ -1409,7 +1534,8 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
 <li><a class="reference internal" href="#callable-aliases">Callable Aliases</a></li>
 <li><a class="reference internal" href="#adding-modifying-and-removing-aliases">Adding, Modifying, and Removing Aliases</a></li>
 <li><a class="reference internal" href="#anonymous-aliases">Anonymous Aliases</a></li>
-<li><a class="reference internal" href="#foreground-only-aliases">Foreground-only Aliases</a></li>
+<li><a class="reference internal" href="#unthreadable-aliases">Unthreadable Aliases</a></li>
+<li><a class="reference internal" href="#uncapturable-aliases">Uncapturable Aliases</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#up-down-tab">Up, Down, Tab</a></li>
@@ -1424,8 +1550,8 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
   </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="add_to_shell.html"
-                          title="Previous page">&larr; Additional Setup</a></p>
+    <p class="topless"><a href="customization.html"
+                          title="Previous page">&larr; Customizing <code class="docutils literal"><span class="pre">xonsh</span></code></a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
@@ -1435,7 +1561,7 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/tutorial.txt"
+      <li><a href="_sources/tutorial.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1468,17 +1594,17 @@ On Windows, you can also type <code class="docutils literal"><span class="pre">C
           <a href="tutorial_hist.html" title="Tutorial: History"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="add_to_shell.html" title="Additional Setup"
+          <a href="customization.html" title="Customizing xonsh"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

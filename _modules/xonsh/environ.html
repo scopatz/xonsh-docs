@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.environ &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.environ &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/environ.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -109,6 +113,7 @@
             <span class="s1">&#39;{{INTENSE_YELLOW}}</span><span class="si">{docstr}</span><span class="s1">{{NO_COLOR}}</span><span class="se">\n\n</span><span class="s1">&#39;</span>
             <span class="s1">&#39;default: {{CYAN}}</span><span class="si">{default}</span><span class="s1">{{NO_COLOR}}</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="s1">&#39;configurable: {{CYAN}}</span><span class="si">{configurable}</span><span class="s1">{{NO_COLOR}}&#39;</span><span class="p">)</span>
+
 
 <span class="nd">@lazyobject</span>
 <span class="k">def</span> <span class="nf">LOCALE_CATS</span><span class="p">():</span>
@@ -198,11 +203,12 @@
     <span class="s1">&#39;PROMPT&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string_or_callable</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;RAISE_SUBPROC_ERROR&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;RIGHT_PROMPT&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string_or_callable</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
+    <span class="s1">&#39;BOTTOM_TOOLBAR&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string_or_callable</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;SUBSEQUENCE_PATH_COMPLETION&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;SUPPRESS_BRANCH_TIMEOUT_MESSAGE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
-    <span class="s1">&#39;TEEPTY_PIPE_DELAY&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
     <span class="s1">&#39;UPDATE_OS_ENVIRON&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;VC_BRANCH_TIMEOUT&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="s1">&#39;VC_HG_SHOW_BRANCH&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;VI_MODE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;WIN_UNICODE_CONSOLE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">always_false</span><span class="p">,</span> <span class="n">setup_win_unicode_console</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
@@ -214,9 +220,14 @@
     <span class="s1">&#39;XONSH_DEBUG&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">always_false</span><span class="p">,</span> <span class="n">to_debug</span><span class="p">,</span> <span class="n">bool_or_int_to_str</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_ENCODING&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_ENCODING_ERRORS&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_HISTORY_BACKEND&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_HISTORY_FILE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_HISTORY_SIZE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_history_tuple</span><span class="p">,</span> <span class="n">to_history_tuple</span><span class="p">,</span> <span class="n">history_tuple_to_str</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_LOGIN&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_PROC_FREQUENCY&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_SHOW_TRACEBACK&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_STDERR_PREFIX&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_STDERR_POSTFIX&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">,</span> <span class="n">ensure_string</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_STORE_STDOUT&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_STORE_STDIN&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_bool</span><span class="p">,</span> <span class="n">to_bool</span><span class="p">,</span> <span class="n">bool_to_str</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_TRACEBACK_LOGFILE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">is_logfile_opt</span><span class="p">,</span> <span class="n">to_logfile_opt</span><span class="p">,</span> <span class="n">logfile_opt_to_str</span><span class="p">),</span>
@@ -303,7 +314,7 @@
         <span class="s1">&#39;EXPAND_ENV_VARS&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;FORCE_POSIX_PATHS&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;FOREIGN_ALIASES_OVERRIDE&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="s1">&#39;FORMATTER_DICT&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prompt</span><span class="o">.</span><span class="n">FORMATTER_DICT</span><span class="p">),</span>
+        <span class="s1">&#39;PROMPT_FIELDS&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prompt</span><span class="o">.</span><span class="n">PROMPT_FIELDS</span><span class="p">),</span>
         <span class="s1">&#39;FUZZY_PATH_COMPLETION&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;GLOB_SORTED&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;HISTCONTROL&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
@@ -328,16 +339,17 @@
         <span class="s1">&#39;PUSHD_SILENT&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;RAISE_SUBPROC_ERROR&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;RIGHT_PROMPT&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;BOTTOM_TOOLBAR&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;SHELL_TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;best&#39;</span><span class="p">,</span>
         <span class="s1">&#39;SUBSEQUENCE_PATH_COMPLETION&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;SUPPRESS_BRANCH_TIMEOUT_MESSAGE&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;SUGGEST_COMMANDS&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;SUGGEST_MAX_NUM&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
         <span class="s1">&#39;SUGGEST_THRESHOLD&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="s1">&#39;TEEPTY_PIPE_DELAY&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="s1">&#39;TITLE&#39;</span><span class="p">:</span> <span class="n">DEFAULT_TITLE</span><span class="p">,</span>
         <span class="s1">&#39;UPDATE_OS_ENVIRON&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;VC_BRANCH_TIMEOUT&#39;</span><span class="p">:</span> <span class="mf">0.2</span> <span class="k">if</span> <span class="n">ON_WINDOWS</span> <span class="k">else</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;VC_HG_SHOW_BRANCH&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;VI_MODE&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;WIN_UNICODE_CONSOLE&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s1">&#39;XDG_CONFIG_HOME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;.config&#39;</span><span class="p">)),</span>
@@ -351,13 +363,17 @@
         <span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_CONFIG_DIR&#39;</span><span class="p">:</span> <span class="n">xonsh_config_dir</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_DATA_DIR&#39;</span><span class="p">:</span> <span class="n">xonsh_data_dir</span><span class="p">,</span>
-        <span class="s1">&#39;XONSH_DEBUG&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;XONSH_DEBUG&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_ENCODING&#39;</span><span class="p">:</span> <span class="n">DEFAULT_ENCODING</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_ENCODING_ERRORS&#39;</span><span class="p">:</span> <span class="s1">&#39;surrogateescape&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;XONSH_HISTORY_BACKEND&#39;</span><span class="p">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_HISTORY_FILE&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/.xonsh_history.json&#39;</span><span class="p">),</span>
         <span class="s1">&#39;XONSH_HISTORY_SIZE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8128</span><span class="p">,</span> <span class="s1">&#39;commands&#39;</span><span class="p">),</span>
         <span class="s1">&#39;XONSH_LOGIN&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;XONSH_PROC_FREQUENCY&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_SHOW_TRACEBACK&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;XONSH_STDERR_PREFIX&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;XONSH_STDERR_POSTFIX&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_STORE_STDIN&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_STORE_STDOUT&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="s1">&#39;XONSH_TRACEBACK_LOGFILE&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
@@ -411,19 +427,20 @@
         <span class="s1">&#39;displayed suggestion. Only usable with ``$SHELL_TYPE=prompt_toolkit.``&#39;</span><span class="p">),</span>
     <span class="s1">&#39;BASH_COMPLETIONS&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;This is a list (or tuple) of strings that specifies where the &#39;</span>
-        <span class="s1">&#39;``bash_completion`` script may be found. For better performance, &#39;</span>
+        <span class="s1">&#39;``bash_completion`` script may be found. &#39;</span>
+        <span class="s1">&#39;The first valid path will be used. For better performance, &#39;</span>
         <span class="s1">&#39;bash-completion v2.x is recommended since it lazy-loads individual &#39;</span>
-        <span class="s1">&#39;completion scripts. Paths or directories of individual completion &#39;</span>
+        <span class="s1">&#39;completion scripts. &#39;</span>
+        <span class="s1">&#39;For both bash-completion v1.x and v2.x, paths of individual completion &#39;</span>
         <span class="s1">&#39;scripts (like ``.../completes/ssh``) do not need to be included here. &#39;</span>
         <span class="s1">&#39;The default values are platform &#39;</span>
         <span class="s1">&#39;dependent, but sane. To specify an alternate list, do so in the run &#39;</span>
         <span class="s1">&#39;control file.&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">(</span>
             <span class="s2">&quot;Normally this is:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;    ``(&#39;/etc/bash_completion&#39;, )``</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;But, on Mac it is:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;    ``(&#39;/usr/local/etc/bash_completion&#39;, )``</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;And on Arch Linux it is:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;    ``(&#39;/usr/share/bash-completion/bash_completion&#39;, )``</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;But, on Mac it is:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;    ``(&#39;/usr/local/share/bash-completion/bash_completion&#39;, &quot;</span>
+            <span class="s2">&quot;&#39;/usr/local/etc/bash_completion&#39;)``</span><span class="se">\n\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;Other OS-specific defaults may be added in the future.&quot;</span><span class="p">)),</span>
     <span class="s1">&#39;CASE_SENSITIVE_COMPLETIONS&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Sets whether completions should be case sensitive or case &#39;</span>
@@ -479,11 +496,11 @@
         <span class="s2">&quot;``$XONSH_CONFIG_DIR/config.json`` in the &#39;env&#39; section and not in &quot;</span>
         <span class="s1">&#39;``.xonshrc`` as loading of foreign aliases happens before&#39;</span>
         <span class="s1">&#39;``.xonshrc`` is parsed&#39;</span><span class="p">,</span> <span class="n">configurable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="s1">&#39;FORMATTER_DICT&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+    <span class="s1">&#39;PROMPT_FIELDS&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Dictionary containing variables to be used when formatting $PROMPT &#39;</span>
         <span class="s2">&quot;and $TITLE. See &#39;Customizing the Prompt&#39; &quot;</span>
         <span class="s1">&#39;http://xon.sh/tutorial.html#customizing-the-prompt&#39;</span><span class="p">,</span>
-        <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;``xonsh.prompt.FORMATTER_DICT``&#39;</span><span class="p">),</span>
+        <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;``xonsh.prompt.PROMPT_FIELDS``&#39;</span><span class="p">),</span>
     <span class="s1">&#39;FUZZY_PATH_COMPLETION&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s2">&quot;Toggles &#39;fuzzy&#39; matching of paths for tab completion, which is only &quot;</span>
         <span class="s2">&quot;used as a fallback if no other completions succeed but can be used &quot;</span>
@@ -558,6 +575,11 @@
         <span class="s1">&#39;at the prompt. This may be parameterized in the same way as &#39;</span>
         <span class="s1">&#39;the ``$PROMPT`` variable. Currently, this is only available in the &#39;</span>
         <span class="s1">&#39;prompt-toolkit shell.&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;BOTTOM_TOOLBAR&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;Template string for the bottom toolbar. &#39;</span>
+        <span class="s1">&#39;This may be parameterized in the same way as &#39;</span>
+        <span class="s1">&#39;the ``$PROMPT`` variable. Currently, this is only available in the &#39;</span>
+        <span class="s1">&#39;prompt-toolkit shell.&#39;</span><span class="p">),</span>
     <span class="s1">&#39;SHELL_TYPE&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Which shell is used. Currently two base shell types are supported:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
         <span class="s2">&quot;    - ``readline`` that is backed by Python&#39;s readline module</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -586,15 +608,6 @@
         <span class="s1">&#39;tab completion of paths.&#39;</span><span class="p">),</span>
     <span class="s1">&#39;SUPPRESS_BRANCH_TIMEOUT_MESSAGE&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Whether or not to supress branch timeout warning messages.&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;TEEPTY_PIPE_DELAY&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
-        <span class="s1">&#39;The number of [seconds] to delay a spawned process if it has &#39;</span>
-        <span class="s1">&#39;information being piped in via stdin. This value must be a float. &#39;</span>
-        <span class="s1">&#39;If a value less than or equal to zero is passed in, no delay is &#39;</span>
-        <span class="s1">&#39;used. This can be used to fix situations where a spawned process, &#39;</span>
-        <span class="s1">&#39;such as piping into ``grep``, exits too quickly for the piping &#39;</span>
-        <span class="s1">&#39;operation itself. TeePTY (and thus this variable) are currently &#39;</span>
-        <span class="s1">&#39;only used when ``$XONSH_STORE_STDOUT`` is True.&#39;</span><span class="p">,</span>
-        <span class="n">configurable</span><span class="o">=</span><span class="n">ON_LINUX</span><span class="p">),</span>
     <span class="s1">&#39;TERM&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;TERM is sometimes set by the terminal emulator. This is used (when &#39;</span>
         <span class="s2">&quot;valid) to determine whether or not to set the title. Users shouldn&#39;t &quot;</span>
@@ -622,6 +635,8 @@
         <span class="s1">&#39;The timeout (in seconds) for version control &#39;</span>
         <span class="s1">&#39;branch computations. This is a timeout per subprocess call, so the &#39;</span>
         <span class="s1">&#39;total time to compute will be larger than this in many cases.&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;VC_HG_SHOW_BRANCH&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;Whether or not to show the Mercurial branch in the prompt.&#39;</span><span class="p">),</span>
     <span class="s1">&#39;VI_MODE&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s2">&quot;Flag to enable ``vi_mode`` in the ``prompt_toolkit`` shell.&quot;</span><span class="p">),</span>
     <span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
@@ -665,10 +680,13 @@
         <span class="s1">&#39;This is the location where xonsh configuration information is stored.&#39;</span><span class="p">,</span>
         <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;``$XDG_CONFIG_HOME/xonsh``&quot;</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_DEBUG&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
-        <span class="s1">&#39;Sets the xonsh debugging level. This may be an integer or a boolean, &#39;</span>
-        <span class="s1">&#39;with higher values cooresponding to higher debuging levels and more &#39;</span>
-        <span class="s1">&#39;information presented. Setting this variable prior to stating xonsh &#39;</span>
-        <span class="s1">&#39;will supress amalgamated imports.&#39;</span><span class="p">,</span> <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="s1">&#39;Sets the xonsh debugging level. This may be an integer or a boolean. &#39;</span>
+        <span class="s1">&#39;Setting this variable prior to stating xonsh to ``1`` or ``True`` &#39;</span>
+        <span class="s1">&#39;will supress amalgamated imports. Setting it to ``2`` will get some &#39;</span>
+        <span class="s1">&#39;basic information like input transformation, command replacement. &#39;</span>
+        <span class="s1">&#39;With ``3`` or a higher number will make more debugging information &#39;</span>
+        <span class="s1">&#39;presented, like PLY parsing messages.&#39;</span><span class="p">,</span>
+        <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_DATA_DIR&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;This is the location where xonsh data files are stored, such as &#39;</span>
         <span class="s1">&#39;history.&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;``$XDG_DATA_HOME/xonsh``&quot;</span><span class="p">),</span>
@@ -696,6 +714,9 @@
         <span class="s1">&#39;* ``XONSH_GITSTATUS_AHEAD``: ``↑·``</span><span class="se">\n</span><span class="s1">&#39;</span>
         <span class="s1">&#39;* ``XONSH_GITSTATUS_BEHIND``: ``↓·``</span><span class="se">\n</span><span class="s1">&#39;</span>
     <span class="p">),</span>
+    <span class="s1">&#39;XONSH_HISTORY_BACKEND&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;Set which history backend to use. Options are: ``json``, &#39;</span>
+        <span class="s1">&#39;``sqlite``, and ``dummy``. default is ``json``.&#39;</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_HISTORY_FILE&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Location of history file (deprecated).&#39;</span><span class="p">,</span>
         <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;``~/.xonsh_history``&quot;</span><span class="p">),</span>
@@ -714,6 +735,10 @@
     <span class="s1">&#39;XONSH_LOGIN&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;``True`` if xonsh is running as a login shell, and ``False`` otherwise.&#39;</span><span class="p">,</span>
         <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_PROC_FREQUENCY&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;The process frquency is the time that &#39;</span>
+        <span class="s1">&#39;xonsh process threads sleep for while running command pipelines. &#39;</span>
+        <span class="s1">&#39;The value has units of seconds [s].&#39;</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_SHOW_TRACEBACK&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Controls if a traceback is shown if exceptions occur in the shell. &#39;</span>
         <span class="s1">&#39;Set to ``True`` to always show traceback or ``False`` to always hide. &#39;</span>
@@ -723,6 +748,18 @@
         <span class="s2">&quot;When running a xonsh script, this variable contains the absolute path &quot;</span>
         <span class="s2">&quot;to the currently executing script&#39;s file.&quot;</span><span class="p">,</span>
         <span class="n">configurable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_STDERR_PREFIX&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;A format string, using the same keys and colors as ``$PROMPT``, that &#39;</span>
+        <span class="s1">&#39;is prepended whenever stderr is displayed. This may be used in &#39;</span>
+        <span class="s1">&#39;conjunction with ``$XONSH_STDERR_POSTFIX`` to close out the block.&#39;</span>
+        <span class="s1">&#39;For example, to have stderr appear on a red background, the &#39;</span>
+        <span class="s1">&#39;prefix &amp; postfix pair would be &quot;</span><span class="si">{BACKGROUND_RED}</span><span class="s1">&quot; &amp; &quot;</span><span class="si">{NO_COLOR}</span><span class="s1">&quot;.&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;XONSH_STDERR_POSTFIX&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
+        <span class="s1">&#39;A format string, using the same keys and colors as ``$PROMPT``, that &#39;</span>
+        <span class="s1">&#39;is appended whenever stderr is displayed. This may be used in &#39;</span>
+        <span class="s1">&#39;conjunction with ``$XONSH_STDERR_PREFIX`` to start the block.&#39;</span>
+        <span class="s1">&#39;For example, to have stderr appear on a red background, the &#39;</span>
+        <span class="s1">&#39;prefix &amp; postfix pair would be &quot;</span><span class="si">{BACKGROUND_RED}</span><span class="s1">&quot; &amp; &quot;</span><span class="si">{NO_COLOR}</span><span class="s1">&quot;.&#39;</span><span class="p">),</span>
     <span class="s1">&#39;XONSH_STORE_STDIN&#39;</span><span class="p">:</span> <span class="n">VarDocs</span><span class="p">(</span>
         <span class="s1">&#39;Whether or not to store the stdin that is supplied to the &#39;</span>
         <span class="s1">&#39;``!()`` and ``![]`` operators.&#39;</span><span class="p">),</span>
@@ -897,6 +934,12 @@
     <span class="c1">#</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="c1"># remove this block on next release</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;FORMATTER_DICT&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PendingDeprecationWarning: FORMATTER_DICT is an alias of &#39;</span>
+                  <span class="s1">&#39;PROMPT_FIELDS and will be removed in the next release&#39;</span><span class="p">,</span>
+                  <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;PROMPT_FIELDS&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="bp">Ellipsis</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span>
         <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -998,7 +1041,7 @@
 
 <span class="n">BASE_ENV</span> <span class="o">=</span> <span class="n">LazyObject</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">&#39;BASH_COMPLETIONS&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;BASH_COMPLETIONS&#39;</span><span class="p">]),</span>
-    <span class="s1">&#39;FORMATTER_DICT&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;FORMATTER_DICT&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;PROMPT_FIELDS&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;PROMPT_FIELDS&#39;</span><span class="p">]),</span>
     <span class="s1">&#39;XONSH_VERSION&#39;</span><span class="p">:</span> <span class="n">XONSH_VERSION</span><span class="p">,</span>
 <span class="p">},</span> <span class="nb">globals</span><span class="p">(),</span> <span class="s1">&#39;BASE_ENV&#39;</span><span class="p">)</span>
 
@@ -1167,16 +1210,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xontrib.voxapi &mdash; xonsh 0.4.7 documentation</title>
+    <title>xontrib.voxapi &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xontrib/voxapi.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -77,6 +81,7 @@
 <span class="kn">import</span> <span class="nn">collections.abc</span>
 
 <span class="kn">from</span> <span class="nn">xonsh.platform</span> <span class="k">import</span> <span class="n">ON_POSIX</span><span class="p">,</span> <span class="n">ON_WINDOWS</span>
+<span class="kn">from</span> <span class="nn">xonsh.fs</span> <span class="k">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">fspath</span>
 
 <span class="c1"># This is because builtins aren&#39;t globally created during testing.</span>
 <span class="c1"># FIXME: Is there a better way?</span>
@@ -193,7 +198,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># NOTE: clear=True is the same as delete then create.</span>
         <span class="c1"># NOTE: upgrade=True is its own method</span>
-        <span class="n">env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">):</span>
+            <span class="n">env_path</span> <span class="o">=</span> <span class="n">fspath</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_reserved</span><span class="p">(</span><span class="n">env_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;venv can&#39;t contain reserved names (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_subdir_names</span><span class="p">())))</span>
         <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
             <span class="n">env_path</span><span class="p">,</span>
             <span class="n">system_site_packages</span><span class="o">=</span><span class="n">system_site_packages</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="n">symlinks</span><span class="p">,</span>
@@ -238,6 +248,10 @@
         <span class="c1"># Ok, do what we came here to do.</span>
         <span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">env_path</span><span class="p">,</span> <span class="n">upgrade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">)</span></div>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_reserved</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_subdir_names</span><span class="p">()</span>  <span class="c1"># FIXME: Check the middle components, too</span>
+
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get information about a virtual environment.</span>
 
@@ -248,23 +262,29 @@
 <span class="sd">            the current one (throws a KeyError if there isn&#39;t one).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="o">...</span><span class="p">:</span>
-            <span class="n">env_path</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-            <span class="n">env_path</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="n">env_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;VIRTUAL_ENV&#39;</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">):</span>
+            <span class="n">env_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">fspath</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_reserved</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                <span class="c1"># Don&#39;t allow a venv that could be a venv special dir</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
 
-        <span class="n">ve</span> <span class="o">=</span> <span class="n">_mkvenv</span><span class="p">(</span><span class="n">env_path</span><span class="p">)</span>
+            <span class="n">env_paths</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                <span class="n">env_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">env_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venvdir</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ve</span><span class="o">.</span><span class="n">env</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_subdir_names</span><span class="p">():</span>  <span class="c1"># FIXME: Check the inner components, too</span>
-            <span class="c1"># Don&#39;t allow a venv that could be a venv special dir</span>
+        <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">env_paths</span><span class="p">:</span>
+            <span class="n">ve</span> <span class="o">=</span> <span class="n">_mkvenv</span><span class="p">(</span><span class="n">ep</span><span class="p">)</span>
+
+            <span class="c1"># Actually check if this is an actual venv or just a organizational directory</span>
+            <span class="c1"># eg, if &#39;spam/eggs&#39; is a venv, reject &#39;spam&#39;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ve</span><span class="o">.</span><span class="n">bin</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">return</span> <span class="n">ve</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
-
-        <span class="c1"># Actually check if this is an actual venv or just a organizational directory</span>
-        <span class="c1"># eg, if &#39;spam/eggs&#39; is a venv, reject &#39;spam&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ve</span><span class="o">.</span><span class="n">bin</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ve</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="c1"># For some reason, MutableMapping seems to do this against iter, which is just silly.</span>
@@ -409,16 +429,16 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

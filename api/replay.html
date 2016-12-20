@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Replay History (xonsh.replay) &mdash; xonsh 0.4.7 documentation</title>
+    <title>Replay History (xonsh.replay) &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -29,11 +30,14 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" />
-    <link rel="up" title="Xonsh API" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="History Diff’er (xonsh.diff_history)" href="diff_history.html" />
-    <link rel="prev" title="Pretty printing (xonsh.pretty)" href="pretty.html" /> 
+    <link rel="prev" title="Pretty printing (xonsh.pretty)" href="pretty.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/api/replay.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -53,9 +57,9 @@
         <li class="right" >
           <a href="pretty.html" title="Pretty printing (xonsh.pretty)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -120,10 +124,20 @@ mapping may be passed in as well. Defaults to (&#8216;replay&#8217;, &#8216;nati
 </dd></dl>
 
 <dl class="function">
+<dt id="xonsh.replay.replay_create_parser">
+<code class="descclassname">xonsh.replay.</code><code class="descname">replay_create_parser</code><span class="sig-paren">(</span><em>p=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/replay.html#replay_create_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.replay.replay_create_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="xonsh.replay.replay_main">
 <code class="descclassname">xonsh.replay.</code><code class="descname">replay_main</code><span class="sig-paren">(</span><em>args</em>, <em>stdin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/replay.html#replay_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.replay.replay_main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Acts as main function for replaying a xonsh history file.</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="xonsh.replay.replay_main_action">
+<code class="descclassname">xonsh.replay.</code><code class="descname">replay_main_action</code><span class="sig-paren">(</span><em>h</em>, <em>ns</em>, <em>stdout=None</em>, <em>stderr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/replay.html#replay_main_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.replay.replay_main_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 
@@ -149,7 +163,7 @@ mapping may be passed in as well. Defaults to (&#8216;replay&#8217;, &#8216;nati
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/replay.txt"
+      <li><a href="../_sources/api/replay.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -184,16 +198,16 @@ mapping may be passed in as well. Defaults to (&#8216;replay&#8217;, &#8216;nati
         <li class="right" >
           <a href="pretty.html" title="Pretty printing (xonsh.pretty)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview: module code &mdash; xonsh 0.4.7 documentation</title>
+    <title>Overview: module code &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -29,8 +30,12 @@
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../index.html" /> 
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/index.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -44,7 +49,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -61,7 +66,6 @@
 <li><a href="cmd.html">cmd</a></li>
 <li><a href="collections/abc.html">collections.abc</a></li>
 <li><a href="posix.html">posix</a></li>
-<li><a href="prompt_toolkit/filters/base.html">prompt_toolkit.filters.base</a></li>
 <li><a href="threading.html">threading</a></li>
 <li><a href="xonsh/aliases.html">xonsh.aliases</a></li>
 <li><a href="xonsh/ast.html">xonsh.ast</a></li>
@@ -78,6 +82,7 @@
 <li><a href="xonsh/completers/path.html">xonsh.completers.path</a></li>
 <li><a href="xonsh/completers/python.html">xonsh.completers.python</a></li>
 <li><a href="xonsh/completers/tools.html">xonsh.completers.tools</a></li>
+<li><a href="xonsh/completers/xompletions.html">xonsh.completers.xompletions</a></li>
 <li><a href="xonsh/contexts.html">xonsh.contexts</a></li>
 <li><a href="xonsh/diff_history.html">xonsh.diff_history</a></li>
 <li><a href="xonsh/dirstack.html">xonsh.dirstack</a></li>
@@ -85,7 +90,10 @@
 <li><a href="xonsh/events.html">xonsh.events</a></li>
 <li><a href="xonsh/execer.html">xonsh.execer</a></li>
 <li><a href="xonsh/foreign_shells.html">xonsh.foreign_shells</a></li>
-<li><a href="xonsh/history.html">xonsh.history</a></li>
+<li><a href="xonsh/history/base.html">xonsh.history.base</a></li>
+<li><a href="xonsh/history/json.html">xonsh.history.json</a></li>
+<li><a href="xonsh/history/main.html">xonsh.history.main</a></li>
+<li><a href="xonsh/history/sqlite.html">xonsh.history.sqlite</a></li>
 <li><a href="xonsh/imphooks.html">xonsh.imphooks</a></li>
 <li><a href="xonsh/inspectors.html">xonsh.inspectors</a></li>
 <li><a href="xonsh/jobs.html">xonsh.jobs</a></li>
@@ -101,7 +109,6 @@
 <li><a href="xonsh/prompt/base.html">xonsh.prompt.base</a></li>
 <li><a href="xonsh/prompt/env.html">xonsh.prompt.env</a></li>
 <li><a href="xonsh/prompt/gitstatus.html">xonsh.prompt.gitstatus</a></li>
-<li><a href="xonsh/prompt/vc_branch.html">xonsh.prompt.vc_branch</a></li>
 <li><a href="xonsh/ptk/completer.html">xonsh.ptk.completer</a></li>
 <li><a href="xonsh/ptk/history.html">xonsh.ptk.history</a></li>
 <li><a href="xonsh/ptk/key_bindings.html">xonsh.ptk.key_bindings</a></li>
@@ -110,7 +117,6 @@
 <li><a href="xonsh/readline_shell.html">xonsh.readline_shell</a></li>
 <li><a href="xonsh/replay.html">xonsh.replay</a></li>
 <li><a href="xonsh/shell.html">xonsh.shell</a></li>
-<li><a href="xonsh/teepty.html">xonsh.teepty</a></li>
 <li><a href="xonsh/tools.html">xonsh.tools</a></li>
 <li><a href="xonsh/tracer.html">xonsh.tracer</a></li>
 <li><a href="xonsh/wizard.html">xonsh.wizard</a></li>
@@ -152,15 +158,15 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
  
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

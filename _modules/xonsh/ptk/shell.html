@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.ptk.shell &mdash; xonsh 0.4.7 documentation</title>
+    <title>xonsh.ptk.shell &#8212; xonsh 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.7',
+        VERSION:     '0.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -29,9 +30,12 @@
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
-    <link rel="top" title="xonsh 0.4.7 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+     
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="http://xon.sh/_modules/xonsh/ptk/shell.html"/>
+
   </head>
   <body role="document">
     <div class="relbar-top">
@@ -45,9 +49,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -69,18 +73,27 @@
 <span class="kn">from</span> <span class="nn">prompt_toolkit.layout.lexers</span> <span class="k">import</span> <span class="n">PygmentsLexer</span>
 <span class="kn">from</span> <span class="nn">prompt_toolkit.shortcuts</span> <span class="k">import</span> <span class="n">print_tokens</span>
 <span class="kn">from</span> <span class="nn">prompt_toolkit.styles</span> <span class="k">import</span> <span class="n">PygmentsStyle</span>
+<span class="kn">import</span> <span class="nn">pygments</span>
 <span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="k">import</span> <span class="n">get_all_styles</span>
 <span class="kn">from</span> <span class="nn">pygments.token</span> <span class="k">import</span> <span class="n">Token</span>
 
 <span class="kn">from</span> <span class="nn">xonsh.base_shell</span> <span class="k">import</span> <span class="n">BaseShell</span>
 <span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="n">print_exception</span>
-<span class="kn">from</span> <span class="nn">xonsh.prompt.base</span> <span class="k">import</span> <span class="n">partial_format_prompt</span>
 <span class="kn">from</span> <span class="nn">xonsh.pyghooks</span> <span class="k">import</span> <span class="p">(</span><span class="n">XonshLexer</span><span class="p">,</span> <span class="n">partial_color_tokenize</span><span class="p">,</span>
-                            <span class="n">xonsh_style_proxy</span><span class="p">)</span>
+                            <span class="n">xonsh_style_proxy</span><span class="p">,</span> <span class="n">XonshTerminal256Formatter</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">xonsh.ptk.completer</span> <span class="k">import</span> <span class="n">PromptToolkitCompleter</span>
 <span class="kn">from</span> <span class="nn">xonsh.ptk.history</span> <span class="k">import</span> <span class="n">PromptToolkitHistory</span>
 <span class="kn">from</span> <span class="nn">xonsh.ptk.key_bindings</span> <span class="k">import</span> <span class="n">load_xonsh_bindings</span>
 <span class="kn">from</span> <span class="nn">xonsh.ptk.shortcuts</span> <span class="k">import</span> <span class="n">Prompter</span>
+<span class="kn">from</span> <span class="nn">xonsh.events</span> <span class="k">import</span> <span class="n">events</span>
+
+
+<span class="n">events</span><span class="o">.</span><span class="n">transmogrify</span><span class="p">(</span><span class="s1">&#39;on_ptk_create&#39;</span><span class="p">,</span> <span class="s1">&#39;LoadEvent&#39;</span><span class="p">)</span>
+<span class="n">events</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="s1">&#39;on_ptk_create&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">on_ptk_create(prompter: Prompter, history: PromptToolkitHistory, completer: PromptToolkitCompleter, bindings: KeyBindingManager) -&gt;</span>
+
+<span class="s2">Fired after prompt toolkit has been initialized</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="PromptToolkitShell"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell">[docs]</a><span class="k">class</span> <span class="nc">PromptToolkitShell</span><span class="p">(</span><span class="n">BaseShell</span><span class="p">):</span>
@@ -91,15 +104,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">prompter</span> <span class="o">=</span> <span class="n">Prompter</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="n">PromptToolkitHistory</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pt_completer</span> <span class="o">=</span> <span class="n">PromptToolkitCompleter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
-
         <span class="n">key_bindings_manager_args</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;enable_auto_suggest_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="s1">&#39;enable_search&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="s1">&#39;enable_abort_and_exit_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="p">}</span>
-
+            <span class="s1">&#39;enable_auto_suggest_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;enable_search&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;enable_abort_and_exit_bindings&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_bindings_manager</span> <span class="o">=</span> <span class="n">KeyBindingManager</span><span class="p">(</span><span class="o">**</span><span class="n">key_bindings_manager_args</span><span class="p">)</span>
         <span class="n">load_xonsh_bindings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_bindings_manager</span><span class="p">)</span>
+        <span class="c1"># This assumes that PromptToolkitShell is a singleton</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">on_ptk_create</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prompter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt_completer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_bindings_manager</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PromptToolkitShell.singleline"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.singleline">[docs]</a>    <span class="k">def</span> <span class="nf">singleline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_in_history</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_suggest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">enable_history_search</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -124,15 +137,20 @@
             <span class="n">get_prompt_tokens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">cli</span><span class="p">:</span> <span class="n">prompt_tokens_cached</span>
             <span class="n">rprompt_tokens_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rprompt_tokens</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="n">get_rprompt_tokens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">cli</span><span class="p">:</span> <span class="n">rprompt_tokens_cached</span>
+            <span class="n">bottom_toolbar_tokens_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_toolbar_tokens</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">get_bottom_toolbar_tokens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">cli</span><span class="p">:</span> <span class="n">bottom_toolbar_tokens_cached</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">get_prompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_tokens</span>
             <span class="n">get_rprompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rprompt_tokens</span>
+            <span class="n">get_bottom_toolbar_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_toolbar_tokens</span>
+
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompter</span><span class="p">:</span>
             <span class="n">prompt_args</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;mouse_support&#39;</span><span class="p">:</span> <span class="n">mouse_support</span><span class="p">,</span>
                     <span class="s1">&#39;auto_suggest&#39;</span><span class="p">:</span> <span class="n">auto_suggest</span><span class="p">,</span>
                     <span class="s1">&#39;get_prompt_tokens&#39;</span><span class="p">:</span> <span class="n">get_prompt_tokens</span><span class="p">,</span>
                     <span class="s1">&#39;get_rprompt_tokens&#39;</span><span class="p">:</span> <span class="n">get_rprompt_tokens</span><span class="p">,</span>
+                    <span class="s1">&#39;get_bottom_toolbar_tokens&#39;</span><span class="p">:</span> <span class="n">get_bottom_toolbar_tokens</span><span class="p">,</span>
                     <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="n">PygmentsStyle</span><span class="p">(</span><span class="n">xonsh_style_proxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="p">)),</span>
                     <span class="s1">&#39;completer&#39;</span><span class="p">:</span> <span class="n">completer</span><span class="p">,</span>
                     <span class="s1">&#39;multiline&#39;</span><span class="p">:</span> <span class="n">multiline</span><span class="p">,</span>
@@ -148,7 +166,7 @@
             <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompter</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="o">**</span><span class="n">prompt_args</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">line</span></div>
 
-<div class="viewcode-block" id="PromptToolkitShell.push"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Pushes a line onto the buffer and compiles the code in a way that</span>
 <span class="sd">        enables multiline input.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -167,7 +185,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
             <span class="n">print_exception</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="n">code</span></div>
+        <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="n">code</span>
 
 <div class="viewcode-block" id="PromptToolkitShell.cmdloop"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.cmdloop">[docs]</a>    <span class="k">def</span> <span class="nf">cmdloop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Enters a loop that reads and execute input from user.&quot;&quot;&quot;</span>
@@ -182,9 +200,9 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precmd</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">EOFError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IGNOREEOF&quot;</span><span class="p">):</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Use &quot;exit&quot; to leave the shell.&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -194,7 +212,7 @@
         <span class="sd">&quot;&quot;&quot;Returns a list of (token, str) tuples for the current prompt.&quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PROMPT&#39;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">partial_format_prompt</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_formatter</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
             <span class="n">print_exception</span><span class="p">()</span>
         <span class="n">toks</span> <span class="o">=</span> <span class="n">partial_color_tokenize</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
@@ -206,13 +224,30 @@
 <span class="sd">        prompt.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RIGHT_PROMPT&#39;</span><span class="p">)</span>
-        <span class="c1"># partial_format_prompt does handle empty strings properly,</span>
+        <span class="c1"># self.prompt_formatter does handle empty strings properly,</span>
         <span class="c1"># but this avoids descending into it in the common case of</span>
         <span class="c1"># $RIGHT_PROMPT == &#39;&#39;.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">partial_format_prompt</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_formatter</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+            <span class="n">print_exception</span><span class="p">()</span>
+        <span class="n">toks</span> <span class="o">=</span> <span class="n">partial_color_tokenize</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">toks</span></div>
+
+<div class="viewcode-block" id="PromptToolkitShell.bottom_toolbar_tokens"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.bottom_toolbar_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">bottom_toolbar_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cli</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of (token, str) tuples for the current bottom</span>
+<span class="sd">        toolbar.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BOTTOM_TOOLBAR&#39;</span><span class="p">)</span>
+        <span class="c1"># self.prompt_formatter does handle empty strings properly,</span>
+        <span class="c1"># but this avoids descending into it in the common case of</span>
+        <span class="c1"># $TOOLBAR == &#39;&#39;.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_formatter</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
             <span class="n">print_exception</span><span class="p">()</span>
         <span class="n">toks</span> <span class="o">=</span> <span class="n">partial_color_tokenize</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
@@ -247,11 +282,21 @@
         <span class="n">toks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">Token</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>  <span class="c1"># final space</span>
         <span class="k">return</span> <span class="n">toks</span></div>
 
-<div class="viewcode-block" id="PromptToolkitShell.format_color"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.format_color">[docs]</a>    <span class="k">def</span> <span class="nf">format_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="PromptToolkitShell.format_color"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.format_color">[docs]</a>    <span class="k">def</span> <span class="nf">format_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force_string</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Formats a color string using Pygments. This, therefore, returns</span>
-<span class="sd">        a list of (Token, str) tuples.</span>
+<span class="sd">        a list of (Token, str) tuples. If force_string is set to true, though,</span>
+<span class="sd">        this will return a color fomtatted string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">partial_color_tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">partial_color_tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">force_string</span><span class="p">:</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="o">.</span><span class="n">style_name</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">)</span>
+            <span class="n">proxy_style</span> <span class="o">=</span> <span class="n">xonsh_style_proxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styler</span><span class="p">)</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">XonshTerminal256Formatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">proxy_style</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">pygments</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">s</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tokens</span></div>
 
 <div class="viewcode-block" id="PromptToolkitShell.print_color"><a class="viewcode-back" href="../../../api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.print_color">[docs]</a>    <span class="k">def</span> <span class="nf">print_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Prints a color string using prompt-toolkit color management.&quot;&quot;&quot;</span>
@@ -309,16 +354,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.4.7 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">xonsh 0.5.0 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+        &#169; Copyright 2015, Anthony Scopatz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
