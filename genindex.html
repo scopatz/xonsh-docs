@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &#8212; xonsh 0.5.2 documentation</title>
+    <title>Index &#8212; xonsh 0.5.3 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,7 +18,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.2',
+        VERSION:     '0.5.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -50,7 +50,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.2 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.3 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -151,8 +151,6 @@
       <li><a href="api/proc.html#xonsh.proc.CommandPipeline.args">args (xonsh.proc.CommandPipeline attribute)</a>
 
       <ul>
-        <li><a href="api/tools.html#xonsh.tools.XonshBlockError.args">(xonsh.tools.XonshBlockError attribute)</a>
-</li>
         <li><a href="api/tools.html#xonsh.tools.XonshCalledProcessError.args">(xonsh.tools.XonshCalledProcessError attribute)</a>
 </li>
         <li><a href="api/tools.html#xonsh.tools.XonshError.args">(xonsh.tools.XonshError attribute)</a>
@@ -366,8 +364,12 @@
         <li><a href="api/readline_shell.html#xonsh.readline_shell.ReadlineShell.color_style_names">(xonsh.readline_shell.ReadlineShell method)</a>
 </li>
       </ul></li>
-      <li><a href="api/readline_shell.html#xonsh.readline_shell.ReadlineShell.columnize">columnize() (xonsh.readline_shell.ReadlineShell method)</a>
+      <li><a href="api/tools.html#xonsh.tools.columnize">columnize() (in module xonsh.tools)</a>
+
+      <ul>
+        <li><a href="api/readline_shell.html#xonsh.readline_shell.ReadlineShell.columnize">(xonsh.readline_shell.ReadlineShell method)</a>
 </li>
+      </ul></li>
       <li><a href="api/tools.html#xonsh.tools.command_not_found">command_not_found() (in module xonsh.tools)</a>
 </li>
       <li><a href="api/proc.html#xonsh.proc.CommandPipeline">CommandPipeline (class in xonsh.proc)</a>
@@ -496,6 +498,8 @@
       </ul></li>
       <li><a href="api/vox.html#xontrib.voxapi.Vox.deactivate">deactivate() (xontrib.voxapi.Vox method)</a>
 </li>
+      <li><a href="api/events.html#xonsh.events.debug_level">debug_level() (in module xonsh.events)</a>
+</li>
       <li><a href="api/tools.html#xonsh.tools.decode">decode() (in module xonsh.tools)</a>
 </li>
       <li><a href="api/tools.html#xonsh.tools.decode_bytes">decode_bytes() (in module xonsh.tools)</a>
@@ -522,6 +526,10 @@
         <li><a href="api/wizard.html#xonsh.wizard.StateFile.default_file">(xonsh.wizard.StateFile attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/commands_cache.html#xonsh.commands_cache.CommandsCache.default_predictor">default_predictor() (xonsh.commands_cache.CommandsCache method)</a>
+</li>
+      <li><a href="api/commands_cache.html#xonsh.commands_cache.CommandsCache.default_predictor_readbin">default_predictor_readbin() (xonsh.commands_cache.CommandsCache method)</a>
+</li>
       <li><a href="api/prompt/base.html#xonsh.prompt.base.default_prompt">default_prompt() (in module xonsh.prompt.base)</a>
 </li>
       <li><a href="api/built_ins.html#xonsh.built_ins.default_signal_pauser">default_signal_pauser() (in module xonsh.built_ins)</a>
@@ -536,12 +544,12 @@
 </li>
       <li><a href="api/proc.html#xonsh.proc.FileThreadDispatcher.deregister">deregister() (xonsh.proc.FileThreadDispatcher method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/proc.html#xonsh.proc.FileThreadDispatcher.detach">detach() (xonsh.proc.FileThreadDispatcher method)</a>
 </li>
       <li><a href="api/proc.html#xonsh.proc.Handle.Detach">Detach() (xonsh.proc.Handle method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/environ.html#xonsh.environ.Ensurer.detype">detype (xonsh.environ.Ensurer attribute)</a>
 </li>
       <li><a href="api/environ.html#xonsh.environ.Env.detype">detype() (xonsh.environ.Env method)</a>
@@ -640,10 +648,10 @@
 </li>
       <li><a href="api/diff_history.html#xonsh.diff_history.HistoryDiffer.envdiff">envdiff() (xonsh.diff_history.HistoryDiffer method)</a>
 </li>
-      <li><a href="api/vox.html#xontrib.voxapi.EnvironmentInUse">EnvironmentInUse</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/vox.html#xontrib.voxapi.EnvironmentInUse">EnvironmentInUse</a>
+</li>
       <li><a href="api/tools.html#xonsh.tools.EnvPath">EnvPath (class in xonsh.tools)</a>
 </li>
       <li><a href="api/proc.html#xonsh.proc.CommandPipeline.err">err (xonsh.proc.CommandPipeline attribute)</a>
@@ -659,8 +667,6 @@
       <li><a href="api/events.html#xonsh.events.Event">Event (class in xonsh.events)</a>
 </li>
       <li><a href="api/events.html#xonsh.events.EventManager">EventManager (class in xonsh.events)</a>
-</li>
-      <li><a href="api/events.html#xonsh.events.events">events (in module xonsh.events)</a>
 </li>
       <li><a href="api/execer.html#xonsh.execer.Execer.exec">exec() (xonsh.execer.Execer method)</a>
 </li>
@@ -678,9 +684,7 @@
 </li>
       <li><a href="api/tools.html#xonsh.tools.expand_gray_colors_for_cmd_exe">expand_gray_colors_for_cmd_exe() (in module xonsh.tools)</a>
 </li>
-      <li><a href="api/built_ins.html#xonsh.built_ins.expand_path">expand_path() (in module xonsh.built_ins)</a>
-</li>
-      <li><a href="api/tools.html#xonsh.tools.expandpath">expandpath() (in module xonsh.tools)</a>
+      <li><a href="api/tools.html#xonsh.tools.expand_path">expand_path() (in module xonsh.tools)</a>
 </li>
       <li><a href="api/tools.html#xonsh.tools.expanduser_abs_path">expanduser_abs_path() (in module xonsh.tools)</a>
 </li>
@@ -736,12 +740,10 @@
         <li><a href="api/events.html#xonsh.events.LoadEvent.fire">(xonsh.events.LoadEvent method)</a>
 </li>
       </ul></li>
-      <li><a href="api/shell.html#xonsh.shell.fire_precommand">fire_precommand() (in module xonsh.shell)</a>
+      <li><a href="api/readline_shell.html#xonsh.readline_shell.fix_readline_state_after_ctrl_c">fix_readline_state_after_ctrl_c() (in module xonsh.readline_shell)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/readline_shell.html#xonsh.readline_shell.fix_readline_state_after_ctrl_c">fix_readline_state_after_ctrl_c() (in module xonsh.readline_shell)</a>
-</li>
       <li><a href="api/history/base.html#xonsh.history.base.History.flush">flush() (xonsh.history.base.History method)</a>
 
       <ul>
@@ -922,9 +924,11 @@
 </li>
       <li><a href="api/lexer.html#xonsh.lexer.handle_token">handle_token() (in module xonsh.lexer)</a>
 </li>
+      <li><a href="api/ast.html#xonsh.ast.has_elts">has_elts() (in module xonsh.ast)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ast.html#xonsh.ast.has_elts">has_elts() (in module xonsh.ast)</a>
+      <li><a href="api/events.html#xonsh.events.has_kwargs">has_kwargs() (in module xonsh.events)</a>
 </li>
       <li><a href="api/platform.html#xonsh.platform.has_prompt_toolkit">has_prompt_toolkit (in module xonsh.platform)</a>
 </li>
@@ -1013,8 +1017,6 @@
       <li><a href="api/lexer.html#xonsh.lexer.Lexer.input">input() (xonsh.lexer.Lexer method)</a>
 </li>
       <li><a href="api/tools.html#xonsh.tools.EnvPath.insert">insert() (xonsh.tools.EnvPath method)</a>
-</li>
-      <li><a href="api/ast.html#xonsh.ast.CtxAwareTransformer.insert_with_block_check">insert_with_block_check() (xonsh.ast.CtxAwareTransformer method)</a>
 </li>
       <li><a href="api/inspectors.html#xonsh.inspectors.Inspector">Inspector (class in xonsh.inspectors)</a>
 </li>
@@ -1722,12 +1724,12 @@
 </li>
       <li><a href="api/replay.html#xonsh.replay.replay_main_action">replay_main_action() (in module xonsh.replay)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/replay.html#xonsh.replay.Replayer">Replayer (class in xonsh.replay)</a>
 </li>
       <li><a href="api/pretty.html#xonsh.pretty.RepresentationPrinter">RepresentationPrinter (class in xonsh.pretty)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ptk/completer.html#xonsh.ptk.completer.PromptToolkitCompleter.reserve_space">reserve_space() (xonsh.ptk.completer.PromptToolkitCompleter method)</a>
 </li>
       <li><a href="api/lexer.html#xonsh.lexer.Lexer.reset">reset() (xonsh.lexer.Lexer method)</a>
@@ -1752,6 +1754,14 @@
 </li>
       <li><a href="api/built_ins.html#xonsh.built_ins.SubprocSpec.resolve_executable_commands">resolve_executable_commands() (xonsh.built_ins.SubprocSpec method)</a>
 </li>
+      <li><a href="api/base_shell.html#xonsh.base_shell.BaseShell.restore_tty_sanity">restore_tty_sanity() (xonsh.base_shell.BaseShell method)</a>
+
+      <ul>
+        <li><a href="api/ptk/shell.html#xonsh.ptk.shell.PromptToolkitShell.restore_tty_sanity">(xonsh.ptk.shell.PromptToolkitShell method)</a>
+</li>
+        <li><a href="api/readline_shell.html#xonsh.readline_shell.ReadlineShell.restore_tty_sanity">(xonsh.readline_shell.ReadlineShell method)</a>
+</li>
+      </ul></li>
       <li><a href="api/proc.html#xonsh.proc.CommandPipeline.returncode">returncode (xonsh.proc.CommandPipeline attribute)</a>
 
       <ul>
@@ -1759,6 +1769,8 @@
 </li>
       </ul></li>
       <li><a href="api/tools.html#xonsh.tools.EnvPath.reverse">reverse() (xonsh.tools.EnvPath method)</a>
+</li>
+      <li><a href="api/readline_shell.html#xonsh.readline_shell.rl_completion_query_items">rl_completion_query_items() (in module xonsh.readline_shell)</a>
 </li>
       <li><a href="api/readline_shell.html#xonsh.readline_shell.rl_completion_suppress_append">rl_completion_suppress_append() (in module xonsh.readline_shell)</a>
 </li>
@@ -1900,10 +1912,20 @@
 </li>
       <li><a href="api/openpy.html#xonsh.openpy.source_to_unicode">source_to_unicode() (in module xonsh.openpy)</a>
 </li>
+      <li><a href="api/events.html#xonsh.events.AbstractEvent.species">species (xonsh.events.AbstractEvent attribute)</a>
+
+      <ul>
+        <li><a href="api/events.html#xonsh.events.Event.species">(xonsh.events.Event attribute)</a>
+</li>
+        <li><a href="api/events.html#xonsh.events.LoadEvent.species">(xonsh.events.LoadEvent attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/history/sqlite.html#xonsh.history.sqlite.SqliteHistory">SqliteHistory (class in xonsh.history.sqlite)</a>
 </li>
       <li><a href="api/history/sqlite.html#xonsh.history.sqlite.SqliteHistoryGC">SqliteHistoryGC (class in xonsh.history.sqlite)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.GitStatus.staged">staged (xonsh.prompt.gitstatus.GitStatus attribute)</a>
 </li>
       <li><a href="api/ptk/history.html#xonsh.ptk.history.PromptToolkitHistoryAdder.start">start() (xonsh.ptk.history.PromptToolkitHistoryAdder method)</a>
@@ -1914,8 +1936,6 @@
         <li><a href="api/tracer.html#xonsh.tracer.TracerType.start">(xonsh.tracer.TracerType method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.GitStatus.stashed">stashed (xonsh.prompt.gitstatus.GitStatus attribute)</a>
 </li>
       <li><a href="api/wizard.html#xonsh.wizard.StateFile">StateFile (class in xonsh.wizard)</a>
@@ -2052,10 +2072,10 @@
 </li>
       <li><a href="api/tools.html#xonsh.tools.to_history_tuple">to_history_tuple() (in module xonsh.tools)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/tools.html#xonsh.tools.to_logfile_opt">to_logfile_opt() (in module xonsh.tools)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lexer.html#xonsh.lexer.Lexer.token">token() (xonsh.lexer.Lexer method)</a>
 </li>
       <li><a href="api/lexer.html#xonsh.lexer.Lexer.tokens">tokens (xonsh.lexer.Lexer attribute)</a>
@@ -2077,6 +2097,8 @@
       <li><a href="api/tracer.html#xonsh.tracer.tracermain">tracermain() (in module xonsh.tracer)</a>
 </li>
       <li><a href="api/tracer.html#xonsh.tracer.TracerType">TracerType (class in xonsh.tracer)</a>
+</li>
+      <li><a href="api/shell.html#xonsh.shell.transform_command">transform_command() (in module xonsh.shell)</a>
 </li>
       <li><a href="api/events.html#xonsh.events.EventManager.transmogrify">transmogrify() (xonsh.events.EventManager method)</a>
 </li>
@@ -2256,11 +2278,11 @@
 </li>
       <li><a href="api/environ.html#xonsh.environ.windows_foreign_env_fixes">windows_foreign_env_fixes() (in module xonsh.environ)</a>
 </li>
-      <li><a href="api/tools.html#xonsh.tools.XonshBlockError.with_traceback">with_traceback() (xonsh.tools.XonshBlockError method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/tools.html#xonsh.tools.XonshCalledProcessError.with_traceback">with_traceback() (xonsh.tools.XonshCalledProcessError method)</a>
 
       <ul>
-        <li><a href="api/tools.html#xonsh.tools.XonshCalledProcessError.with_traceback">(xonsh.tools.XonshCalledProcessError method)</a>
-</li>
         <li><a href="api/tools.html#xonsh.tools.XonshError.with_traceback">(xonsh.tools.XonshError method)</a>
 </li>
         <li><a href="api/vox.html#xontrib.voxapi.EnvironmentInUse.with_traceback">(xontrib.voxapi.EnvironmentInUse method)</a>
@@ -2268,8 +2290,6 @@
         <li><a href="api/vox.html#xontrib.voxapi.NoEnvironmentActive.with_traceback">(xontrib.voxapi.NoEnvironmentActive method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/wizard.html#xonsh.wizard.Wizard">Wizard (class in xonsh.wizard)</a>
 </li>
       <li><a href="api/proc.html#xonsh.proc.FileThreadDispatcher.writable">writable() (xonsh.proc.FileThreadDispatcher method)</a>
@@ -2420,8 +2440,6 @@
 </li>
       <li><a href="api/pyghooks.html#xonsh.pyghooks.xonsh_style_proxy">xonsh_style_proxy() (in module xonsh.pyghooks)</a>
 </li>
-      <li><a href="api/tools.html#xonsh.tools.XonshBlockError">XonshBlockError</a>
-</li>
       <li><a href="api/tools.html#xonsh.tools.XonshCalledProcessError">XonshCalledProcessError</a>
 </li>
       <li><a href="api/environ.html#xonsh.environ.xonshconfig">xonshconfig() (in module xonsh.environ)</a>
@@ -2497,7 +2515,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.2 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.3 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -2505,7 +2523,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

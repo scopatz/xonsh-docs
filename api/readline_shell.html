@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Readline Shell (xonsh.readline_shell) &#8212; xonsh 0.5.2 documentation</title>
+    <title>Readline Shell (xonsh.readline_shell) &#8212; xonsh 0.5.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.2',
+        VERSION:     '0.5.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -57,7 +57,7 @@
         <li class="right" >
           <a href="base_shell.html" title="Base Shell Class (xonsh.base_shell)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.2 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.3 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
@@ -350,6 +350,14 @@ enables multiline input.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="xonsh.readline_shell.ReadlineShell.restore_tty_sanity">
+<code class="descname">restore_tty_sanity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#ReadlineShell.restore_tty_sanity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.restore_tty_sanity" title="Permalink to this definition">¶</a></dt>
+<dd><p>An interface for resetting the TTY stdin mode. This is highly
+dependent on the shell backend. Also it is mostly optional since
+it only affects ^Z backgrounding behaviour.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="xonsh.readline_shell.ReadlineShell.settitle">
 <code class="descname">settitle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xonsh.readline_shell.ReadlineShell.settitle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets terminal title.</p>
@@ -434,6 +442,14 @@ history.</p>
 <dt>Based on code from:</dt>
 <dd><a class="reference external" href="http://bugs.python.org/file39467/raw_input__workaround_demo.py">http://bugs.python.org/file39467/raw_input__workaround_demo.py</a></dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.readline_shell.rl_completion_query_items">
+<code class="descclassname">xonsh.readline_shell.</code><code class="descname">rl_completion_query_items</code><span class="sig-paren">(</span><em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/readline_shell.html#rl_completion_query_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.readline_shell.rl_completion_query_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the rl_completion_query_items varaiable, if possible.
+A None value will set this to $COMPLETION_QUERY_LIMIT, otherwise any integer
+is accepted.</p>
 </dd></dl>
 
 <dl class="function">
@@ -527,7 +543,7 @@ output may be used in an inputrc file.</p>
         <li class="right" >
           <a href="base_shell.html" title="Base Shell Class (xonsh.base_shell)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.2 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.3 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
@@ -536,7 +552,7 @@ output may be used in an inputrc file.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
