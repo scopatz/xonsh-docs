@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &#8212; xonsh 0.5.4 documentation</title>
+    <title>Index &#8212; xonsh 0.5.5 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,7 +18,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.4',
+        VERSION:     '0.5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -50,7 +50,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.4 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.5 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -742,10 +742,10 @@
         <li><a href="api/events.html#xonsh.events.LoadEvent.fire">(xonsh.events.LoadEvent method)</a>
 </li>
       </ul></li>
-      <li><a href="api/readline_shell.html#xonsh.readline_shell.fix_readline_state_after_ctrl_c">fix_readline_state_after_ctrl_c() (in module xonsh.readline_shell)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/readline_shell.html#xonsh.readline_shell.fix_readline_state_after_ctrl_c">fix_readline_state_after_ctrl_c() (in module xonsh.readline_shell)</a>
+</li>
       <li><a href="api/history/base.html#xonsh.history.base.History.flush">flush() (xonsh.history.base.History method)</a>
 
       <ul>
@@ -759,8 +759,6 @@
       <li><a href="api/pretty.html#xonsh.pretty.for_type">for_type() (in module xonsh.pretty)</a>
 </li>
       <li><a href="api/pretty.html#xonsh.pretty.for_type_by_name">for_type_by_name() (in module xonsh.pretty)</a>
-</li>
-      <li><a href="api/proc.html#xonsh.proc.foreground">foreground() (in module xonsh.proc)</a>
 </li>
       <li><a href="api/environ.html#xonsh.environ.foreign_env_fixes">foreign_env_fixes() (in module xonsh.environ)</a>
 </li>
@@ -889,6 +887,8 @@
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.gitstatus">gitstatus() (in module xonsh.prompt.gitstatus)</a>
 </li>
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.gitstatus_prompt">gitstatus_prompt() (in module xonsh.prompt.gitstatus)</a>
+</li>
+      <li><a href="api/jobs.html#xonsh.jobs.give_terminal_to">give_terminal_to() (in module xonsh.jobs)</a>
 </li>
       <li><a href="api/tools.html#xonsh.tools.globpath">globpath() (in module xonsh.tools)</a>
 </li>
@@ -1738,10 +1738,10 @@
 </li>
       <li><a href="api/pretty.html#xonsh.pretty.RepresentationPrinter">RepresentationPrinter (class in xonsh.pretty)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ptk/completer.html#xonsh.ptk.completer.PromptToolkitCompleter.reserve_space">reserve_space() (xonsh.ptk.completer.PromptToolkitCompleter method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lexer.html#xonsh.lexer.Lexer.reset">reset() (xonsh.lexer.Lexer method)</a>
 </li>
       <li><a href="api/base_shell.html#xonsh.base_shell.BaseShell.reset_buffer">reset_buffer() (xonsh.base_shell.BaseShell method)</a>
@@ -1772,6 +1772,8 @@
         <li><a href="api/readline_shell.html#xonsh.readline_shell.ReadlineShell.restore_tty_sanity">(xonsh.readline_shell.ReadlineShell method)</a>
 </li>
       </ul></li>
+      <li><a href="api/proc.html#xonsh.proc.CommandPipeline.resume">resume() (xonsh.proc.CommandPipeline method)</a>
+</li>
       <li><a href="api/proc.html#xonsh.proc.CommandPipeline.returncode">returncode (xonsh.proc.CommandPipeline attribute)</a>
 
       <ul>
@@ -1936,8 +1938,6 @@
 </li>
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.GitStatus.staged">staged (xonsh.prompt.gitstatus.GitStatus attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ptk/history.html#xonsh.ptk.history.PromptToolkitHistoryAdder.start">start() (xonsh.ptk.history.PromptToolkitHistoryAdder method)</a>
 
       <ul>
@@ -1946,11 +1946,17 @@
         <li><a href="api/tracer.html#xonsh.tracer.TracerType.start">(xonsh.tracer.TracerType method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/main.html#xonsh.main.start_services">start_services() (in module xonsh.main)</a>
+</li>
       <li><a href="api/prompt/gitstatus.html#xonsh.prompt.gitstatus.GitStatus.stashed">stashed (xonsh.prompt.gitstatus.GitStatus attribute)</a>
 </li>
       <li><a href="api/wizard.html#xonsh.wizard.StateFile">StateFile (class in xonsh.wizard)</a>
 </li>
       <li><a href="api/wizard.html#xonsh.wizard.StateVisitor">StateVisitor (class in xonsh.wizard)</a>
+</li>
+      <li><a href="api/environ.html#xonsh.environ.static_config_run_control">static_config_run_control() (in module xonsh.environ)</a>
 </li>
       <li><a href="api/built_ins.html#xonsh.built_ins.SubprocSpec.stderr">stderr (xonsh.built_ins.SubprocSpec attribute)</a>
 
@@ -2050,6 +2056,8 @@
         <li><a href="api/environ.html#xonsh.environ.Env.swap">(xonsh.environ.Env method)</a>
 </li>
       </ul></li>
+      <li><a href="api/tools.html#xonsh.tools.swap_values">swap_values() (in module xonsh.tools)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2130,7 +2138,7 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/proc.html#xonsh.proc.uncapturable">uncapturable() (in module xonsh.proc)</a>
+      <li><a href="api/tools.html#xonsh.tools.uncapturable">uncapturable() (in module xonsh.tools)</a>
 </li>
       <li><a href="api/environ.html#xonsh.environ.Env.undo_replace_env">undo_replace_env() (xonsh.environ.Env method)</a>
 </li>
@@ -2140,7 +2148,7 @@
 </li>
       <li><a href="api/wizard.html#xonsh.wizard.UnstorableType">UnstorableType (class in xonsh.wizard)</a>
 </li>
-      <li><a href="api/proc.html#xonsh.proc.unthreadable">unthreadable() (in module xonsh.proc)</a>
+      <li><a href="api/tools.html#xonsh.tools.unthreadable">unthreadable() (in module xonsh.tools)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -2153,6 +2161,8 @@
 </li>
       </ul></li>
       <li><a href="api/codecache.html#xonsh.codecache.update_cache">update_cache() (in module xonsh.codecache)</a>
+</li>
+      <li><a href="api/proc.html#xonsh.proc.update_fg_process_group">update_fg_process_group() (in module xonsh.proc)</a>
 </li>
       <li><a href="api/vox.html#xontrib.voxapi.Vox.upgrade">upgrade() (xontrib.voxapi.Vox method)</a>
 </li>
@@ -2452,6 +2462,8 @@
 </li>
       <li><a href="api/aliases.html#xonsh.aliases.xonsh_exit">xonsh_exit() (in module xonsh.aliases)</a>
 </li>
+      <li><a href="api/environ.html#xonsh.environ.xonsh_script_run_control">xonsh_script_run_control() (in module xonsh.environ)</a>
+</li>
       <li><a href="api/pyghooks.html#xonsh.pyghooks.xonsh_style_proxy">xonsh_style_proxy() (in module xonsh.pyghooks)</a>
 </li>
       <li><a href="api/tools.html#xonsh.tools.XonshCalledProcessError">XonshCalledProcessError</a>
@@ -2529,7 +2541,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.4 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.5 documentation</a> &#187;</li>
  
       </ul>
     </div>
