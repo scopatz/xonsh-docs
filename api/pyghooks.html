@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Pygments Hooks (xonsh.pyghooks) &#8212; xonsh 0.5.6 documentation</title>
+    <title>Pygments Hooks (xonsh.pyghooks) &#8212; xonsh 0.5.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.6',
+        VERSION:     '0.5.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -33,7 +33,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Jupyter Kernel (xonsh.jupyter_kernel)" href="jupyter_kernel.html" />
-    <link rel="prev" title="Command Line Interface (xonsh.main)" href="main.html" />
+    <link rel="prev" title="Color Tools (xonsh.color_tools)" href="color_tools.html" />
      
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="canonical" href="http://xon.sh/api/pyghooks.html"/>
@@ -55,9 +55,9 @@
           <a href="jupyter_kernel.html" title="Jupyter Kernel (xonsh.jupyter_kernel)"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="main.html" title="Command Line Interface (xonsh.main)"
+          <a href="color_tools.html" title="Color Tools (xonsh.color_tools)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.7 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
@@ -134,7 +134,7 @@ with root or subproc state</p>
 
 <dl class="attribute">
 <dt id="xonsh.pyghooks.XonshLexer.tokens">
-<code class="descname">tokens</code><em class="property"> = {'backtick_re': [('[\\.\\^\\$\\*\\+\\?\\[\\]\\|]', Token.Literal.String.Regex), ('({[0-9]+}|{[0-9]+,[0-9]+})\\??', Token.Literal.String.Regex), ('\\\\([0-9]+|[AbBdDsSwWZabfnrtuUvx\\\\])', Token.Literal.String.Escape), ('`', Token.Literal.String.Backtick, '#pop'), ('[^`\\.\\^\\$\\*\\+\\?\\[\\]\\|]+', Token.Literal.String.Backtick)], 'subproc_bracket': [('\\)', Token.Punctuation, '#pop'), 'subproc'], 'py_bracket': [('\\)', Token.Punctuation, '#pop'), 'root'], 'subproc_square_bracket': [('\\]', Token.Punctuation, '#pop'), 'subproc'], 'py_curly_bracket': [('\\}', Token.Punctuation, '#pop'), 'root'], 'subproc_start': [('\\s+', Token.Text.Whitespace), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;!]+(?=\\s|$|\\)|\\]|\\}|!)', &lt;function subproc_cmd_callback&gt;, '#pop'), ('', Token.Text.Whitespace, '#pop')], 'subproc_macro': [('(\\s*)([^\\n]+)', &lt;function bygroups.&lt;locals&gt;.callback&gt;), ('', Token.Text.Whitespace, '#pop')], 'root': [('\\?', Token.Keyword), ('(?&lt;=\\w)!', Token.Keyword), ('\\$\\w+', Token.Name.Variable), ('\\(', Token.Punctuation, 'py_bracket'), ('\\{', Token.Punctuation, 'py_curly_bracket'), 'mode_switch_brackets', inherit], 'mode_switch_brackets': [('(\\$)(\\{)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_curly_bracket'), ('(&#64;)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_bracket'), ('([\\!\\$])(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('(&#64;\\$)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('([\\!\\$])(\\[)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_square_bracket', 'subproc_start')), ('(g?)(`)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'backtick_re')], 'subproc': ['mode_switch_brackets', ('&amp;&amp;|\\|\\|', Token.Operator, 'subproc_start'), ('&quot;(\\\\\\\\|\\\\[0-7]+|\\\\.|[^&quot;\\\\])*&quot;', Token.Literal.String.Double), (&quot;'(\\\\\\\\|\\\\[0-7]+|\\\\.|[^'\\\\])*'&quot;, Token.Literal.String.Single), ('(?&lt;=\\w|\\s)!', Token.Keyword, 'subproc_macro'), ('^!', Token.Keyword, 'subproc_macro'), (';', Token.Punctuation, 'subproc_start'), ('&amp;|=', Token.Punctuation), ('\\|', Token.Punctuation, 'subproc_start'), ('\\s+', Token.Text), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;]+', &lt;function subproc_arg_callback&gt;), ('&lt;', Token.Text), ('\\$\\w+', Token.Name.Variable)]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.tokens" title="Permalink to this definition">¶</a></dt>
+<code class="descname">tokens</code><em class="property"> = {'subproc': ['mode_switch_brackets', ('&amp;&amp;|\\|\\|', Token.Operator, 'subproc_start'), ('&quot;(\\\\\\\\|\\\\[0-7]+|\\\\.|[^&quot;\\\\])*&quot;', Token.Literal.String.Double), (&quot;'(\\\\\\\\|\\\\[0-7]+|\\\\.|[^'\\\\])*'&quot;, Token.Literal.String.Single), ('(?&lt;=\\w|\\s)!', Token.Keyword, 'subproc_macro'), ('^!', Token.Keyword, 'subproc_macro'), (';', Token.Punctuation, 'subproc_start'), ('&amp;|=', Token.Punctuation), ('\\|', Token.Punctuation, 'subproc_start'), ('\\s+', Token.Text), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;]+', &lt;function subproc_arg_callback&gt;), ('&lt;', Token.Text), ('\\$\\w+', Token.Name.Variable)], 'py_bracket': [('\\)', Token.Punctuation, '#pop'), 'root'], 'mode_switch_brackets': [('(\\$)(\\{)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_curly_bracket'), ('(&#64;)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'py_bracket'), ('([\\!\\$])(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('(&#64;\\$)(\\()', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_bracket', 'subproc_start')), ('([\\!\\$])(\\[)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, ('subproc_square_bracket', 'subproc_start')), ('(g?)(`)', &lt;function bygroups.&lt;locals&gt;.callback&gt;, 'backtick_re')], 'subproc_start': [('\\s+', Token.Text.Whitespace), ('[^=\\s\\[\\]{}()$&quot;\\\'`&lt;&amp;|;!]+(?=\\s|$|\\)|\\]|\\}|!)', &lt;function subproc_cmd_callback&gt;, '#pop'), ('', Token.Text.Whitespace, '#pop')], 'subproc_macro': [('(\\s*)([^\\n]+)', &lt;function bygroups.&lt;locals&gt;.callback&gt;), ('', Token.Text.Whitespace, '#pop')], 'root': [('\\?', Token.Keyword), ('(?&lt;=\\w)!', Token.Keyword), ('\\$\\w+', Token.Name.Variable), ('\\(', Token.Punctuation, 'py_bracket'), ('\\{', Token.Punctuation, 'py_curly_bracket'), 'mode_switch_brackets', inherit], 'py_curly_bracket': [('\\}', Token.Punctuation, '#pop'), 'root'], 'subproc_bracket': [('\\)', Token.Punctuation, '#pop'), 'subproc'], 'subproc_square_bracket': [('\\]', Token.Punctuation, '#pop'), 'subproc'], 'backtick_re': [('[\\.\\^\\$\\*\\+\\?\\[\\]\\|]', Token.Literal.String.Regex), ('({[0-9]+}|{[0-9]+,[0-9]+})\\??', Token.Literal.String.Regex), ('\\\\([0-9]+|[AbBdDsSwWZabfnrtuUvx\\\\])', Token.Literal.String.Escape), ('`', Token.Literal.String.Backtick, '#pop'), ('[^`\\.\\^\\$\\*\\+\\?\\[\\]\\|]+', Token.Literal.String.Backtick)]}</em><a class="headerlink" href="#xonsh.pyghooks.XonshLexer.tokens" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -249,9 +249,9 @@ and background colors, if provided.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="xonsh.pyghooks.norm_name">
-<code class="descclassname">xonsh.pyghooks.</code><code class="descname">norm_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#norm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.norm_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalizes a color name.</p>
+<dt id="xonsh.pyghooks.make_pygments_style">
+<code class="descclassname">xonsh.pyghooks.</code><code class="descname">make_pygments_style</code><span class="sig-paren">(</span><em>pallette</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#make_pygments_style"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.make_pygments_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a pygments style based on a color pallete.</p>
 </dd></dl>
 
 <dl class="function">
@@ -260,6 +260,12 @@ and background colors, if provided.</p>
 <dd><p>Tokenizes a template string containing colors. Will return a list
 of tuples mapping the token to the string which has that color.
 These sub-strings maybe templates themselves.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xonsh.pyghooks.pygments_style_by_name">
+<code class="descclassname">xonsh.pyghooks.</code><code class="descname">pygments_style_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/pyghooks.html#pygments_style_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.pyghooks.pygments_style_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or makes a pygments color style by its name.</p>
 </dd></dl>
 
 <dl class="function">
@@ -294,8 +300,8 @@ otherwise fallback to fallback lexer.</p>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="main.html"
-                          title="Previous page">&larr; Command Line Interface (<code class="docutils literal"><span class="pre">xonsh.main</span></code>)</a></p>
+    <p class="topless"><a href="color_tools.html"
+                          title="Previous page">&larr; Color Tools (<code class="docutils literal"><span class="pre">xonsh.color_tools</span></code>)</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
@@ -338,9 +344,9 @@ otherwise fallback to fallback lexer.</p>
           <a href="jupyter_kernel.html" title="Jupyter Kernel (xonsh.jupyter_kernel)"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="main.html" title="Command Line Interface (xonsh.main)"
+          <a href="color_tools.html" title="Color Tools (xonsh.color_tools)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.6 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.7 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>

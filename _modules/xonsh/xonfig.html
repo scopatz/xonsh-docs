@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xonsh.xonfig &#8212; xonsh 0.5.6 documentation</title>
+    <title>xonsh.xonfig &#8212; xonsh 0.5.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.6',
+        VERSION:     '0.5.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -49,7 +49,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.5.7 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -64,9 +64,12 @@
             
   <h1>Source code for xonsh.xonfig</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;The xonsh configuration (xonfig) utility.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">textwrap</span>
 <span class="kn">import</span> <span class="nn">builtins</span>
@@ -89,6 +92,7 @@
 <span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">to_bool</span><span class="p">,</span> <span class="n">is_string</span><span class="p">,</span> <span class="n">print_exception</span><span class="p">,</span> <span class="n">is_superuser</span><span class="p">,</span>
                          <span class="n">color_style_names</span><span class="p">,</span> <span class="n">print_color</span><span class="p">,</span> <span class="n">color_style</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">xonsh.xontribs</span> <span class="k">import</span> <span class="n">xontrib_metadata</span><span class="p">,</span> <span class="n">find_xontrib</span>
+<span class="kn">from</span> <span class="nn">xonsh.lazyasd</span> <span class="k">import</span> <span class="n">lazyobject</span>
 
 <span class="n">HR</span> <span class="o">=</span> <span class="s2">&quot;&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;`-.,_,.-*&#39;&quot;</span>
 <span class="n">WIZARD_HEAD</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -232,6 +236,16 @@
 <span class="n">ENVVAR_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{BOLD_GREEN}</span><span class="s2">&gt;&gt;&gt;</span><span class="si">{NO_COLOR}</span><span class="s2"> &quot;</span>
 
 
+<div class="viewcode-block" id="make_exit_message"><a class="viewcode-back" href="../../api/xonfig.html#xonsh.xonfig.make_exit_message">[docs]</a><span class="k">def</span> <span class="nf">make_exit_message</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creates a message for how to exit the wizard.&quot;&quot;&quot;</span>
+    <span class="n">shell_type</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_shell__</span><span class="o">.</span><span class="n">shell_type</span>
+    <span class="n">keyseq</span> <span class="o">=</span> <span class="s1">&#39;Ctrl-D&#39;</span> <span class="k">if</span> <span class="n">shell_type</span> <span class="o">==</span> <span class="s1">&#39;readline&#39;</span> <span class="k">else</span> <span class="s1">&#39;Ctrl-C&#39;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;To exit the wizard at any time, press </span><span class="si">{BOLD_UNDERLINE_CYAN}</span><span class="s1">&#39;</span>
+    <span class="n">msg</span> <span class="o">+=</span> <span class="n">keyseq</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{NO_COLOR}</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">wiz</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span></div>
+
+
 <div class="viewcode-block" id="make_envvar"><a class="viewcode-back" href="../../api/xonfig.html#xonsh.xonfig.make_envvar">[docs]</a><span class="k">def</span> <span class="nf">make_envvar</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Makes a StoreNonEmpty node for an environment variable.&quot;&quot;&quot;</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span>
@@ -331,6 +345,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">wiz</span><span class="o">.</span><span class="n">Wizard</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span>
         <span class="n">wiz</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">WIZARD_HEAD</span><span class="p">),</span>
+        <span class="n">make_exit_message</span><span class="p">(),</span>
         <span class="n">wiz</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">default_file</span><span class="o">=</span><span class="n">default_file</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="n">wiz</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">WIZARD_FS</span><span class="p">),</span>
         <span class="n">make_fs_wiz</span><span class="p">(),</span>
@@ -379,6 +394,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">pv</span><span class="o">.</span><span class="n">visit</span><span class="p">()</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">()</span>
             <span class="n">print_exception</span><span class="p">()</span>
 
 
@@ -523,6 +539,11 @@
     <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="p">[</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">style_stash</span>
 
 
+<span class="k">def</span> <span class="nf">_tutorial</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">webbrowser</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;http://xon.sh/tutorial.html&#39;</span><span class="p">)</span>
+
+
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_xonfig_create_parser</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;xonfig&#39;</span><span class="p">,</span>
@@ -532,8 +553,7 @@
                                          <span class="s1">&#39;default action&#39;</span><span class="p">))</span>
     <span class="n">info</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--json&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;reports results as json&#39;</span><span class="p">)</span>
-    <span class="n">wiz</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;wizard&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;displays configuration information, &#39;</span>
-                                         <span class="s1">&#39;default action&#39;</span><span class="p">)</span>
+    <span class="n">wiz</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;wizard&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;displays configuration information&#39;</span><span class="p">)</span>
     <span class="n">wiz</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--file&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">help</span><span class="o">=</span><span class="s1">&#39;config file location, default=$XONSHCONFIG&#39;</span><span class="p">)</span>
     <span class="n">wiz</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--confirm&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -544,6 +564,7 @@
     <span class="n">colors</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;colors&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;preview color style&#39;</span><span class="p">)</span>
     <span class="n">colors</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;style to preview, default: &lt;current&gt;&#39;</span><span class="p">)</span>
+    <span class="n">subp</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;tutorial&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Launch tutorial in browser.&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">p</span>
 
 
@@ -552,6 +573,7 @@
     <span class="s1">&#39;wizard&#39;</span><span class="p">:</span> <span class="n">_wizard</span><span class="p">,</span>
     <span class="s1">&#39;styles&#39;</span><span class="p">:</span> <span class="n">_styles</span><span class="p">,</span>
     <span class="s1">&#39;colors&#39;</span><span class="p">:</span> <span class="n">_colors</span><span class="p">,</span>
+    <span class="s1">&#39;tutorial&#39;</span><span class="p">:</span> <span class="n">_tutorial</span><span class="p">,</span>
 <span class="p">}</span>
 
 
@@ -565,6 +587,92 @@
     <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># apply default action</span>
         <span class="n">ns</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">args</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_XONFIG_MAIN_ACTIONS</span><span class="p">[</span><span class="n">ns</span><span class="o">.</span><span class="n">action</span><span class="p">](</span><span class="n">ns</span><span class="p">)</span></div>
+
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">STRIP_COLOR_RE</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;{.*?}&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_align_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Align and pad a color formattet string &quot;&quot;&quot;</span>
+    <span class="n">linelen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">STRIP_COLOR_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">))</span>
+    <span class="n">padlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">width</span><span class="o">-</span><span class="n">linelen</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">align</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fill</span><span class="o">*</span><span class="p">(</span><span class="n">padlen</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">string</span> <span class="o">+</span> <span class="n">fill</span><span class="o">*</span><span class="p">(</span><span class="n">padlen</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="n">padlen</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">align</span> <span class="o">==</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fill</span><span class="o">*</span><span class="n">padlen</span> <span class="o">+</span> <span class="n">string</span>
+    <span class="k">elif</span> <span class="n">align</span> <span class="o">==</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span> <span class="o">+</span> <span class="n">fill</span><span class="o">*</span><span class="n">padlen</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+
+<span class="nd">@lazyobject</span>
+<span class="k">def</span> <span class="nf">TAGLINES</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="s2">&quot;Exofrills in the shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;No frills in the shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Become the Lord of the Files&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Break out of your shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The only shell that is also a shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;All that is and all that shell be&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;It cannot be that hard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Pass the xonsh, Piggy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Piggy glanced nervously into hell and cradled the xonsh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The xonsh is a symbol&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;It is pronounced conch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The shell, bourne again&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Snailed it&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Starfish loves you&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Come snail away&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;This is Major Tom to Ground Xonshtrol&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Sally sells csh and keeps xonsh to herself&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Nice indeed. Everything&#39;s accounted for, except your old shell.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;I wanna thank you for putting me back in my snail shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Crustaceanly Yours&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;With great shell comes great reproducibility&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;None shell pass&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;You shell not pass!&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The x-on shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Ever wonder why there isn&#39;t a Taco Shell? Because it is a corny idea.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The carcolh will catch you!&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;People xonshtantly mispronounce these things&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;WHAT...is your favorite shell?&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Conches for the xonsh god!&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Python-powered, cross-platform, Unix-gazing shell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Tab completion in Alderaan places&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+
+<span class="c1"># list of strings or tuples (string, align, fill)</span>
+<span class="n">WELCOME_MSG</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;{{INTENSE_WHITE}}Welcome to the xonsh shell (</span><span class="si">{version}</span><span class="s1">){{NO_COLOR}}&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">),</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;{{INTENSE_RED}}~{{NO_COLOR}} </span><span class="si">{tagline}</span><span class="s1"> {{INTENSE_RED}}~{{NO_COLOR}}&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">),</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;{{INTENSE_BLACK}}&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;{{GREEN}}xonfig{{NO_COLOR}} tutorial    {{INTENSE_WHITE}}-&gt;    Launch the tutorial in &#39;</span>
+    <span class="s1">&#39;the browser{{NO_COLOR}}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;{{GREEN}}xonfig{{NO_COLOR}} wizard      {{INTENSE_WHITE}}-&gt;    Run the configuration &#39;</span>
+    <span class="s1">&#39;wizard and claim your shell {{NO_COLOR}}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;{{INTENSE_BLACK}}(Note: Run the Wizard or create a {{RED}}~/.xonshrc{{INTENSE_BLACK}} file &#39;</span>
+    <span class="s1">&#39;to suppress the welcome screen)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="print_welcome_screen"><a class="viewcode-back" href="../../api/xonfig.html#xonsh.xonfig.print_welcome_screen">[docs]</a><span class="k">def</span> <span class="nf">print_welcome_screen</span><span class="p">():</span>
+    <span class="n">subst</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tagline</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TAGLINES</span><span class="p">)),</span>
+                 <span class="n">version</span><span class="o">=</span><span class="n">XONSH_VERSION</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">WELCOME_MSG</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">subst</span><span class="p">)</span>
+        <span class="n">termwidth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">_align_string</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">elem</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">elem</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">termwidth</span><span class="p">)</span>
+        <span class="n">print_color</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -600,7 +708,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.6 documentation</a> &#187;</li>
+    <li><a href="../../index.html">xonsh 0.5.7 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
