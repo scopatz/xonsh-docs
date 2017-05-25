@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Xonsh Change Log &#8212; xonsh 0.5.9 documentation</title>
+    <title>Xonsh Change Log &#8212; xonsh 0.5.10.dev1 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,21 +17,22 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.9',
+        VERSION:     '0.5.10.dev1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
+        HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="xonsh 0.5.10.dev1 documentation" href="index.html" />
     <link rel="next" title="Frequently Asked Questions" href="faq.html" />
     <link rel="prev" title="Developer’s Guide" href="devguide.html" />
      
@@ -57,7 +58,7 @@
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.9 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -71,6 +72,49 @@
             
   <div class="section" id="xonsh-change-log">
 <h1>Xonsh Change Log<a class="headerlink" href="#xonsh-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-5-10">
+<h2>v0.5.10<a class="headerlink" href="#v0-5-10" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>v0.5.10<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id2">
+<h2>v0.5.10<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id3">
+<h2>v0.5.10<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li>Added <code class="docutils literal"><span class="pre">xclip</span></code> and <code class="docutils literal"><span class="pre">repo</span></code> to default threadable predictors (Issues #2355
+and #2348)</li>
+<li>Pretty printing of the $PATH variable</li>
+<li>Add &#8220;fzf-widgets&#8221; xontrib which provides fuzzy search productivity widgets
+with on custom keybindings to xontrib list.</li>
+<li>New <code class="docutils literal"><span class="pre">free_cwd</span></code> xontrib for Windows, which prevent the current directory from beeing locked when the prompt is shown.
+This allows the other programs or Windows explorer to delete the current or parent directory. This is accomplished by
+reseting the CWD to the users home directory temporarily while the prompt is displayed. The directory is still locked
+while any commands are processed so xonsh still can&#8217;t remove it own working directory.</li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li>Codecov threshold to 2%</li>
+</ul>
+<p><strong>Removed:</strong></p>
+<ul class="simple">
+<li>On Windows environments variables in wrapped like``%foo%`` are no longer expanded automatically.</li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li>Fixed the <code class="docutils literal"><span class="pre">--rc</span></code> option so it now runs xonsh with the specified rc file</li>
+<li><code class="docutils literal"><span class="pre">&#64;$</span></code> operator now functions properly when returned command is an alias</li>
+<li>Correct line continuation would not work on Windows if the line continuations were used
+in the <code class="docutils literal"><span class="pre">xonshrc</span></code> file.</li>
+<li>Fixed a regression in the Windows <code class="docutils literal"><span class="pre">sudo</span></code> command, that allows users to run elevated commands in xonsh.</li>
+<li>Fix echo command from xoreutils.</li>
+<li>Fixed a bug on Windows which meant xonsh wasn&#8217;t using PATH enrivonment variable but instead relying on a default
+value from the widnows registry.</li>
+</ul>
+</div>
 <div class="section" id="v0-5-9">
 <h2>v0.5.9<a class="headerlink" href="#v0-5-9" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
@@ -1781,8 +1825,8 @@ with a decoding error.</li>
 <li>Low system overhead</li>
 </ul>
 </div>
-<div class="section" id="id1">
-<h2>&lt;v0.1.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>&lt;v0.1.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>The before times, like 65,000,000 BCE.</p>
 </div>
 </div>
@@ -1799,6 +1843,10 @@ with a decoding error.</li>
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xonsh Change Log</a><ul>
+<li><a class="reference internal" href="#v0-5-10">v0.5.10</a></li>
+<li><a class="reference internal" href="#id1">v0.5.10</a></li>
+<li><a class="reference internal" href="#id2">v0.5.10</a></li>
+<li><a class="reference internal" href="#id3">v0.5.10</a></li>
 <li><a class="reference internal" href="#v0-5-9">v0.5.9</a></li>
 <li><a class="reference internal" href="#v0-5-8">v0.5.8</a></li>
 <li><a class="reference internal" href="#v0-5-7">v0.5.7</a></li>
@@ -1828,7 +1876,7 @@ with a decoding error.</li>
 <li><a class="reference internal" href="#v0-2-1-v0-2-4">v0.2.1 - v0.2.4</a></li>
 <li><a class="reference internal" href="#v0-2-0">v0.2.0</a></li>
 <li><a class="reference internal" href="#v0-1-0">v0.1.0</a></li>
-<li><a class="reference internal" href="#id1">&lt;v0.1.0</a></li>
+<li><a class="reference internal" href="#id4">&lt;v0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -1847,7 +1895,7 @@ with a decoding error.</li>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/changelog.rst.txt"
+      <li><a href="_sources/changelog.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1899,7 +1947,7 @@ with a decoding error.</li>
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.9 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -1907,7 +1955,7 @@ with a decoding error.</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
