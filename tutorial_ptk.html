@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial: prompt_toolkit custom keybindings &#8212; xonsh 0.5.10.dev1 documentation</title>
+    <title>Tutorial: prompt_toolkit custom keybindings &#8212; xonsh 0.5.12 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,22 +17,21 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.10.dev1',
+        VERSION:     '0.5.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="xonsh 0.5.10.dev1 documentation" href="index.html" />
     <link rel="next" title="Bash to Xonsh Translation Guide" href="bash_to_xsh.html" />
     <link rel="prev" title="Tutorial: Write Your Own History Backend" href="tutorial_history_backend.html" />
      
@@ -58,7 +57,7 @@
         <li class="right" >
           <a href="tutorial_history_backend.html" title="Tutorial: Write Your Own History Backend"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -96,7 +95,7 @@ functioning shell, you probably shouldn&#8217;t mess with the following keystrok
 Some of them are <a class="reference external" href="https://en.wikipedia.org/wiki/Control_character#In_ASCII">ASCII control characters</a> and _really_
 shouldn&#8217;t be used. The others are used by xonsh and will result in some loss of
 functionality (in less you take the time to rebind them elsewhere).</p>
-<table border="1" class="colwidths-given docutils">
+<table border="1" class="docutils">
 <colgroup>
 <col width="33%" />
 <col width="33%" />
@@ -118,15 +117,15 @@ functionality (in less you take the time to rebind them elsewhere).</p>
 <td>Indent, autocomplete</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">Control</span> <span class="pre">R</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Backwards history search</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">Control</span> <span class="pre">Z</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>SIGSTOP current job</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">Control</span> <span class="pre">C</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>SIGINT current job</td>
 </tr>
 </tbody>
@@ -219,7 +218,7 @@ Useful? Debatable. Powerful? Yes.</p>
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="index.html" title="index">
           <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinx-toc sphinxlocaltoc">
+        </a></p><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Tutorial: <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> custom keybindings</a><ul>
@@ -247,7 +246,7 @@ Useful? Debatable. Powerful? Yes.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/tutorial_ptk.txt"
+      <li><a href="_sources/tutorial_ptk.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -263,23 +262,6 @@ Useful? Debatable. Powerful? Yes.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-    
-    
-        <div class="sidebar-toggle-group no-js">
-            
-            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
-                 «
-                <span class="show-for-small">hide menu</span>
-                
-            </button>
-            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
-                
-                <span class="show-for-small">menu</span>
-                <span class="hide-for-small">sidebar</span>
-                 »
-            </button>
-        </div>
-    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -299,7 +281,7 @@ Useful? Debatable. Powerful? Yes.</p>
         <li class="right" >
           <a href="tutorial_history_backend.html" title="Tutorial: Write Your Own History Backend"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -307,7 +289,7 @@ Useful? Debatable. Powerful? Yes.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

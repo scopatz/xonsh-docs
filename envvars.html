@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Environment Variables &#8212; xonsh 0.5.10.dev1 documentation</title>
+    <title>Environment Variables &#8212; xonsh 0.5.12 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,22 +17,21 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.10.dev1',
+        VERSION:     '0.5.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="xonsh 0.5.10.dev1 documentation" href="index.html" />
     <link rel="next" title="Built-in Aliases" href="aliases.html" />
     <link rel="prev" title="Static Configuration File" href="xonshconfig.html" />
      
@@ -58,7 +57,7 @@
         <li class="right" >
           <a href="xonshconfig.html" title="Static Configuration File"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -196,7 +195,7 @@ applicable.</p>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#xonsh-store-stdout"><span class="std std-ref">$XONSH_STORE_STDOUT</span></a></td>
 <td><a class="reference internal" href="#xonsh-traceback-logfile"><span class="std std-ref">$XONSH_TRACEBACK_LOGFILE</span></a></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -488,7 +487,7 @@ in multiple columns while typing.</li>
 <span id="id34"></span><h3>$PATH<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
 <p>List of strings representing where to look for executables.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> (&#8216;/home/laerus/bin&#8217;, &#8216;/usr/local/sbin&#8217;, &#8216;/usr/local/bin&#8217;, &#8216;/usr/sbin&#8217;, &#8216;/usr/bin&#8217;, &#8216;/sbin&#8217;, &#8216;/bin&#8217;, &#8216;/usr/games&#8217;, &#8216;/usr/local/games&#8217;)</p>
+<p><strong>default:</strong> (&#8216;/usr/local/sbin&#8217;, &#8216;/usr/local/bin&#8217;, &#8216;/usr/bin&#8217;, &#8216;/usr/bin/site_perl&#8217;, &#8216;/usr/bin/vendor_perl&#8217;, &#8216;/usr/bin/core_perl&#8217;)</p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -560,13 +559,17 @@ in multiple columns while typing.</li>
 <span id="id43"></span><h3>$SHELL_TYPE<a class="headerlink" href="#shell-type" title="Permalink to this headline">¶</a></h3>
 <p>Which shell is used. Currently two base shell types are supported:</p>
 <blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">readline</span></code> that is backed by Python&#8217;s readline module</li>
-<li><code class="docutils literal"><span class="pre">prompt_toolkit</span></code> that uses external library of the same name</li>
-<li><code class="docutils literal"><span class="pre">random</span></code> selects a random shell from the above on startup</li>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">readline</span></code> that is backed by Python&#8217;s readline module</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">prompt_toolkit</span></code> that uses external library of the same name</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">random</span></code> selects a random shell from the above on startup</p>
+</li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">best</span></code> selects the most feature-rich shell available on the</dt>
-<dd>user&#8217;s system</dd>
+<dd><p class="first last">user&#8217;s system</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -961,7 +964,7 @@ this can be performed by using env, e.g.
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="index.html" title="index">
           <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinx-toc sphinxlocaltoc">
+        </a></p><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Environment Variables</a><ul>
@@ -1072,7 +1075,7 @@ this can be performed by using env, e.g.
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/envvars.txt"
+      <li><a href="_sources/envvars.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1088,23 +1091,6 @@ this can be performed by using env, e.g.
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-    
-    
-        <div class="sidebar-toggle-group no-js">
-            
-            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
-                 «
-                <span class="show-for-small">hide menu</span>
-                
-            </button>
-            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
-                
-                <span class="show-for-small">menu</span>
-                <span class="hide-for-small">sidebar</span>
-                 »
-            </button>
-        </div>
-    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -1124,7 +1110,7 @@ this can be performed by using env, e.g.
         <li class="right" >
           <a href="xonshconfig.html" title="Static Configuration File"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -1132,7 +1118,7 @@ this can be performed by using env, e.g.
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

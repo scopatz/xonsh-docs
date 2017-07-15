@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools (xonsh.tools) &#8212; xonsh 0.5.10.dev1 documentation</title>
+    <title>Tools (xonsh.tools) &#8212; xonsh 0.5.12 documentation</title>
     
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,23 +17,21 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.10.dev1',
+        VERSION:     '0.5.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="xonsh 0.5.10.dev1 documentation" href="../index.html" />
-    <link rel="up" title="Xonsh API" href="index.html" />
     <link rel="next" title="Platform-specific constants and implementations (xonsh.platform)" href="platform.html" />
     <link rel="prev" title="Events (xonsh.events)" href="events.html" />
      
@@ -59,7 +57,7 @@
         <li class="right" >
           <a href="events.html" title="Events (xonsh.events)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
@@ -171,12 +169,12 @@ relevant env variable has been set.</p>
 
 <dl class="method">
 <dt id="xonsh.tools.EnvPath.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; None -- remove all items from S<a class="headerlink" href="#xonsh.tools.EnvPath.clear" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None -- remove all items from S<a class="headerlink" href="#xonsh.tools.EnvPath.clear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="xonsh.tools.EnvPath.count">
-<code class="descname">count</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#xonsh.tools.EnvPath.count" title="Permalink to this definition">¶</a></dt>
+<code class="descname">count</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span> &#x2192; integer -- return number of occurrences of value<a class="headerlink" href="#xonsh.tools.EnvPath.count" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -187,7 +185,7 @@ relevant env variable has been set.</p>
 
 <dl class="method">
 <dt id="xonsh.tools.EnvPath.index">
-<code class="descname">index</code><span class="sig-paren">(</span><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> &rarr; integer -- return first index of value.<a class="headerlink" href="#xonsh.tools.EnvPath.index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">index</code><span class="sig-paren">(</span><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; integer -- return first index of value.<a class="headerlink" href="#xonsh.tools.EnvPath.index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises ValueError if the value is not present.</p>
 </dd></dl>
 
@@ -198,7 +196,7 @@ relevant env variable has been set.</p>
 
 <dl class="method">
 <dt id="xonsh.tools.EnvPath.pop">
-<code class="descname">pop</code><span class="sig-paren">(</span><span class="optional">[</span><em>index</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; item -- remove and return item at index (default last).<a class="headerlink" href="#xonsh.tools.EnvPath.pop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pop</code><span class="sig-paren">(</span><span class="optional">[</span><em>index</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; item -- remove and return item at index (default last).<a class="headerlink" href="#xonsh.tools.EnvPath.pop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise IndexError if list is empty or index is out of range.</p>
 </dd></dl>
 
@@ -1016,7 +1014,7 @@ profilers.</p>
 
 <dl class="data">
 <dt id="xonsh.tools.HISTORY_UNITS">
-<code class="descclassname">xonsh.tools.</code><code class="descname">HISTORY_UNITS</code><em class="property"> = {'': ('commands', &lt;class 'int'&gt;), 'months': ('s', &lt;function &lt;lambda&gt;&gt;), 'megabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'day': ('s', &lt;function &lt;lambda&gt;&gt;), 'files': ('files', &lt;class 'int'&gt;), 'min': ('s', &lt;function &lt;lambda&gt;&gt;), 'gigabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'seconds': ('s', &lt;class 'float'&gt;), 's': ('s', &lt;class 'float'&gt;), 'y': ('s', &lt;function &lt;lambda&gt;&gt;), 'f': ('files', &lt;class 'int'&gt;), 'm': ('s', &lt;function &lt;lambda&gt;&gt;), 'sec': ('s', &lt;class 'float'&gt;), 'yr': ('s', &lt;function &lt;lambda&gt;&gt;), 'h': ('s', &lt;function &lt;lambda&gt;&gt;), 'kb': ('b', &lt;function &lt;lambda&gt;&gt;), 'gigabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'hr': ('s', &lt;function &lt;lambda&gt;&gt;), 'meg': ('b', &lt;function &lt;lambda&gt;&gt;), 'mins': ('s', &lt;function &lt;lambda&gt;&gt;), 'c': ('commands', &lt;class 'int'&gt;), 'gb': ('b', &lt;function &lt;lambda&gt;&gt;), 'kilobytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'hours': ('s', &lt;function &lt;lambda&gt;&gt;), 'mon': ('s', &lt;function &lt;lambda&gt;&gt;), 'commands': ('commands', &lt;class 'int'&gt;), 'month': ('s', &lt;function &lt;lambda&gt;&gt;), 'megabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'gigs': ('b', &lt;function &lt;lambda&gt;&gt;), 'cmds': ('commands', &lt;class 'int'&gt;), 'terabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'tb': ('b', &lt;function &lt;lambda&gt;&gt;), 'second': ('s', &lt;class 'float'&gt;), 'days': ('s', &lt;function &lt;lambda&gt;&gt;), 'byte': ('b', &lt;class 'int'&gt;), 'cmd': ('commands', &lt;class 'int'&gt;), 'd': ('s', &lt;function &lt;lambda&gt;&gt;), 'yrs': ('s', &lt;function &lt;lambda&gt;&gt;), 'kilobyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'mb': ('b', &lt;function &lt;lambda&gt;&gt;), 'years': ('s', &lt;function &lt;lambda&gt;&gt;), 'terabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'gig': ('b', &lt;function &lt;lambda&gt;&gt;), 'hour': ('s', &lt;function &lt;lambda&gt;&gt;), 'year': ('s', &lt;function &lt;lambda&gt;&gt;), 'bytes': ('b', &lt;class 'int'&gt;), 'megs': ('b', &lt;function &lt;lambda&gt;&gt;), 'b': ('b', &lt;class 'int'&gt;), 'command': ('commands', &lt;class 'int'&gt;)}</em><a class="headerlink" href="#xonsh.tools.HISTORY_UNITS" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">xonsh.tools.</code><code class="descname">HISTORY_UNITS</code><em class="property"> = {'': ('commands', &lt;class 'int'&gt;), 'cmd': ('commands', &lt;class 'int'&gt;), 'c': ('commands', &lt;class 'int'&gt;), 'b': ('b', &lt;class 'int'&gt;), 'megabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'hr': ('s', &lt;function &lt;lambda&gt;&gt;), 'y': ('s', &lt;function &lt;lambda&gt;&gt;), 'kilobyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'byte': ('b', &lt;class 'int'&gt;), 'bytes': ('b', &lt;class 'int'&gt;), 'terabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'gigs': ('b', &lt;function &lt;lambda&gt;&gt;), 'f': ('files', &lt;class 'int'&gt;), 'days': ('s', &lt;function &lt;lambda&gt;&gt;), 'years': ('s', &lt;function &lt;lambda&gt;&gt;), 'commands': ('commands', &lt;class 'int'&gt;), 'terabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'megabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'cmds': ('commands', &lt;class 'int'&gt;), 'mb': ('b', &lt;function &lt;lambda&gt;&gt;), 'months': ('s', &lt;function &lt;lambda&gt;&gt;), 'meg': ('b', &lt;function &lt;lambda&gt;&gt;), 'mins': ('s', &lt;function &lt;lambda&gt;&gt;), 'yr': ('s', &lt;function &lt;lambda&gt;&gt;), 's': ('s', &lt;class 'float'&gt;), 'year': ('s', &lt;function &lt;lambda&gt;&gt;), 'day': ('s', &lt;function &lt;lambda&gt;&gt;), 'tb': ('b', &lt;function &lt;lambda&gt;&gt;), 'kilobytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'd': ('s', &lt;function &lt;lambda&gt;&gt;), 'h': ('s', &lt;function &lt;lambda&gt;&gt;), 'gb': ('b', &lt;function &lt;lambda&gt;&gt;), 'gig': ('b', &lt;function &lt;lambda&gt;&gt;), 'hour': ('s', &lt;function &lt;lambda&gt;&gt;), 'seconds': ('s', &lt;class 'float'&gt;), 'command': ('commands', &lt;class 'int'&gt;), 'month': ('s', &lt;function &lt;lambda&gt;&gt;), 'gigabytes': ('b', &lt;function &lt;lambda&gt;&gt;), 'yrs': ('s', &lt;function &lt;lambda&gt;&gt;), 'min': ('s', &lt;function &lt;lambda&gt;&gt;), 'kb': ('b', &lt;function &lt;lambda&gt;&gt;), 'mon': ('s', &lt;function &lt;lambda&gt;&gt;), 'second': ('s', &lt;class 'float'&gt;), 'm': ('s', &lt;function &lt;lambda&gt;&gt;), 'hours': ('s', &lt;function &lt;lambda&gt;&gt;), 'sec': ('s', &lt;class 'float'&gt;), 'gigabyte': ('b', &lt;function &lt;lambda&gt;&gt;), 'megs': ('b', &lt;function &lt;lambda&gt;&gt;), 'files': ('files', &lt;class 'int'&gt;)}</em><a class="headerlink" href="#xonsh.tools.HISTORY_UNITS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps lowercase unit names to canonical name and conversion utilities.</p>
 </dd></dl>
 
@@ -1071,7 +1069,7 @@ string (r, b, or u, case insensitive)</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/tools.txt"
+      <li><a href="../_sources/api/tools.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1087,23 +1085,6 @@ string (r, b, or u, case insensitive)</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-    
-    
-        <div class="sidebar-toggle-group no-js">
-            
-            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
-                 «
-                <span class="show-for-small">hide menu</span>
-                
-            </button>
-            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
-                
-                <span class="show-for-small">menu</span>
-                <span class="hide-for-small">sidebar</span>
-                 »
-            </button>
-        </div>
-    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -1123,7 +1104,7 @@ string (r, b, or u, case insensitive)</p>
         <li class="right" >
           <a href="events.html" title="Events (xonsh.events)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
@@ -1132,7 +1113,7 @@ string (r, b, or u, case insensitive)</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

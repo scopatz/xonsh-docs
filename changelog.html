@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Xonsh Change Log &#8212; xonsh 0.5.10.dev1 documentation</title>
+    <title>Xonsh Change Log &#8212; xonsh 0.5.12 documentation</title>
     
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,22 +17,21 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.10.dev1',
+        VERSION:     '0.5.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="xonsh 0.5.10.dev1 documentation" href="index.html" />
     <link rel="next" title="Frequently Asked Questions" href="faq.html" />
     <link rel="prev" title="Developer’s Guide" href="devguide.html" />
      
@@ -58,7 +57,7 @@
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -72,17 +71,28 @@
             
   <div class="section" id="xonsh-change-log">
 <h1>Xonsh Change Log<a class="headerlink" href="#xonsh-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-5-12">
+<h2>v0.5.12<a class="headerlink" href="#v0-5-12" title="Permalink to this headline">¶</a></h2>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li>Fixed <code class="docutils literal"><span class="pre">release.xsh</span></code> to prevent it from dirtying the repo on release and
+leading to an unwanted <code class="docutils literal"><span class="pre">.dev</span></code> suffix on the version number</li>
+</ul>
+</div>
+<div class="section" id="v0-5-11">
+<h2>v0.5.11<a class="headerlink" href="#v0-5-11" title="Permalink to this headline">¶</a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">release.xsh</span></code> creates a github release with the merged news entries as the
+release body</li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">xonfig</span></code> now displays the proper value for &#8220;on linux&#8221;</li>
+</ul>
+</div>
 <div class="section" id="v0-5-10">
 <h2>v0.5.10<a class="headerlink" href="#v0-5-10" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="id1">
-<h2>v0.5.10<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="id2">
-<h2>v0.5.10<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="id3">
-<h2>v0.5.10<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li>Added <code class="docutils literal"><span class="pre">xclip</span></code> and <code class="docutils literal"><span class="pre">repo</span></code> to default threadable predictors (Issues #2355
@@ -835,42 +845,66 @@ for consistentcy with other parts of the macro system.</li>
 <li>aliases that use &#8216;!&#8217; in their name cause they clash with the macro syntax</li>
 </ul>
 <p><strong>Fixed:</strong></p>
-<ul class="simple">
-<li>Fix regression where bash git completions where not loaded
-automatically when GitForWindows is installed.</li>
-<li>More tokens are now supported in subproc args, such as <code class="docutils literal"><span class="pre">==</span></code>.</li>
-<li>Python completions now work without space delimiters, e.g. <code class="docutils literal"><span class="pre">a=matpl&lt;TAB&gt;</span></code>
-will complete to <code class="docutils literal"><span class="pre">a=matplotlib</span></code></li>
-<li>Parser would fail on nested, captured suprocess macros. Now, it works,
-hooray!?</li>
-<li>now fires chdir event if OS change in working directory is detected.</li>
+<ul>
+<li><p class="first">Fix regression where bash git completions where not loaded
+automatically when GitForWindows is installed.</p>
+</li>
+<li><p class="first">More tokens are now supported in subproc args, such as <code class="docutils literal"><span class="pre">==</span></code>.</p>
+</li>
+<li><p class="first">Python completions now work without space delimiters, e.g. <code class="docutils literal"><span class="pre">a=matpl&lt;TAB&gt;</span></code>
+will complete to <code class="docutils literal"><span class="pre">a=matplotlib</span></code></p>
+</li>
+<li><p class="first">Parser would fail on nested, captured suprocess macros. Now, it works,
+hooray!?</p>
+</li>
+<li><p class="first">now fires chdir event if OS change in working directory is detected.</p>
+</li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code></dt>
-<dd>uses <code class="docutils literal"><span class="pre">porcelain</span></code> option instead of using the bytestring
-<code class="docutils literal"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code> to find out if a git directory is dirty</dd>
+<dd><p class="first last">uses <code class="docutils literal"><span class="pre">porcelain</span></code> option instead of using the bytestring
+<code class="docutils literal"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code> to find out if a git directory is dirty</p>
+</dd>
 </dl>
 </li>
-<li>Fix bug where know commands where not highlighed on windows.</li>
-<li>Fixed completer showing executable in upper case on windows.</li>
-<li>Fixed issue where tilde expansion was occuring more than once before an
-equals sign.</li>
-<li>test_dirstack test_cdpath_expansion leaving stray testing dirs</li>
-<li>Better completer display for long completions in prompt-toolkit</li>
-<li>Automatucally append newine to target of <code class="docutils literal"><span class="pre">source</span></code> alias, so that it may
-be exec&#8217;d.</li>
-<li>test_news fails when single graves around word</li>
-<li>Slashes in virtual environment names work in vox</li>
-<li>non string type value in $FORMATTER_DICT turning prompt ugly</li>
-<li>whole prompt turning useless when one formatting function raises an exception</li>
-<li>Fix completion after alias expansion</li>
-<li>Fix hard crash when foreign shell functions fails to run. #1715</li>
-<li>Bug where non-default locations for <code class="docutils literal"><span class="pre">XDG_DATA_HOME</span></code> and <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>
-would not expand <code class="docutils literal"><span class="pre">~</span></code> into the home directory</li>
-<li>Auto quote path completions if path contains &#8216;and&#8217; or &#8216;or&#8217;</li>
-<li>Completion now works on subcommands after pipe, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> and so on.</li>
-<li>cd . and cd &lt;singleCharacter&gt; now work.  Fix indexerror in AUTO_PUSHD case, too.</li>
-<li>Fixed issue with accidentally wrapping generators inside of function calls.</li>
-<li>History indexing with string returns most recent command.</li>
+<li><p class="first">Fix bug where know commands where not highlighed on windows.</p>
+</li>
+<li><p class="first">Fixed completer showing executable in upper case on windows.</p>
+</li>
+<li><p class="first">Fixed issue where tilde expansion was occuring more than once before an
+equals sign.</p>
+</li>
+<li><p class="first">test_dirstack test_cdpath_expansion leaving stray testing dirs</p>
+</li>
+<li><p class="first">Better completer display for long completions in prompt-toolkit</p>
+</li>
+<li><p class="first">Automatucally append newine to target of <code class="docutils literal"><span class="pre">source</span></code> alias, so that it may
+be exec&#8217;d.</p>
+</li>
+<li><p class="first">test_news fails when single graves around word</p>
+</li>
+<li><p class="first">Slashes in virtual environment names work in vox</p>
+</li>
+<li><p class="first">non string type value in $FORMATTER_DICT turning prompt ugly</p>
+</li>
+<li><p class="first">whole prompt turning useless when one formatting function raises an exception</p>
+</li>
+<li><p class="first">Fix completion after alias expansion</p>
+</li>
+<li><p class="first">Fix hard crash when foreign shell functions fails to run. #1715</p>
+</li>
+<li><p class="first">Bug where non-default locations for <code class="docutils literal"><span class="pre">XDG_DATA_HOME</span></code> and <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>
+would not expand <code class="docutils literal"><span class="pre">~</span></code> into the home directory</p>
+</li>
+<li><p class="first">Auto quote path completions if path contains &#8216;and&#8217; or &#8216;or&#8217;</p>
+</li>
+<li><p class="first">Completion now works on subcommands after pipe, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> and so on.</p>
+</li>
+<li><p class="first">cd . and cd &lt;singleCharacter&gt; now work.  Fix indexerror in AUTO_PUSHD case, too.</p>
+</li>
+<li><p class="first">Fixed issue with accidentally wrapping generators inside of function calls.</p>
+</li>
+<li><p class="first">History indexing with string returns most recent command.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="v0-4-6">
@@ -1825,8 +1859,8 @@ with a decoding error.</li>
 <li>Low system overhead</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>&lt;v0.1.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>&lt;v0.1.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>The before times, like 65,000,000 BCE.</p>
 </div>
 </div>
@@ -1839,14 +1873,13 @@ with a decoding error.</li>
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="index.html" title="index">
           <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinx-toc sphinxlocaltoc">
+        </a></p><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xonsh Change Log</a><ul>
+<li><a class="reference internal" href="#v0-5-12">v0.5.12</a></li>
+<li><a class="reference internal" href="#v0-5-11">v0.5.11</a></li>
 <li><a class="reference internal" href="#v0-5-10">v0.5.10</a></li>
-<li><a class="reference internal" href="#id1">v0.5.10</a></li>
-<li><a class="reference internal" href="#id2">v0.5.10</a></li>
-<li><a class="reference internal" href="#id3">v0.5.10</a></li>
 <li><a class="reference internal" href="#v0-5-9">v0.5.9</a></li>
 <li><a class="reference internal" href="#v0-5-8">v0.5.8</a></li>
 <li><a class="reference internal" href="#v0-5-7">v0.5.7</a></li>
@@ -1876,7 +1909,7 @@ with a decoding error.</li>
 <li><a class="reference internal" href="#v0-2-1-v0-2-4">v0.2.1 - v0.2.4</a></li>
 <li><a class="reference internal" href="#v0-2-0">v0.2.0</a></li>
 <li><a class="reference internal" href="#v0-1-0">v0.1.0</a></li>
-<li><a class="reference internal" href="#id4">&lt;v0.1.0</a></li>
+<li><a class="reference internal" href="#id1">&lt;v0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -1895,7 +1928,7 @@ with a decoding error.</li>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/changelog.txt"
+      <li><a href="_sources/changelog.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1911,23 +1944,6 @@ with a decoding error.</li>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-    
-    
-        <div class="sidebar-toggle-group no-js">
-            
-            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
-                 «
-                <span class="show-for-small">hide menu</span>
-                
-            </button>
-            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
-                
-                <span class="show-for-small">menu</span>
-                <span class="hide-for-small">sidebar</span>
-                 »
-            </button>
-        </div>
-    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -1947,7 +1963,7 @@ with a decoding error.</li>
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.10.dev1 documentation</a> &#187;</li>
+    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -1955,7 +1971,7 @@ with a decoding error.</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
