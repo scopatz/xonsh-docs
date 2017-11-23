@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Import Hooks (xonsh.imphooks) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Import Hooks (xonsh.imphooks) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/imphooks.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="execer.html" title="Compiliation, Evaluation, &amp; Execution (xonsh.execer)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -96,7 +95,7 @@ fullname stack.</p>
 <dl class="class">
 <dt id="xonsh.imphooks.XonshImportEventLoader">
 <em class="property">class </em><code class="descclassname">xonsh.imphooks.</code><code class="descname">XonshImportEventLoader</code><span class="sig-paren">(</span><em>loader</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/imphooks.html#XonshImportEventLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.imphooks.XonshImportEventLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class that dispatches loader calls to another loader and fires relevent
+<dd><p>A class that dispatches loader calls to another loader and fires relevant
 xonsh events.</p>
 <dl class="method">
 <dt id="xonsh.imphooks.XonshImportEventLoader.create_module">
@@ -113,13 +112,13 @@ xonsh events.</p>
 <dl class="method">
 <dt id="xonsh.imphooks.XonshImportEventLoader.load_module">
 <code class="descname">load_module</code><span class="sig-paren">(</span><em>fullname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/imphooks.html#XonshImportEventLoader.load_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.imphooks.XonshImportEventLoader.load_module" title="Permalink to this definition">¶</a></dt>
-<dd><p>Legacy module loading, provided for backwards compatability.</p>
+<dd><p>Legacy module loading, provided for backwards compatibility.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xonsh.imphooks.XonshImportEventLoader.module_repr">
 <code class="descname">module_repr</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/imphooks.html#XonshImportEventLoader.module_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.imphooks.XonshImportEventLoader.module_repr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Legacy module repr, provided for backwards compatability.</p>
+<dd><p>Legacy module repr, provided for backwards compatibility.</p>
 </dd></dl>
 
 </dd></dl>
@@ -155,7 +154,7 @@ xonsh events.</p>
 <dl class="method">
 <dt id="xonsh.imphooks.XonshImportHook.get_filename">
 <code class="descname">get_filename</code><span class="sig-paren">(</span><em>fullname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/imphooks.html#XonshImportHook.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.imphooks.XonshImportHook.get_filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the filename for a module&#8217;s fullname.</p>
+<dd><p>Returns the filename for a module’s fullname.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -199,8 +198,8 @@ already present.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -231,6 +230,23 @@ already present.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -250,16 +266,17 @@ already present.</p>
         <li class="right" >
           <a href="execer.html" title="Compiliation, Evaluation, &amp; Execution (xonsh.execer)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

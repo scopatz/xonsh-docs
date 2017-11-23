@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Windows Guide &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Windows Guide &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/windows.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="osx.html" title="OSX Guide"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -96,7 +95,7 @@ snail@home ~ $
 <div class="section" id="install-from-source">
 <h3>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h3>
 <p>To install xonsh from source on Windows, first install <a class="reference external" href="https://www.python.org/downloads/windows/">Python v3.4+</a> from
-<a class="reference external" href="http://python.org">http://python.org</a>. Remember to select &#8220;Add python to PATH&#8221; during installation.</p>
+<a class="reference external" href="http://python.org">http://python.org</a>. Remember to select “Add python to PATH” during installation.</p>
 <p>Next, install the prompt_toolkit dependency via <code class="docutils literal"><span class="pre">pip</span></code>:</p>
 <div class="highlight-bat"><div class="highlight"><pre><span></span><span class="p">&gt;</span> pip install prompt-toolkit
 </pre></div>
@@ -122,7 +121,7 @@ snail@home ~ $
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="color-style">
 <h3>Color style<a class="headerlink" href="#color-style" title="Permalink to this headline">¶</a></h3>
-<p>The dark red and blue colors are completely unreadable in Windows&#8217; default
+<p>The dark red and blue colors are completely unreadable in Windows’ default
 terminal.</p>
 <a class="reference internal image-reference" href="_images/intensify-colors-on-win-false.png"><img alt="intensify-colors-win-false" class="align-center" src="_images/intensify-colors-on-win-false.png" style="width: 396px;" /></a>
 <p>To give new users, the best experience Xonsh automatically replaces
@@ -156,7 +155,7 @@ You can do this by adding the following to the xonsh run control file <code clas
 </div>
 <div class="section" id="avoid-locking-the-working-directory">
 <h3>Avoid locking the working directory<a class="headerlink" href="#avoid-locking-the-working-directory" title="Permalink to this headline">¶</a></h3>
-<p>Python (like other processes on Windows) locks the current working directory so it can&#8217;t be deleted or renamed.
+<p>Python (like other processes on Windows) locks the current working directory so it can’t be deleted or renamed.
 <code class="docutils literal"><span class="pre">cmd.exe</span></code> has this behaviour as well, but it is quite annoying for a shell.</p>
 <p>The <code class="docutils literal"><span class="pre">free_cwd</span></code> xontrib (add-on) for xonsh solves some of this problem. It works by
 hooking the prompt to reset the current working directory to the root drive folder whenever
@@ -194,7 +193,7 @@ available when xonsh starts.</p>
 </div>
 <div class="section" id="unicode-support-for-windows">
 <h3>Unicode support for Windows<a class="headerlink" href="#unicode-support-for-windows" title="Permalink to this headline">¶</a></h3>
-<p>Python&#8217;s utf-8 unicode is not compatible with the default shell &#8216;cmd.exe&#8217; on Windows. The package <code class="docutils literal"><span class="pre">win_unicode_console</span></code> fixes this. Xonsh will use <code class="docutils literal"><span class="pre">win_unicode_console</span></code> if it is installed. This can be disabled/enabled with the <code class="docutils literal"><span class="pre">$WIN_UNICODE_CONSOLE`</span></code> environment variable.</p>
+<p>Python’s utf-8 unicode is not compatible with the default shell ‘cmd.exe’ on Windows. The package <code class="docutils literal"><span class="pre">win_unicode_console</span></code> fixes this. Xonsh will use <code class="docutils literal"><span class="pre">win_unicode_console</span></code> if it is installed. This can be disabled/enabled with the <code class="docutils literal"><span class="pre">$WIN_UNICODE_CONSOLE`</span></code> environment variable.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Even with unicode support enabled the symbols available will depend on the font used in cmd.exe.</p>
@@ -216,10 +215,10 @@ available when xonsh starts.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Windows Guide</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a><ul>
@@ -268,6 +267,23 @@ available when xonsh starts.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -287,15 +303,16 @@ available when xonsh starts.</p>
         <li class="right" >
           <a href="osx.html" title="OSX Guide"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

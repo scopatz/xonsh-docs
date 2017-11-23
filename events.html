@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Core Events &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Core Events &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,18 +25,19 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Talks &amp; Articles" href="talks_and_articles.html" />
+    <link rel="next" title="Xonsh API" href="api/index.html" />
     <link rel="prev" title="Xontribs" href="xontribs.html" />
      
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="canonical" href="http://xon.sh/events.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -52,13 +50,14 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="talks_and_articles.html" title="Talks &amp; Articles"
+          <a href="api/index.html" title="Xonsh API"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="xontribs.html" title="Xontribs"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -118,14 +117,14 @@
 </div>
 <div class="section" id="on-envvar-change-name-str-oldvalue-any-newvalue-any-none">
 <span id="on-envvar-change"></span><h3><code class="docutils literal"><span class="pre">on_envvar_change(name:</span> <span class="pre">str,</span> <span class="pre">oldvalue:</span> <span class="pre">Any,</span> <span class="pre">newvalue:</span> <span class="pre">Any)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code><a class="headerlink" href="#on-envvar-change-name-str-oldvalue-any-newvalue-any-none" title="Permalink to this headline">¶</a></h3>
-<p>Fires after an enviroment variable is changed.
+<p>Fires after an environment variable is changed.
 Note: Setting envvars inside the handler might
 cause a recursion until the limit.</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="on-envvar-new-name-str-value-any-none">
 <span id="on-envvar-new"></span><h3><code class="docutils literal"><span class="pre">on_envvar_new(name:</span> <span class="pre">str,</span> <span class="pre">value:</span> <span class="pre">Any)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code><a class="headerlink" href="#on-envvar-new-name-str-value-any-none" title="Permalink to this headline">¶</a></h3>
-<p>Fires after a new enviroment variable is created.
+<p>Fires after a new environment variable is created.
 Note: Setting envvars inside the handler might
 cause a recursion until the limit.</p>
 <hr class="docutils" />
@@ -210,7 +209,7 @@ package.</td>
 </div>
 <div class="section" id="on-post-init-none">
 <span id="on-post-init"></span><h3><code class="docutils literal"><span class="pre">on_post_init()</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code><a class="headerlink" href="#on-post-init-none" title="Permalink to this headline">¶</a></h3>
-<p>Fired after all initialization is finished and we&#8217;re ready to do work.</p>
+<p>Fired after all initialization is finished and we’re ready to do work.</p>
 <p>NOTE: This is fired before the wizard is automatically started.</p>
 <hr class="docutils" />
 </div>
@@ -266,7 +265,7 @@ package.</td>
 <div class="section" id="on-transform-command-cmd-str-str">
 <span id="on-transform-command"></span><h3><code class="docutils literal"><span class="pre">on_transform_command(cmd:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code><a class="headerlink" href="#on-transform-command-cmd-str-str" title="Permalink to this headline">¶</a></h3>
 <p>Fired to request xontribs to transform a command line. Return the transformed
-command, or the same command if no transformaiton occurs. Only done for
+command, or the same command if no transformation occurs. Only done for
 interactive sessions.</p>
 <p>This may be fired multiple times per command, with other transformers input or
 output, so design any handlers for this carefully.</p>
@@ -280,10 +279,10 @@ output, so design any handlers for this carefully.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Core Events</a><ul>
 <li><a class="reference internal" href="#listing">Listing</a><ul>
@@ -322,8 +321,8 @@ output, so design any handlers for this carefully.</p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="talks_and_articles.html"
-                          title="Next page">&rarr; Talks &amp; Articles</a></p>
+    <p class="topless"><a href="api/index.html"
+                          title="Next page">&rarr; Xonsh API</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -344,6 +343,23 @@ output, so design any handlers for this carefully.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -358,20 +374,21 @@ output, so design any handlers for this carefully.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="talks_and_articles.html" title="Talks &amp; Articles"
+          <a href="api/index.html" title="Xonsh API"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="xontribs.html" title="Xontribs"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

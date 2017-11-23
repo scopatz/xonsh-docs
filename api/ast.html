@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Abstract Syntax Tree (xonsh.ast) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Abstract Syntax Tree (xonsh.ast) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/ast.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="parser.html" title="Parser (xonsh.parser)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -86,7 +85,7 @@ a subprocess.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>parser</strong> : xonsh.Parser</p>
 <blockquote class="last">
-<div><p>A parse instance to try to parse suprocess statements with.</p>
+<div><p>A parse instance to try to parse subprocess statements with.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -236,7 +235,7 @@ a subprocess.</p>
 <dl class="method">
 <dt id="xonsh.ast.CtxAwareTransformer.visit_ImportFrom">
 <code class="descname">visit_ImportFrom</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/ast.html#CtxAwareTransformer.visit_ImportFrom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ast.CtxAwareTransformer.visit_ImportFrom" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle visiting a &#8220;from ... import ...&#8221; statement.</p>
+<dd><p>Handle visiting a “from … import …” statement.</p>
 </dd></dl>
 
 <dl class="method">
@@ -262,14 +261,14 @@ a subprocess.</p>
 <dl class="function">
 <dt id="xonsh.ast.gather_load_store_names">
 <code class="descclassname">xonsh.ast.</code><code class="descname">gather_load_store_names</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/ast.html#gather_load_store_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ast.gather_load_store_names" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the names present in the node&#8217;s tree in a set of load nodes and
+<dd><p>Returns the names present in the node’s tree in a set of load nodes and
 a set of store nodes.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="xonsh.ast.gather_names">
 <code class="descclassname">xonsh.ast.</code><code class="descname">gather_names</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/ast.html#gather_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ast.gather_names" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the set of all names present in the node&#8217;s tree.</p>
+<dd><p>Returns the set of all names present in the node’s tree.</p>
 </dd></dl>
 
 <dl class="function">
@@ -305,7 +304,7 @@ a set of store nodes.</p>
 <dl class="function">
 <dt id="xonsh.ast.isdescendable">
 <code class="descclassname">xonsh.ast.</code><code class="descname">isdescendable</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/ast.html#isdescendable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.ast.isdescendable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deteremines whether or not a node is worth visiting. Currently only
+<dd><p>Determines whether or not a node is worth visiting. Currently only
 UnaryOp and BoolOp nodes are visited.</p>
 </dd></dl>
 
@@ -371,8 +370,8 @@ UnaryOp and BoolOp nodes are visited.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -403,6 +402,23 @@ UnaryOp and BoolOp nodes are visited.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -422,16 +438,17 @@ UnaryOp and BoolOp nodes are visited.</p>
         <li class="right" >
           <a href="parser.html" title="Parser (xonsh.parser)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

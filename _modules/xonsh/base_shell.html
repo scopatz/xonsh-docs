@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>xonsh.base_shell &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>xonsh.base_shell &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -37,7 +35,7 @@
     <link rel="canonical" href="http://xon.sh/_modules/xonsh/base_shell.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -49,7 +47,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -278,10 +276,10 @@
 
 
 <div class="viewcode-block" id="Tee"><a class="viewcode-back" href="../../api/base_shell.html#xonsh.base_shell.Tee">[docs]</a><span class="k">class</span> <span class="nc">Tee</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Class that merges tee&#39;d stdout and stderr into a single strea,.</span>
+    <span class="sd">&quot;&quot;&quot;Class that merges tee&#39;d stdout and stderr into a single stream.</span>
 
 <span class="sd">    This represents what a user would actually see on the command line.</span>
-<span class="sd">    This class as the same interface as io.TextIOWrapper, except that</span>
+<span class="sd">    This class has the same interface as io.TextIOWrapper, except that</span>
 <span class="sd">    the buffer is optional.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># pylint is a stupid about counting public methods when using inheritance.</span>
@@ -404,8 +402,12 @@
                 <span class="n">hist</span><span class="o">.</span><span class="n">last_cmd_rtn</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># return code for failure</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">ts1</span> <span class="o">=</span> <span class="n">ts1</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">(</span><span class="n">inp</span><span class="o">=</span><span class="n">src</span><span class="p">,</span> <span class="n">ts</span><span class="o">=</span><span class="p">[</span><span class="n">ts0</span><span class="p">,</span> <span class="n">ts1</span><span class="p">],</span> <span class="n">tee_out</span><span class="o">=</span><span class="n">tee</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+            <span class="n">tee_out</span> <span class="o">=</span> <span class="n">tee</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">(</span><span class="n">inp</span><span class="o">=</span><span class="n">src</span><span class="p">,</span> <span class="n">ts</span><span class="o">=</span><span class="p">[</span><span class="n">ts0</span><span class="p">,</span> <span class="n">ts1</span><span class="p">],</span> <span class="n">tee_out</span><span class="o">=</span><span class="n">tee_out</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">accumulated_inputs</span> <span class="o">+=</span> <span class="n">src</span>
+            <span class="n">append_newline</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_APPEND_NEWLINE&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">append_newline</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tee_out</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">tee</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fix_cwd</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_exit__</span><span class="p">:</span>  <span class="c1"># pylint: disable=no-member</span>
@@ -545,7 +547,7 @@
             <span class="n">kernel32</span><span class="o">.</span><span class="n">SetConsoleTitleW</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="n">closefd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="c1"># prevent xonsh from answering interative questions</span>
+                <span class="c1"># prevent xonsh from answering interactive questions</span>
                 <span class="c1"># on the next command by writing the title</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">]0;</span><span class="si">{0}</span><span class="se">\x07</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
@@ -571,15 +573,15 @@
         <span class="k">return</span> <span class="n">p</span>
 
 <div class="viewcode-block" id="BaseShell.format_color"><a class="viewcode-back" href="../../api/base_shell.html#xonsh.base_shell.BaseShell.format_color">[docs]</a>    <span class="k">def</span> <span class="nf">format_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force_string</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Formats the colors in a string. This base implmentation colors based</span>
-<span class="sd">        on ANSI color codes</span>
+        <span class="sd">&quot;&quot;&quot;Formats the colors in a string. ``BaseShell``&#39;s default implementation</span>
+<span class="sd">        of this method uses colors based on ANSI color codes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">style</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XONSH_COLOR_STYLE&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ansi_partial_color_format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="n">hide</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseShell.print_color"><a class="viewcode-back" href="../../api/base_shell.html#xonsh.base_shell.BaseShell.print_color">[docs]</a>    <span class="k">def</span> <span class="nf">print_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prints a string in color. This base implmentation will color based</span>
-<span class="sd">        ANSI color codes if a string was given as input. If a list of token</span>
+        <span class="sd">&quot;&quot;&quot;Prints a string in color. This base implementation&#39;s colors are based</span>
+<span class="sd">        on ANSI color codes if a string was given as input. If a list of token</span>
 <span class="sd">        pairs is given, it will color based on pygments, if available. If</span>
 <span class="sd">        pygments is not available, it will print a colorless string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -618,8 +620,8 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../../index.html" title="index">
-          <img class="logo" src="../../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../../sidebar.html" title="sidebar">
+          <img class="logo" src="../../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
@@ -633,6 +635,23 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -646,7 +665,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -655,7 +674,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

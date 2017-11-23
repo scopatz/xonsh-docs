@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>xonsh.prompt.vc &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>xonsh.prompt.vc &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -37,7 +35,7 @@
     <link rel="canonical" href="http://xon.sh/_modules/xonsh/prompt/vc.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -49,7 +47,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -64,7 +62,7 @@
             
   <h1>Source code for xonsh.prompt.vc</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Prompt formatter for simple version control branchs&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Prompt formatter for simple version control branches&quot;&quot;&quot;</span>
 <span class="c1"># pylint:disable=no-member, invalid-name</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -78,10 +76,11 @@
 
 
 <span class="k">def</span> <span class="nf">_get_git_branch</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="n">denv</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">branches</span> <span class="o">=</span> <span class="n">xt</span><span class="o">.</span><span class="n">decode_bytes</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">],</span>
-            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span>
+            <span class="p">[</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">],</span> <span class="n">env</span><span class="o">=</span><span class="n">denv</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
         <span class="p">))</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
         <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -218,13 +217,15 @@
 
 <span class="k">def</span> <span class="nf">_git_dirty_working_directory</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">include_untracked</span><span class="p">):</span>
     <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">denv</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_env__</span><span class="o">.</span><span class="n">detype</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;--porcelain&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">include_untracked</span><span class="p">:</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--untracked-files=normal&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--untracked-files=no&#39;</span><span class="p">)</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
+                                         <span class="n">env</span><span class="o">=</span><span class="n">denv</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
         <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -275,9 +276,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dwd</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">cmds</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">__xonsh_commands_cache__</span>
-    <span class="k">if</span> <span class="n">cmds</span><span class="o">.</span><span class="n">lazy_locate_binary</span><span class="p">(</span><span class="s1">&#39;git&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cmds</span><span class="o">.</span><span class="n">lazy_locate_binary</span><span class="p">(</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="n">ignore_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">dwd</span> <span class="o">=</span> <span class="n">git_dirty_working_directory</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">cmds</span><span class="o">.</span><span class="n">lazy_locate_binary</span><span class="p">(</span><span class="s1">&#39;hg&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cmds</span><span class="o">.</span><span class="n">lazy_locate_binary</span><span class="p">(</span><span class="s1">&#39;hg&#39;</span><span class="p">,</span> <span class="n">ignore_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dwd</span> <span class="o">=</span> <span class="n">hg_dirty_working_directory</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">dwd</span></div>
 
@@ -299,7 +300,7 @@
 
 <div class="viewcode-block" id="branch_bg_color"><a class="viewcode-back" href="../../../api/prompt/vc.html#xonsh.prompt.vc.branch_bg_color">[docs]</a><span class="k">def</span> <span class="nf">branch_bg_color</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Return red if the current branch is dirty, yellow if the dirtiness can</span>
-<span class="sd">    not be determined, and green if it clean. These are bacground colors.</span>
+<span class="sd">    not be determined, and green if it clean. These are background colors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dwd</span> <span class="o">=</span> <span class="n">dirty_working_directory</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">dwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -316,8 +317,8 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../../../index.html" title="index">
-          <img class="logo" src="../../../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../../../sidebar.html" title="sidebar">
+          <img class="logo" src="../../../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
@@ -331,6 +332,23 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -344,7 +362,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -353,7 +371,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>History Diff’er (xonsh.diff_history) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>History Diff’er (xonsh.diff_history) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/diff_history.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="replay.html" title="Replay History (xonsh.replay)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,8 +70,8 @@
           <div class="body" role="main">
             
   <div class="section" id="module-xonsh.diff_history">
-<span id="history-diff-er-xonsh-diff-history"></span><span id="xonsh-diff-history"></span><h1>History Diff&#8217;er (<code class="docutils literal"><span class="pre">xonsh.diff_history</span></code>)<a class="headerlink" href="#module-xonsh.diff_history" title="Permalink to this headline">¶</a></h1>
-<p>Tools for diff&#8217;ing two xonsh history files in a meaningful fashion.</p>
+<span id="history-diff-er-xonsh-diff-history"></span><span id="xonsh-diff-history"></span><h1>History Diff’er (<code class="docutils literal"><span class="pre">xonsh.diff_history</span></code>)<a class="headerlink" href="#module-xonsh.diff_history" title="Permalink to this headline">¶</a></h1>
+<p>Tools for diff’ing two xonsh history files in a meaningful fashion.</p>
 <dl class="class">
 <dt id="xonsh.diff_history.HistoryDiffer">
 <em class="property">class </em><code class="descclassname">xonsh.diff_history.</code><code class="descname">HistoryDiffer</code><span class="sig-paren">(</span><em>afile</em>, <em>bfile</em>, <em>reopen=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/diff_history.html#HistoryDiffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.diff_history.HistoryDiffer" title="Permalink to this definition">¶</a></dt>
@@ -152,7 +151,7 @@ a lot of reading so it is best to keep the handles open.</p>
 <dl class="function">
 <dt id="xonsh.diff_history.highlighted_ndiff">
 <code class="descclassname">xonsh.diff_history.</code><code class="descname">highlighted_ndiff</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/diff_history.html#highlighted_ndiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.diff_history.highlighted_ndiff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a highlited string, with bold charaters where different.</p>
+<dd><p>Returns a highlighted string, with bold characters where different.</p>
 </dd></dl>
 
 <dl class="function">
@@ -168,8 +167,8 @@ a lot of reading so it is best to keep the handles open.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -200,6 +199,23 @@ a lot of reading so it is best to keep the handles open.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -219,16 +235,17 @@ a lot of reading so it is best to keep the handles open.</p>
         <li class="right" >
           <a href="replay.html" title="Replay History (xonsh.replay)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

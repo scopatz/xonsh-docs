@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Python Procedures as Subprocess Commands (xonsh.proc) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Python Procedures as Subprocess Commands (xonsh.proc) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/proc.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="jobs.html" title="Job Control (xonsh.jobs)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -115,7 +114,7 @@ is created.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>specs</strong> : list of SubprocSpec</p>
 <blockquote class="last">
-<div><p>Process sepcifications</p>
+<div><p>Process specifications</p>
 </div></blockquote>
 </td>
 </tr>
@@ -124,32 +123,32 @@ is created.</p>
 <p class="rubric">Attributes</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="14%" />
-<col width="86%" />
+<col width="19%" />
+<col width="81%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>spec</td>
+<tr class="row-odd"><td><strong>spec</strong></td>
 <td>(SubprocSpec) The last specification in specs</td>
 </tr>
-<tr class="row-even"><td>proc</td>
+<tr class="row-even"><td><strong>proc</strong></td>
 <td>(Popen-like) The process in procs</td>
 </tr>
-<tr class="row-odd"><td>ended</td>
+<tr class="row-odd"><td><strong>ended</strong></td>
 <td>(bool) Boolean for if the command has stopped executing.</td>
 </tr>
-<tr class="row-even"><td>input</td>
+<tr class="row-even"><td><strong>input</strong></td>
 <td>(str) A string of the standard input.</td>
 </tr>
-<tr class="row-odd"><td>output</td>
+<tr class="row-odd"><td><strong>output</strong></td>
 <td>(str) A string of the standard output.</td>
 </tr>
-<tr class="row-even"><td>errors</td>
+<tr class="row-even"><td><strong>errors</strong></td>
 <td>(str) A string of the standard error.</td>
 </tr>
-<tr class="row-odd"><td>lines</td>
+<tr class="row-odd"><td><strong>lines</strong></td>
 <td>(list of str) The output lines</td>
 </tr>
-<tr class="row-even"><td>starttime</td>
+<tr class="row-even"><td><strong>starttime</strong></td>
 <td>(floats or None) Pipeline start timestamp.</td>
 </tr>
 </tbody>
@@ -355,7 +354,7 @@ and 2 for stderr.</p>
 <dt id="xonsh.proc.FileThreadDispatcher">
 <em class="property">class </em><code class="descclassname">xonsh.proc.</code><code class="descname">FileThreadDispatcher</code><span class="sig-paren">(</span><em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#FileThreadDispatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dispatches to different file handles depending on the
-current thread. Useful if you want file operation to go to differnt
+current thread. Useful if you want file operation to go to different
 places for different threads.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -364,7 +363,7 @@ places for different threads.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>default</strong> : file-like or None, optional</p>
 <blockquote class="last">
 <div><p>The file handle to write to if a thread cannot be found in
-the registery. If None, a new in-memory instance.</p>
+the registry. If None, a new in-memory instance.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -373,11 +372,11 @@ the registery. If None, a new in-memory instance.</p>
 <p class="rubric">Attributes</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="16%" />
-<col width="84%" />
+<col width="22%" />
+<col width="78%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>registry</td>
+<tr class="row-odd"><td><strong>registry</strong></td>
 <td>(dict) Maps thread idents to file handles.</td>
 </tr>
 </tbody>
@@ -385,7 +384,7 @@ the registery. If None, a new in-memory instance.</p>
 <dl class="method">
 <dt id="xonsh.proc.FileThreadDispatcher.close">
 <code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#FileThreadDispatcher.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the current thread&#8217;s handle.</p>
+<dd><p>Closes the current thread’s handle.</p>
 </dd></dl>
 
 <dl class="method">
@@ -482,7 +481,7 @@ that this method can be used in a with-statement.</p>
 <dl class="method">
 <dt id="xonsh.proc.FileThreadDispatcher.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#FileThreadDispatcher.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes to this thread&#8217;s handle. This also flushes, just to be
+<dd><p>Writes to this thread’s handle. This also flushes, just to be
 extra sure the string was written.</p>
 </dd></dl>
 
@@ -501,25 +500,25 @@ extra sure the string was written.</p>
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.buffer">
 <code class="descname">buffer</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.buffer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the buffer for this thread&#8217;s handle.</p>
+<dd><p>Gets the buffer for this thread’s handle.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.closed">
 <code class="descname">closed</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.closed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is the thread&#8217;s handle closed.</p>
+<dd><p>Is the thread’s handle closed.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.encoding">
 <code class="descname">encoding</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.encoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the encoding for this thread&#8217;s handle.</p>
+<dd><p>Gets the encoding for this thread’s handle.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.errors">
 <code class="descname">errors</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.errors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the errors for this thread&#8217;s handle.</p>
+<dd><p>Gets the errors for this thread’s handle.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -531,13 +530,13 @@ extra sure the string was written.</p>
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.line_buffering">
 <code class="descname">line_buffering</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.line_buffering" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets if line buffering for this thread&#8217;s handle enabled.</p>
+<dd><p>Gets if line buffering for this thread’s handle enabled.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="xonsh.proc.FileThreadDispatcher.newlines">
 <code class="descname">newlines</code><a class="headerlink" href="#xonsh.proc.FileThreadDispatcher.newlines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the newlines for this thread&#8217;s handle.</p>
+<dd><p>Gets the newlines for this thread’s handle.</p>
 </dd></dl>
 
 </dd></dl>
@@ -571,7 +570,7 @@ extra sure the string was written.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>specs</strong> : list of SubprocSpec</p>
 <blockquote class="last">
-<div><p>Process sepcifications</p>
+<div><p>Process specifications</p>
 </div></blockquote>
 </td>
 </tr>
@@ -580,32 +579,32 @@ extra sure the string was written.</p>
 <p class="rubric">Attributes</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="14%" />
-<col width="86%" />
+<col width="19%" />
+<col width="81%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>spec</td>
+<tr class="row-odd"><td><strong>spec</strong></td>
 <td>(SubprocSpec) The last specification in specs</td>
 </tr>
-<tr class="row-even"><td>proc</td>
+<tr class="row-even"><td><strong>proc</strong></td>
 <td>(Popen-like) The process in procs</td>
 </tr>
-<tr class="row-odd"><td>ended</td>
+<tr class="row-odd"><td><strong>ended</strong></td>
 <td>(bool) Boolean for if the command has stopped executing.</td>
 </tr>
-<tr class="row-even"><td>input</td>
+<tr class="row-even"><td><strong>input</strong></td>
 <td>(str) A string of the standard input.</td>
 </tr>
-<tr class="row-odd"><td>output</td>
+<tr class="row-odd"><td><strong>output</strong></td>
 <td>(str) A string of the standard output.</td>
 </tr>
-<tr class="row-even"><td>errors</td>
+<tr class="row-even"><td><strong>errors</strong></td>
 <td>(str) A string of the standard error.</td>
 </tr>
-<tr class="row-odd"><td>lines</td>
+<tr class="row-odd"><td><strong>lines</strong></td>
 <td>(list of str) The output lines</td>
 </tr>
-<tr class="row-even"><td>starttime</td>
+<tr class="row-even"><td><strong>starttime</strong></td>
 <td>(floats or None) Pipeline start timestamp.</td>
 </tr>
 </tbody>
@@ -703,7 +702,7 @@ handler.</p>
 <em class="property">class </em><code class="descclassname">xonsh.proc.</code><code class="descname">PrevProcCloser</code><span class="sig-paren">(</span><em>pipeline</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#PrevProcCloser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.PrevProcCloser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Previous process closer thread for pipelines whose last command
 is itself unthreadable. This makes sure that the pipeline is
-driven foreward and does not deadlock.</p>
+driven forward and does not deadlock.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -719,7 +718,7 @@ driven foreward and does not deadlock.</p>
 <dl class="method">
 <dt id="xonsh.proc.PrevProcCloser.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#PrevProcCloser.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.PrevProcCloser.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs the closing algorithim.</p>
+<dd><p>Runs the closing algorithm.</p>
 </dd></dl>
 
 </dd></dl>
@@ -742,7 +741,7 @@ are attempting to debug.</p>
 <dt id="xonsh.proc.ProcProxy.wait">
 <code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#ProcProxy.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.ProcProxy.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the function and returns the result. Timeout argument only
-present for API compatability.</p>
+present for API compatibility.</p>
 </dd></dl>
 
 </dd></dl>
@@ -787,7 +786,10 @@ set to <cite>None</cite>, then <cite>sys.stderr</cite> is used.</p>
 <blockquote>
 <div><p>Whether or not to use universal newlines.</p>
 </div></blockquote>
-<p class="last"><strong>env</strong> : Mapping, optiona            Environment mapping.</p>
+<p><strong>env</strong> : Mapping, optional</p>
+<blockquote class="last">
+<div><p>Environment mapping.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -904,7 +906,7 @@ hints (i.e. read all the remaining lines) and non-blocking otherwise.</p>
 <dl class="function">
 <dt id="xonsh.proc.parse_proxy_return">
 <code class="descclassname">xonsh.proc.</code><code class="descname">parse_proxy_return</code><span class="sig-paren">(</span><em>r</em>, <em>stdout</em>, <em>stderr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#parse_proxy_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.parse_proxy_return" title="Permalink to this definition">¶</a></dt>
-<dd><p>Proxies may return a variety of outputs. This hanles them generally.</p>
+<dd><p>Proxies may return a variety of outputs. This handles them generally.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -936,7 +938,7 @@ hints (i.e. read all the remaining lines) and non-blocking otherwise.</p>
 <dl class="function">
 <dt id="xonsh.proc.partial_proxy">
 <code class="descclassname">xonsh.proc.</code><code class="descname">partial_proxy</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#partial_proxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.partial_proxy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dispatches the approriate proxy function based on the number of args.</p>
+<dd><p>Dispatches the appropriate proxy function based on the number of args.</p>
 </dd></dl>
 
 <dl class="function">
@@ -961,9 +963,9 @@ and kwargs. If the process cannot accept signals, the function will be called.</
 <dl class="function">
 <dt id="xonsh.proc.populate_buffer">
 <code class="descclassname">xonsh.proc.</code><code class="descname">populate_buffer</code><span class="sig-paren">(</span><em>reader</em>, <em>fd</em>, <em>buffer</em>, <em>chunksize</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#populate_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.populate_buffer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads bytes from the file descriptor and copies them into a buffer.
-The reads happend in parallel, using pread(), and is thus only
-availabe on posix. If the read fails for any reason, the reader is
+<dd><p>Reads bytes from the file descriptor and copies them into a buffer.</p>
+<p>The reads happen in parallel using the pread() syscall; which is only
+available on POSIX systems. If the read fails for any reason, the reader is
 flagged as closed.</p>
 </dd></dl>
 
@@ -971,7 +973,7 @@ flagged as closed.</p>
 <dt id="xonsh.proc.populate_console">
 <code class="descclassname">xonsh.proc.</code><code class="descname">populate_console</code><span class="sig-paren">(</span><em>reader</em>, <em>fd</em>, <em>buffer</em>, <em>chunksize</em>, <em>queue</em>, <em>expandsize=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#populate_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.populate_console" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads bytes from the file descriptor and puts lines into the queue.
-The reads happend in parallel,
+The reads happened in parallel,
 using xonsh.winutils.read_console_output_character(),
 and is thus only available on windows. If the read fails for any reason,
 the reader is flagged as closed.</p>
@@ -1043,7 +1045,7 @@ storing the result.</p>
 <dl class="function">
 <dt id="xonsh.proc.still_writable">
 <code class="descclassname">xonsh.proc.</code><code class="descname">still_writable</code><span class="sig-paren">(</span><em>fd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/proc.html#still_writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.proc.still_writable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines whether a file descriptior is still writable by trying to
+<dd><p>Determines whether a file descriptor is still writable by trying to
 write an empty string and seeing if it fails.</p>
 </dd></dl>
 
@@ -1060,8 +1062,8 @@ write an empty string and seeing if it fails.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -1092,6 +1094,23 @@ write an empty string and seeing if it fails.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -1111,16 +1130,17 @@ write an empty string and seeing if it fails.</p>
         <li class="right" >
           <a href="jobs.html" title="Job Control (xonsh.jobs)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

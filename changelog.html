@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Xonsh Change Log &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Xonsh Change Log &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/changelog.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,6 +70,92 @@
             
   <div class="section" id="xonsh-change-log">
 <h1>Xonsh Change Log<a class="headerlink" href="#xonsh-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-6-0">
+<h2>v0.6.0<a class="headerlink" href="#v0-6-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Added:</strong></p>
+<ul>
+<li><p class="first">Added an alias command, matching bash’s implementation, available as part of bashisms.</p>
+</li>
+<li><p class="first">New <code class="docutils literal"><span class="pre">$AUTO_SUGGEST_IN_COMPLETIONS</span></code> environment variable that enables/disables
+whether the auto-suggestion result appears in the tab completions.</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">__add__()</span></code> and <code class="docutils literal"><span class="pre">__radd__()</span></code> methods to <code class="docutils literal"><span class="pre">EnvPath</span></code>.</p>
+</li>
+<li><p class="first">Xonsh now supports f-strings, as in Python v3.6+.</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">ipython</span></code> as unthreadable in command cache threadabilty predictors.</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">whole_word_jumping</span></code> xontrib</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">$XONSH_APPEND_NEWLINE</span></code> environment variable</p>
+</li>
+<li><p class="first">Support for PEP 515: Underscores in Numeric Literals</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">xonsh.color_tools.make_palette()</span></code></p>
+<p>Simple rename of the pre-existing
+<code class="docutils literal"><span class="pre">xonsh.color_tools.make_pallete()</span></code> function.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">xonsh.tools.decorator()</span></code> function/method decorator.</p>
+<p>This allows for an API function to be annotated with a
+decorator that documents deprecation, while also tying in
+functionality that will warn a user that the function has
+been deprecated, and, raise an <code class="docutils literal"><span class="pre">AssertionError</span></code> if the
+function has passed its expiry date.</p>
+</li>
+<li><p class="first">New xontrib <code class="docutils literal"><span class="pre">schedule</span></code> (Xonsh Task Scheduler)</p>
+</li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">on_pre_prompt</span></code> is now fired before prompt calculations are made, allowing modifications to the prompt.</li>
+<li><code class="docutils literal"><span class="pre">emacsclient</span></code> will now return false in the threadable predictors.</li>
+<li>Improved the autopair behavior to match that of popular code editors.</li>
+<li>Moved the lazy <code class="docutils literal"><span class="pre">pkg_resources</span></code> package back to its original
+place. The will hopefully address some of the slowdown issues
+experiances on some platforms.</li>
+<li>When xonsh is used to run an <code class="docutils literal"><span class="pre">xsh</span></code> script, the <code class="docutils literal"><span class="pre">xonshrc</span></code> is not loaded</li>
+<li>Change in the behavior of the default predictor with binary analysis. The pattern <code class="docutils literal"><span class="pre">libgpm</span></code> is use, assuming when <code class="docutils literal"><span class="pre">gpm</span></code> is used the program is not threadable. This change solves issues with programs as <code class="docutils literal"><span class="pre">links</span></code>.</li>
+<li>Error messages added to the <code class="docutils literal"><span class="pre">source</span></code> command if it is used with a language
+that is not xonsh or Python.</li>
+</ul>
+<p><strong>Deprecated:</strong></p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">xonsh.color_tools.make_pallette()</span></code></p>
+<p>Deprecated in release 0.5.10 and will be removed in release 0.6.0.</p>
+</li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li>Now f-strings can be used inside &#64;() without explicit enclosing command in ![]</li>
+<li>Fix for <code class="docutils literal"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">*z</span> <span class="pre">=</span> <span class="pre">...</span></code> unpacking.</li>
+<li>Git branch detection now correctly passes the environment down to the subprocess
+call.  This allows for branch detection when git is installed into a non-standard
+location.</li>
+<li>Escape regex characters in <code class="docutils literal"><span class="pre">path_complete</span></code> to avoid regex parsing errors for
+certain combinations of characters in path completer</li>
+<li>gistatus: Fixed hash not being shown when in detaced HEAD and there are no tags</li>
+<li>Fix branch colorization when <code class="docutils literal"><span class="pre">git</span></code> or <code class="docutils literal"><span class="pre">hg</span></code> are aliases.</li>
+<li>Fixed leftover <code class="docutils literal"><span class="pre">.git/index.lock</span></code> in <code class="docutils literal"><span class="pre">gitstatus</span></code></li>
+<li>Made JSON history loading more robust to corrupt files.</li>
+<li>Starting a new command with an open parentheses will no longer
+throw a traceback when <code class="docutils literal"><span class="pre">$UPDATE_COMPLETIONS_ON_KEYPRESS</span></code> is
+<code class="docutils literal"><span class="pre">True</span></code>.</li>
+<li>Automatically wrapping subprocess calls would sometimes include
+semincolons and other line-ending tokens, rather than stopping at them.
+This has been fixed.</li>
+<li>Numerous spelling errors in documentation, docstrings/comments, text
+strings and local variable names.</li>
+<li>Spelling error in the <code class="docutils literal"><span class="pre">xonsh.color_tools.make_pallete()</span></code> public
+function declaration. This was fixed by renaming the function to
+<code class="docutils literal"><span class="pre">xonsh.color_tools.make_palette()</span></code> while maintaining a binding
+of <code class="docutils literal"><span class="pre">make_pallete()</span></code> to the new <code class="docutils literal"><span class="pre">make_palette()</span></code> in case users
+are already used to this API.</li>
+<li>Fixed issue with starting triple quote strings being run as a command.</li>
+<li>Fixed a problem with escaping charet (^) character for cmd.exe in the source-cmd function.</li>
+<li><code class="docutils literal"><span class="pre">EOF</span> <span class="pre">in</span> <span class="pre">multi-line</span> <span class="pre">statement</span></code> errors were misreported as being on line 0.
+Now they are correctly reported as being on the last line of the file.</li>
+</ul>
+</div>
 <div class="section" id="v0-5-12">
 <h2>v0.5.12<a class="headerlink" href="#v0-5-12" title="Permalink to this headline">¶</a></h2>
 <p><strong>Fixed:</strong></p>
@@ -88,7 +173,7 @@ release body</li>
 </ul>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">xonfig</span></code> now displays the proper value for &#8220;on linux&#8221;</li>
+<li><code class="docutils literal"><span class="pre">xonfig</span></code> now displays the proper value for “on linux”</li>
 </ul>
 </div>
 <div class="section" id="v0-5-10">
@@ -98,12 +183,12 @@ release body</li>
 <li>Added <code class="docutils literal"><span class="pre">xclip</span></code> and <code class="docutils literal"><span class="pre">repo</span></code> to default threadable predictors (Issues #2355
 and #2348)</li>
 <li>Pretty printing of the $PATH variable</li>
-<li>Add &#8220;fzf-widgets&#8221; xontrib which provides fuzzy search productivity widgets
+<li>Add “fzf-widgets” xontrib which provides fuzzy search productivity widgets
 with on custom keybindings to xontrib list.</li>
-<li>New <code class="docutils literal"><span class="pre">free_cwd</span></code> xontrib for Windows, which prevent the current directory from beeing locked when the prompt is shown.
+<li>New <code class="docutils literal"><span class="pre">free_cwd</span></code> xontrib for Windows, which prevent the current directory from being locked when the prompt is shown.
 This allows the other programs or Windows explorer to delete the current or parent directory. This is accomplished by
-reseting the CWD to the users home directory temporarily while the prompt is displayed. The directory is still locked
-while any commands are processed so xonsh still can&#8217;t remove it own working directory.</li>
+resetting the CWD to the users home directory temporarily while the prompt is displayed. The directory is still locked
+while any commands are processed so xonsh still can’t remove it own working directory.</li>
 </ul>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
@@ -121,8 +206,8 @@ while any commands are processed so xonsh still can&#8217;t remove it own workin
 in the <code class="docutils literal"><span class="pre">xonshrc</span></code> file.</li>
 <li>Fixed a regression in the Windows <code class="docutils literal"><span class="pre">sudo</span></code> command, that allows users to run elevated commands in xonsh.</li>
 <li>Fix echo command from xoreutils.</li>
-<li>Fixed a bug on Windows which meant xonsh wasn&#8217;t using PATH enrivonment variable but instead relying on a default
-value from the widnows registry.</li>
+<li>Fixed a bug on Windows which meant xonsh wasn’t using PATH environment variable but instead relying on a default
+value from the windows registry.</li>
 </ul>
 </div>
 <div class="section" id="v0-5-9">
@@ -152,10 +237,10 @@ previous command into current buffer</li>
 <h2>v0.5.8<a class="headerlink" href="#v0-5-8" title="Permalink to this headline">¶</a></h2>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">xonsh.platform.os_environ</span></code> wrapper is  now case-insesitive and
+<li>The <code class="docutils literal"><span class="pre">xonsh.platform.os_environ</span></code> wrapper is  now case-insensitive and
 case-preserving on Windows.</li>
 <li>The private <code class="docutils literal"><span class="pre">_TeeStd</span></code> class will no longer attempt to write to a
-standard buffer after the tee has been &#8216;closed&#8217; and the standard
+standard buffer after the tee has been ‘closed’ and the standard
 buffer returned to the system.</li>
 </ul>
 <p><strong>Fixed:</strong></p>
@@ -166,7 +251,7 @@ surrounding whitespace.</li>
 <li>Fixed a bug if foreign_shell name was not written in lower case in
 the static configuration file <code class="docutils literal"><span class="pre">config.json</span></code></li>
 <li>Fixed a regression on Windows where caused <code class="docutils literal"><span class="pre">which</span></code> reported that the
-<code class="docutils literal"><span class="pre">PATH</span></code> envrionment variable could not be found.</li>
+<code class="docutils literal"><span class="pre">PATH</span></code> environment variable could not be found.</li>
 <li>Fixed issue with foregrounding jobs that were started in the background.</li>
 <li>Fixed that <code class="docutils literal"><span class="pre">Ctrl-C</span></code> crashes xonsh after running an invalid command.</li>
 <li>Fixed an potential <code class="docutils literal"><span class="pre">ProcessLookupError</span></code> issue, see #2288.</li>
@@ -177,7 +262,7 @@ the static configuration file <code class="docutils literal"><span class="pre">c
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li>New <code class="docutils literal"><span class="pre">color_tools</span></code> module provides basic color tools for converting
-to and from various formats as well as creating pallettes from color
+to and from various formats as well as creating palettes from color
 strings.</li>
 <li>Redirections may now be used in string and list-of-strings
 aliases.</li>
@@ -192,7 +277,7 @@ browser.</li>
 <li>Sourcing foreign shells now have the <code class="docutils literal"><span class="pre">--show</span></code> option, which
 lets you see when script will be run, and the <code class="docutils literal"><span class="pre">--dryrun</span></code>
 option which prevents the source from actually taking place.
-Xonsh&#8217;s foreign shell API also added these keyword arguments.</li>
+Xonsh’s foreign shell API also added these keyword arguments.</li>
 <li>Subprocess mode now supports subshells. Place any xonsh
 code between two parentheses, e.g. <code class="docutils literal"><span class="pre">(cmd)</span></code>, to run
 this command in a separate xonsh subprocess.</li>
@@ -203,7 +288,7 @@ directory has been remove out from under it and not replaced
 prior to running the next command.</li>
 <li>Line continuation backslashes are respected on Windows in the PTK shell if
 the backspace is is preceded by a space.</li>
-<li>Added <code class="docutils literal"><span class="pre">ponysay</span></code> as a command which will ususally not run in a
+<li>Added <code class="docutils literal"><span class="pre">ponysay</span></code> as a command which will usually not run in a
 threaded mode in the commands cache.</li>
 <li>New <code class="docutils literal"><span class="pre">jsonutils</span></code> module available for serializing special
 xonsh objects to JSON.</li>
@@ -212,7 +297,7 @@ xonsh objects to JSON.</li>
 <ul class="simple">
 <li>The literal tokens <code class="docutils literal"><span class="pre">and</span></code> and <code class="docutils literal"><span class="pre">or</span></code> must be surrounded by
 whitespace to delimit subprocess mode. If they do not have
-whitespace on both sides in subproc mode, they are condisered
+whitespace on both sides in subproc mode, they are considered
 to be part of a command argument.</li>
 <li>The <code class="docutils literal"><span class="pre">xontrib</span></code> command is now flagged as unthreadable and will be
 run on the main Python thread. This allows xontribs to set signal
@@ -238,7 +323,7 @@ readline and Ctrl+C for prompt-toolkit.</li>
 <li><code class="docutils literal"><span class="pre">prompt.vc.get_hg_branch</span></code> now uses <code class="docutils literal"><span class="pre">os.scandir</span></code> to walk up the filetree
 looking for a <code class="docutils literal"><span class="pre">.hg</span></code> directory. This results in (generally) faster branch
 resolution compared to the subprocess call to <code class="docutils literal"><span class="pre">hg</span> <span class="pre">root</span></code>.</li>
-<li>Xonsh&#8217;s script and code caches will are now invalidated whenever the
+<li>Xonsh’s script and code caches will are now invalidated whenever the
 xonsh version changes for a given Python version.</li>
 <li>Autowrapping of subprocess globs has been improved to cover
 more cases that are ambiguous with Python syntax.</li>
@@ -252,8 +337,8 @@ only be displayed when xonsh is in interactive mode.</li>
 able to be used in xonsh. These styles are dynamically created upon
 first use, rather than being lazily loaded by xonsh.</li>
 <li>On Windows, <code class="docutils literal"><span class="pre">os.environ</span></code> is case insensitive. This would potentially
-change the case of envrionment variables set into the environment.
-Xonsh now uses <code class="docutils literal"><span class="pre">nt.envrion</span></code>, the case sensitive counterpart, to avoid
+change the case of environment variables set into the environment.
+Xonsh now uses <code class="docutils literal"><span class="pre">nt.environ</span></code>, the case sensitive counterpart, to avoid
 these issues on Windows.</li>
 <li>Fix how <code class="docutils literal"><span class="pre">$PWD</span></code> is managed in order to work with symlinks gracefully</li>
 <li><code class="docutils literal"><span class="pre">history</span> <span class="pre">replay</span></code> no longer barfs on <code class="docutils literal"><span class="pre">style_name</span></code> when setting up the
@@ -264,7 +349,7 @@ environment</li>
 <li>Certain vim commands issue commands involving subshells,
 and this is now supported.</li>
 <li>Null bytes handed to Popen are now automatically escaped prior
-to running a subprocess. This preevents Popen from issuing
+to running a subprocess. This prevents Popen from issuing
 embedded null byte exceptions.</li>
 <li>Xonsh will no longer crash is the current working directory is
 removed out from under it.</li>
@@ -276,9 +361,9 @@ as line continuations characters. Now line continuation characters must be
 preceded by a space on Windows. This only applies to xonsh in interactive
 mode to ensure  scripts are portable.</li>
 <li>Importing <code class="docutils literal"><span class="pre">*.xsh</span></code> files will now respect the encoding listed in
-that file and properly fallback to UTF-8. This beahviour follows
+that file and properly fallback to UTF-8. This behaviour follows
 the rules described in PEP 263.</li>
-<li>Wizard is now able to properly serialize envrionment paths.</li>
+<li>Wizard is now able to properly serialize environment paths.</li>
 </ul>
 </div>
 <div class="section" id="v0-5-6">
@@ -293,9 +378,9 @@ Use the new <code class="docutils literal"><span class="pre">coreutils</span></c
 <li>The <code class="docutils literal"><span class="pre">trace</span></code> will automatically disable color printing when
 stdout is not a TTY or stdout is captured.</li>
 <li>New <code class="docutils literal"><span class="pre">jedi</span></code> xontrib enables jedi-based tab completions when it is loaded.
-This supercedes xonsh&#8217;s default Python-mode completer.</li>
+This supersedes xonsh’s default Python-mode completer.</li>
 <li>The lexer has a new <code class="docutils literal"><span class="pre">split()</span></code> method which splits strings
-according to xonsh&#8217;s rules for whitespace and quotes.</li>
+according to xonsh’s rules for whitespace and quotes.</li>
 <li>New events for hooking into the Python import process are now available.
 You can now provide a handler for:<ul>
 <li><code class="docutils literal"><span class="pre">on_import_pre_find_spec</span></code></li>
@@ -309,31 +394,31 @@ You can now provide a handler for:<ul>
 </ul>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
-<li>The prompt toolkit shell&#8217;s first completion will now be the
-current token from the auto-suggetion, if available.</li>
+<li>The prompt toolkit shell’s first completion will now be the
+current token from the auto-suggestion, if available.</li>
 <li>Sourcing foreign shells will now safely skip applying aliases
 with the same name as existing xonsh aliases by default.
-This prevents accitidentally overwriting important xonsh standard
+This prevents accidentally overwriting important xonsh standard
 aliases, such as <code class="docutils literal"><span class="pre">cd</span></code>.</li>
 </ul>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
-<li>Threadable predicition for subprocesses will now consult both the command
+<li>Threadable prediction for subprocesses will now consult both the command
 as it was typed in and any resolved aliases.</li>
 <li>The first prompt will no longer print in the middle of the line if the user has
 already started typing.</li>
 <li>Windows consoles will now automatically enable virtual terminal processing
 with the readline shell, if available. This allows the full use of ANSI
 escape sequences.</li>
-<li>On the Windows readline shell, the teb-completion supression prompt will no
+<li>On the Windows readline shell, the tab-completion suppression prompt will no
 longer error out depending on what you press.</li>
-<li>Fixed issue with subprocess mode wrapping not repecting line continuation
+<li>Fixed issue with subprocess mode wrapping not respecting line continuation
 backslashes.</li>
 <li>Handle a bug where Bash On Windows causes platform.windows_bash_command()
 to raise CalledProcessError.</li>
 <li>Fixed issues pertaining to completing from raw string paths.
 This is particularly relevant to Windows, where raw strings
-are instered in path completion.</li>
+are inserted in path completion.</li>
 <li>Replace deprecated calls to <code class="docutils literal"><span class="pre">time.clock()</span></code> by calls to
 <code class="docutils literal"><span class="pre">time.perf_counter()</span></code>.</li>
 <li>Use <code class="docutils literal"><span class="pre">clock()</span></code> to set the start time of <code class="docutils literal"><span class="pre">_timings</span></code> in non-windows instead
@@ -344,14 +429,14 @@ print extraneous newlines when called in a script.</li>
 xonsh semantics, rather than just on whitespace using <code class="docutils literal"><span class="pre">str.split()</span></code>.</li>
 <li>The <code class="docutils literal"><span class="pre">mpl</span></code> xontrib has been updated to improve matplotlib
 handling. If <code class="docutils literal"><span class="pre">xontrib</span> <span class="pre">load</span> <span class="pre">mpl</span></code> is run before matplotlib
-is imported and xonsh is in ineteractive mode, matplotlib
+is imported and xonsh is in interactive mode, matplotlib
 will automatically enter interactive mode as well. Additionally,
 <code class="docutils literal"><span class="pre">pyplot.show()</span></code> is patched in interactive mode to be non-blocking.
-If a non-blocking show fails to draw the figre for some reason,
+If a non-blocking show fails to draw the figure for some reason,
 a regular blocking version is called.</li>
-<li>Fixed issues like <code class="docutils literal"><span class="pre">timeit</span> <span class="pre">ls</span></code> causing OSError - &#8220;Inappropriate ioctl
-for device&#8221;.</li>
-<li>Fixed a potential &#8220;OSError: [Errno 22] Invalid argument&#8221; to increase job
+<li>Fixed issues like <code class="docutils literal"><span class="pre">timeit</span> <span class="pre">ls</span></code> causing OSError - “Inappropriate ioctl
+for device”.</li>
+<li>Fixed a potential “OSError: [Errno 22] Invalid argument” to increase job
 control stability.</li>
 </ul>
 </div>
@@ -376,7 +461,7 @@ static configuration file names as elements. This unifies the two methods
 of run control to a single entry point and loading system.</li>
 <li>The <code class="docutils literal"><span class="pre">xonsh.shell.Shell()</span></code> class now requires that an Execer instance
 be explicitly provided to its init method. This class is no longer
-responsible for creating an execer an its deprendencies.</li>
+responsible for creating an execer an its dependencies.</li>
 <li>Moved decorators <code class="docutils literal"><span class="pre">unthreadable</span></code>, <code class="docutils literal"><span class="pre">uncapturable</span></code> from
 <code class="docutils literal"><span class="pre">xonsh.proc</span></code> to <code class="docutils literal"><span class="pre">xonsh.tools</span></code>.</li>
 <li>Some refactorings on jobs control.</li>
@@ -395,15 +480,15 @@ For this value, please check the environment instead, or call
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li>Command pipelines that end in a callable alias are now interruptable with
-<code class="docutils literal"><span class="pre">^C</span></code> and the processes that are piped into the alais have their file handles
+<code class="docutils literal"><span class="pre">^C</span></code> and the processes that are piped into the alias have their file handles
 closed. This should ensure that the entire pipeline is closed.</li>
 <li>Fixed issue where unthreadable subprocs were not allowed to be
 captured with the <code class="docutils literal"><span class="pre">$(cmd)</span></code> operator.</li>
 <li>The <code class="docutils literal"><span class="pre">ProcProxy</span></code> class (unthreadable aliases) was not being executed and would
-hange if the alias was capturable. This has been fixed.</li>
+hang if the alias was capturable. This has been fixed.</li>
 <li>Fixed a <code class="docutils literal"><span class="pre">tcsetattr:</span> <span class="pre">Interrupted</span> <span class="pre">system</span> <span class="pre">call</span></code> issue when run xonsh scripts.</li>
 <li>Fixed issue with <code class="docutils literal"><span class="pre">ValueError</span></code> being thrown from <code class="docutils literal"><span class="pre">inspect.signature()</span></code>
-when called on C-extention callables in tab completer.</li>
+when called on C-extension callables in tab completer.</li>
 <li>Fixed issue that <code class="docutils literal"><span class="pre">ls</span> <span class="pre">|</span> <span class="pre">less</span></code> crashes on Mac.</li>
 <li>Threadable prediction was incorrectly based on the user input command, rather than
 the version where aliases have been resolved. This has been corrected.</li>
@@ -413,7 +498,7 @@ the version where aliases have been resolved. This has been corrected.</li>
 <h2>v0.5.4<a class="headerlink" href="#v0-5-4" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
-<li>Add alias <code class="docutils literal"><span class="pre">xip</span></code> (&#8220;kip&#8221;) so that xonsh&#8217;s Python environment (whatever that is) can be modified.</li>
+<li>Add alias <code class="docutils literal"><span class="pre">xip</span></code> (“kip”) so that xonsh’s Python environment (whatever that is) can be modified.</li>
 <li>HistoryEntry, a SimpleNamespace object that represents a command in history.</li>
 <li><code class="docutils literal"><span class="pre">xonsh.completers.bash_completion</span></code> module</li>
 <li>Added option to report timing information of xonsh startup times. Start xonsh
@@ -437,7 +522,7 @@ prior to the last reboot.</li>
 </ul>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
-<li>Fixed broken bash completions on Windows if &#8216;Windows Subsystem for Linux&#8217; is installed.</li>
+<li>Fixed broken bash completions on Windows if ‘Windows Subsystem for Linux’ is installed.</li>
 <li>Readline history would try to read the first element of history prior to
 actually loading any history. This caused an exception to be raised on
 Windows at xonsh startup when using pyreadline.</li>
@@ -454,7 +539,7 @@ information no longer appears in the <code class="docutils literal"><span class=
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li>Tab completion xontrib for python applications based on click framework.</li>
-<li>Added <code class="docutils literal"><span class="pre">on_transform_command</span></code> event for pre-processing that macros can&#8217;t handle.</li>
+<li>Added <code class="docutils literal"><span class="pre">on_transform_command</span></code> event for pre-processing that macros can’t handle.</li>
 <li>Autodetection of backgroundability by binary analysis on POSIX.</li>
 <li>New argument <code class="docutils literal"><span class="pre">expand_user=True</span></code> to <code class="docutils literal"><span class="pre">tools.expand_path</span></code>.</li>
 <li>New <code class="docutils literal"><span class="pre">$COMPLETION_QUERY_LIMIT</span></code> environment variable for setting the
@@ -465,7 +550,7 @@ see the potential completions.</li>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
 <li>The <code class="docutils literal"><span class="pre">Block</span></code> and <code class="docutils literal"><span class="pre">Functor</span></code> context managers from <code class="docutils literal"><span class="pre">xonsh.contexts</span></code> have been
-rewritten to use xonsh&#8217;s macro capabilities. You must now enter these via the
+rewritten to use xonsh’s macro capabilities. You must now enter these via the
 <code class="docutils literal"><span class="pre">with!</span></code> statement, e.g. <code class="docutils literal"><span class="pre">with!</span> <span class="pre">Block():</span> <span class="pre">pass</span></code>.</li>
 <li>The <code class="docutils literal"><span class="pre">distributed</span></code> xontrib now needs to use the <code class="docutils literal"><span class="pre">with!</span></code> statement, since it
 relies on <code class="docutils literal"><span class="pre">Functor</span></code>.</li>
@@ -490,9 +575,9 @@ that <code class="docutils literal"><span class="pre">pygments</span></code> is 
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">PopenThread</span></code> will now re-issue SIGINT to the main thread when it is
-recieved.</li>
+received.</li>
 <li>Fixed an issue that using sqlite history backend does not kill unfinished
-jobs when quitting xonsh with a second &#8220;exit&#8221;.</li>
+jobs when quitting xonsh with a second “exit”.</li>
 <li>Fixed an issue that xonsh would fail over to external shells when
 running .xsh script which raises exceptions.</li>
 <li>Fixed an issue with <code class="docutils literal"><span class="pre">openpty()</span></code> returning non-unix line endings in its buffer.
@@ -500,13 +585,13 @@ This was causing git and ssh to fail when xonsh was used as the login shell on t
 server. See <a class="reference external" href="https://mail.python.org/pipermail/python-list/2013-June/650460.html">https://mail.python.org/pipermail/python-list/2013-June/650460.html</a> for
 more details.</li>
 <li>Restored the ability to ^Z and <code class="docutils literal"><span class="pre">fg</span></code> processes on posix platforms.</li>
-<li>CommandPipelines were not gauranteeded to have been ended when the return code
+<li>CommandPipelines were not guaranteed to have been ended when the return code
 was requested. This has been fixed.</li>
 <li>Introduce path expansion in <code class="docutils literal"><span class="pre">is_writable_file</span></code> to fix
 <code class="docutils literal"><span class="pre">$XONSH_TRACEBACK_LOGFILE=~/xonsh.log</span></code>.</li>
 <li>Backgrounding a running process (^Z) now restores ECHO mode to the terminal
-in cases where the subprocess doesn&#8217;t properly restore itself. A major instance
-of this behaviour is Python&#8217;s interactive interpreter.</li>
+in cases where the subprocess doesn’t properly restore itself. A major instance
+of this behaviour is Python’s interactive interpreter.</li>
 <li>Readline backend would not ask the user to confirm the printing of completion
 options if they numbered above a certain value. Instead they would be dumped to
 the screen. This has been fixed.</li>
@@ -558,11 +643,11 @@ starting up.</li>
 <li>Added entry to customization faq re: tab completion selection (#1725)</li>
 <li>Added entry to customization faq re: libgcc core dump (#1160)</li>
 <li>Section about quoting in the tutorial.</li>
-<li>The <code class="docutils literal"><span class="pre">$VC_HG_SHOW_BRANCH</span></code> environement variable to control whether to hide the hg branch in the prompt.</li>
+<li>The <code class="docutils literal"><span class="pre">$VC_HG_SHOW_BRANCH</span></code> environment variable to control whether to hide the hg branch in the prompt.</li>
 <li>xonfig now contains the latest git commit date if xonsh installed
 from source.</li>
 <li>Alt+Enter will execute a multiline code block irrespective of cursor position</li>
-<li>Windows now has the ability to read output asyncronously from
+<li>Windows now has the ability to read output asynchronously from
 the console.</li>
 <li>Use <a class="reference external" href="https://drdoctr.github.io/doctr/">doctr</a> to deploy dev docs to github pages</li>
 <li>New <code class="docutils literal"><span class="pre">xonsh.proc.uncapturable()</span></code> decorator for declaring that function
@@ -570,12 +655,12 @@ aliases should not be run in a captured subprocess.</li>
 <li>New history backend sqlite.</li>
 <li>Prompt user to install xontrib package if they try to load an uninstalled
 xontrib</li>
-<li>Callable aliases may now take a final <code class="docutils literal"><span class="pre">spec</span></code> arguemnt, which is the
-cooresponding <code class="docutils literal"><span class="pre">SubprocSpec</span></code> instance.</li>
+<li>Callable aliases may now take a final <code class="docutils literal"><span class="pre">spec</span></code> argument, which is the
+corresponding <code class="docutils literal"><span class="pre">SubprocSpec</span></code> instance.</li>
 <li>New <code class="docutils literal"><span class="pre">bashisms</span></code> xontrib provides additional Bash-like syntax, such as <code class="docutils literal"><span class="pre">!!</span></code>.
 This xontrib only affects the command line, and not xonsh scripts.</li>
 <li>Tests that create testing repos (git, hg)</li>
-<li>New subprocess specification class <code class="docutils literal"><span class="pre">SubprocSpec</span></code> is used for specifiying
+<li>New subprocess specification class <code class="docutils literal"><span class="pre">SubprocSpec</span></code> is used for specifying
 and manipulating subprocess classes prior to execution.</li>
 <li>New <code class="docutils literal"><span class="pre">PopenThread</span></code> class runs subprocesses on a a separate thread.</li>
 <li>New <code class="docutils literal"><span class="pre">CommandPipeline</span></code> and <code class="docutils literal"><span class="pre">HiddenCommandPipeline</span></code> classes manage the
@@ -591,11 +676,11 @@ background thread and can use <code class="docutils literal"><span class="pre">P
 <code class="docutils literal"><span class="pre">f()</span></code>, <code class="docutils literal"><span class="pre">f(args)</span></code>,  <code class="docutils literal"><span class="pre">f(args,</span> <span class="pre">stdin=None)</span></code>,
 <code class="docutils literal"><span class="pre">f(args,</span> <span class="pre">stdin=None,</span> <span class="pre">stdout=None)</span></code>, and `
 <code class="docutils literal"><span class="pre">f(args,</span> <span class="pre">stdin=None,</span> <span class="pre">stdout=None,</span> <span class="pre">stderr=None)</span></code>.</li>
-<li>Uncaptured subprocesses now recieve a PTY file handle for stdout and
+<li>Uncaptured subprocesses now receive a PTY file handle for stdout and
 stderr.</li>
 <li>New <code class="docutils literal"><span class="pre">$XONSH_PROC_FREQUENCY</span></code> environment variable that specifies how long
-loops in the subprocess framwork should sleep. This may be adjusted from
-its default value to improved perfromance and mitigate &#8220;leaky&#8221; pipes on
+loops in the subprocess framework should sleep. This may be adjusted from
+its default value to improved performance and mitigate “leaky” pipes on
 slower machines.</li>
 <li><code class="docutils literal"><span class="pre">Shift+Tab</span></code> moves backwards in completion dropdown in prompt_toolkit</li>
 <li>PromptFormatter class that holds all the related prompt methods</li>
@@ -625,9 +710,9 @@ tips/tricks/fixes for common issues/requests</li>
 <ul>
 <li><p class="first">CircleCI now handles flake8 checks</p>
 </li>
-<li><p class="first">Travis doesn&#8217;t allow failures on nightly</p>
+<li><p class="first">Travis doesn’t allow failures on nightly</p>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">get_hg_branch</span></code> runs <code class="docutils literal"><span class="pre">hg</span> <span class="pre">root</span></code> to find root dir and check if we&#8217;re in repo</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">get_hg_branch</span></code> runs <code class="docutils literal"><span class="pre">hg</span> <span class="pre">root</span></code> to find root dir and check if we’re in repo</p>
 </li>
 <li><p class="first">The default style will now use the color keywords (#ansired, #ansidarkred)
 to set colors that follow the terminal color schemes. Currently, this requires
@@ -637,7 +722,7 @@ prompt_toolkit master (&gt;1.0.8) and pygments master (2.2) to work correctly.</
 </li>
 <li><p class="first">Updated the effectivity of <code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> on debug messages.</p>
 </li>
-<li><p class="first">Better documentation on how to get nice colors in Windows&#8217; default console</p>
+<li><p class="first">Better documentation on how to get nice colors in Windows’ default console</p>
 </li>
 <li><p class="first">All custom prompt_toolkit key binding filters now declared with the
 <code class="docutils literal"><span class="pre">&#64;Condition</span></code> decorator</p>
@@ -651,7 +736,7 @@ prompt_toolkit master (&gt;1.0.8) and pygments master (2.2) to work correctly.</
 <li><p class="first">Quote all paths when completion if any of the paths needs be quoted,
 so that bash can automatically complete to the max prefix of the paths.</p>
 </li>
-<li><p class="first">Tee&#8217;d reads now occur in 1kb chunks, rather than character-by-character.</p>
+<li><p class="first">Tee’d reads now occur in 1kb chunks, rather than character-by-character.</p>
 </li>
 <li><p class="first">The <code class="docutils literal"><span class="pre">which</span></code> alias no longer has a trailing newline if it is captured.
 This means that <code class="docutils literal"><span class="pre">$(which</span> <span class="pre">cmd)</span></code> will simply be the path to the command.</p>
@@ -718,7 +803,7 @@ file.</p>
 </li>
 <li><p class="first">vended <code class="docutils literal"><span class="pre">ply</span></code> is now a git subtree to help with any future updates</p>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">WHITE</span></code>  color keyword now means lightgray and <code class="docutils literal"><span class="pre">INTENSE_WHITE</span></code> commpletely white</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">WHITE</span></code>  color keyword now means lightgray and <code class="docutils literal"><span class="pre">INTENSE_WHITE</span></code> completely white</p>
 </li>
 <li><p class="first">Removed <code class="docutils literal"><span class="pre">add_to_shell</span></code> doc section from <code class="docutils literal"><span class="pre">*nix</span></code> install pages and instead
 relocated it to the general customization page</p>
@@ -745,13 +830,13 @@ implemented in the <code class="docutils literal"><span class="pre">ProcProxyThr
 <li>Fix up small pep8 violations</li>
 <li>Fixed a bug where some files are not showing using bash completer</li>
 <li>Fixed some issues with subprocess capturing aliases that it probably
-shouldn&#8217;t.</li>
+shouldn’t.</li>
 <li><code class="docutils literal"><span class="pre">safe_readable()</span></code> now checks for <code class="docutils literal"><span class="pre">ValueError</span></code> as well.</li>
 <li>The scroll bars in the PTK completions menus are back.</li>
 <li>Jupyter kernel installation now respects the setuptools <code class="docutils literal"><span class="pre">root</span></code> parameter.</li>
 <li>Fix <code class="docutils literal"><span class="pre">__repr__</span></code> and <code class="docutils literal"><span class="pre">__str__</span></code> methods of <code class="docutils literal"><span class="pre">SubprocSpec</span></code> so they report
 correctly</li>
-<li>Fixed the meassage printed when which is unable to find the command.</li>
+<li>Fixed the message printed when which is unable to find the command.</li>
 <li>Fixed a handful of sphinx errors and warnings in the docs</li>
 <li>Fixed many PEP8 violations that had gone unnoticed</li>
 <li>Fix failure to detect an Anaconda python distribution if the python was install from the conda-forge channel.</li>
@@ -765,7 +850,7 @@ or process is suspended.</li>
 <li>Added a minimum time buffer time for command pipelines to check for
 if previous commands have executed successfully.  This is helpful
 for pipelines where the last command takes a long time to start up,
-such as GNU Parallel. This also checks to make sure that output has occured.
+such as GNU Parallel. This also checks to make sure that output has occurred.
 This includes piping 2+ commands together and pipelines that end in
 unthreadable commands.</li>
 <li><code class="docutils literal"><span class="pre">curr_branch</span></code> reports correctly when <code class="docutils literal"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">status.short</span> <span class="pre">true</span></code> is used</li>
@@ -775,23 +860,23 @@ streamed.</li>
 <li>Aliases that begin with a comma now complete correctly (no spurious comma)</li>
 <li>Use <code class="docutils literal"><span class="pre">python3</span></code> in shebang lines for compatibility with distros that still use Python 2 as the default Python</li>
 <li>STDOUT is only stored when <code class="docutils literal"><span class="pre">$XONSH_STORE_STDOUT=True</span></code></li>
-<li>Fixed issue with alais redirections to files throwing an OSError because
+<li>Fixed issue with alias redirections to files throwing an OSError because
 the function ProcProxies were not being waited upon.</li>
-<li>Fixed issue with callablable aliases that happen to call sys.exit() or
+<li>Fixed issue with callable aliases that happen to call sys.exit() or
 raise SystemExit taking out the whole xonsh process.</li>
 <li>Safely flushes file handles on threaded buffers.</li>
 <li>Proper default value and documentation for <code class="docutils literal"><span class="pre">$BASH_COMPLETIONS</span></code></li>
 <li>Fixed readline completer issues on paths with spaces</li>
 <li>Fix bug in <code class="docutils literal"><span class="pre">argvquote()</span></code> functions used when sourcing batch files on Windows. The bug meant an extra backslash was added to UNC paths.
 Thanks to &#64;bytesemantics for spotting it, and &#64;janschulz for fixing the issue.</li>
-<li>pep8, lint and refator in pytest style of <code class="docutils literal"><span class="pre">test_ptk_multiline.py</span></code>, <code class="docutils literal"><span class="pre">test_replay.py</span></code></li>
+<li>pep8, lint and refactor in pytest style of <code class="docutils literal"><span class="pre">test_ptk_multiline.py</span></code>, <code class="docutils literal"><span class="pre">test_replay.py</span></code></li>
 <li>Tab completion of aliases returned a upper cased alias on Windows.</li>
 <li>History show all action now also include current session items.</li>
-<li><code class="docutils literal"><span class="pre">proc.stream_stderr</span></code> now handles stderr that doesn&#8217;t have buffer attribute</li>
+<li><code class="docutils literal"><span class="pre">proc.stream_stderr</span></code> now handles stderr that doesn’t have buffer attribute</li>
 <li>Made <code class="docutils literal"><span class="pre">history</span> <span class="pre">show</span></code> result sorted.</li>
 <li>Fixed issue that <code class="docutils literal"><span class="pre">history</span> <span class="pre">gc</span></code> does not delete empty history files.</li>
 <li>Standard stream tees have been fixed to accept the possibility that
-they may not be backed by a binary buffer. This inludes the pipeline
+they may not be backed by a binary buffer. This includes the pipeline
 stdout tee as well as the shell tees.</li>
 <li>Fixed a bug when the pygments plugin was used by third party editors etc.</li>
 <li>CPU usage of <code class="docutils literal"><span class="pre">PopenThread</span></code> and <code class="docutils literal"><span class="pre">CommandPipeline</span></code> has been brought
@@ -802,11 +887,11 @@ down significantly.</li>
 <h2>v0.4.7<a class="headerlink" href="#v0-4-7" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
-<li>Define alias for &#8216;echo&#8217; on startup for Windows only.</li>
+<li>Define alias for ‘echo’ on startup for Windows only.</li>
 <li>New coredev <a class="reference external" href="https://github.com/astronouth7303">astronouth7303</a> added</li>
 <li><code class="docutils literal"><span class="pre">which</span> <span class="pre">-a</span></code> now searches in <code class="docutils literal"><span class="pre">__xonsh_ctx__</span></code> too</li>
 <li>Info about the xontrib cookiecutter template on xontrib tutorial</li>
-<li>xonsh&#8217;s optional dependencies may now be installed with the pip extras <code class="docutils literal"><span class="pre">ptk</span></code>, <code class="docutils literal"><span class="pre">proctitle</span></code>, <code class="docutils literal"><span class="pre">linux</span></code>, <code class="docutils literal"><span class="pre">mac</span></code>, and <code class="docutils literal"><span class="pre">win</span></code>.</li>
+<li>xonsh’s optional dependencies may now be installed with the pip extras <code class="docutils literal"><span class="pre">ptk</span></code>, <code class="docutils literal"><span class="pre">proctitle</span></code>, <code class="docutils literal"><span class="pre">linux</span></code>, <code class="docutils literal"><span class="pre">mac</span></code>, and <code class="docutils literal"><span class="pre">win</span></code>.</li>
 <li>Env <code class="docutils literal"><span class="pre">help</span></code> method to format and print the vardocs for an envvar</li>
 <li>test_news fails if no empty line before a category</li>
 <li>more info on test_news failures</li>
@@ -829,82 +914,58 @@ syntax.</li>
 <li>moved <code class="docutils literal"><span class="pre">which</span></code> from <code class="docutils literal"><span class="pre">xonsh.aliases</span></code> into <code class="docutils literal"><span class="pre">xoreutils.which</span></code></li>
 <li><code class="docutils literal"><span class="pre">xonsh.prompt.gitstatus.gitstatus</span></code> now returns a namedtuple</li>
 <li>implementation of <code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.get_git_branch</span></code> and
-<code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code> to use &#8216;git status &#8211;procelain&#8217;</li>
+<code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code> to use ‘git status –procelain’</li>
 <li>moved prompt formatting specific functions from <code class="docutils literal"><span class="pre">xonsh.environ</span></code>
 to <code class="docutils literal"><span class="pre">xonsh.prompt.base</span></code></li>
 <li>All prompt formatter functions moved to <code class="docutils literal"><span class="pre">xonsh.prompt</span></code> subpackage</li>
-<li>Printing the message about foreign aliases being ingored happens only
+<li>Printing the message about foreign aliases being ignored happens only
 if XONSH_DEBUG is set.</li>
 <li>Use <code class="docutils literal"><span class="pre">SetConsoleTitleW()</span></code> on Windows instead of a process call.</li>
 <li>Tutorial to reflect the current history command argument functionality</li>
 <li>Macro function arguments now default to <code class="docutils literal"><span class="pre">str</span></code>, rather than <code class="docutils literal"><span class="pre">eval</span></code>,
-for consistentcy with other parts of the macro system.</li>
+for consistency with other parts of the macro system.</li>
 </ul>
 <p><strong>Removed:</strong></p>
 <ul class="simple">
-<li>aliases that use &#8216;!&#8217; in their name cause they clash with the macro syntax</li>
+<li>aliases that use ‘!’ in their name cause they clash with the macro syntax</li>
 </ul>
 <p><strong>Fixed:</strong></p>
-<ul>
-<li><p class="first">Fix regression where bash git completions where not loaded
-automatically when GitForWindows is installed.</p>
-</li>
-<li><p class="first">More tokens are now supported in subproc args, such as <code class="docutils literal"><span class="pre">==</span></code>.</p>
-</li>
-<li><p class="first">Python completions now work without space delimiters, e.g. <code class="docutils literal"><span class="pre">a=matpl&lt;TAB&gt;</span></code>
-will complete to <code class="docutils literal"><span class="pre">a=matplotlib</span></code></p>
-</li>
-<li><p class="first">Parser would fail on nested, captured suprocess macros. Now, it works,
-hooray!?</p>
-</li>
-<li><p class="first">now fires chdir event if OS change in working directory is detected.</p>
-</li>
+<ul class="simple">
+<li>Fix regression where bash git completions where not loaded
+automatically when GitForWindows is installed.</li>
+<li>More tokens are now supported in subproc args, such as <code class="docutils literal"><span class="pre">==</span></code>.</li>
+<li>Python completions now work without space delimiters, e.g. <code class="docutils literal"><span class="pre">a=matpl&lt;TAB&gt;</span></code>
+will complete to <code class="docutils literal"><span class="pre">a=matplotlib</span></code></li>
+<li>Parser would fail on nested, captured suprocess macros. Now, it works,
+hooray!?</li>
+<li>now fires chdir event if OS change in working directory is detected.</li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">xonsh.prompt.vc_branch.git_dirty_working_directory</span></code></dt>
-<dd><p class="first last">uses <code class="docutils literal"><span class="pre">porcelain</span></code> option instead of using the bytestring
-<code class="docutils literal"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code> to find out if a git directory is dirty</p>
-</dd>
+<dd>uses <code class="docutils literal"><span class="pre">porcelain</span></code> option instead of using the bytestring
+<code class="docutils literal"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code> to find out if a git directory is dirty</dd>
 </dl>
 </li>
-<li><p class="first">Fix bug where know commands where not highlighed on windows.</p>
-</li>
-<li><p class="first">Fixed completer showing executable in upper case on windows.</p>
-</li>
-<li><p class="first">Fixed issue where tilde expansion was occuring more than once before an
-equals sign.</p>
-</li>
-<li><p class="first">test_dirstack test_cdpath_expansion leaving stray testing dirs</p>
-</li>
-<li><p class="first">Better completer display for long completions in prompt-toolkit</p>
-</li>
-<li><p class="first">Automatucally append newine to target of <code class="docutils literal"><span class="pre">source</span></code> alias, so that it may
-be exec&#8217;d.</p>
-</li>
-<li><p class="first">test_news fails when single graves around word</p>
-</li>
-<li><p class="first">Slashes in virtual environment names work in vox</p>
-</li>
-<li><p class="first">non string type value in $FORMATTER_DICT turning prompt ugly</p>
-</li>
-<li><p class="first">whole prompt turning useless when one formatting function raises an exception</p>
-</li>
-<li><p class="first">Fix completion after alias expansion</p>
-</li>
-<li><p class="first">Fix hard crash when foreign shell functions fails to run. #1715</p>
-</li>
-<li><p class="first">Bug where non-default locations for <code class="docutils literal"><span class="pre">XDG_DATA_HOME</span></code> and <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>
-would not expand <code class="docutils literal"><span class="pre">~</span></code> into the home directory</p>
-</li>
-<li><p class="first">Auto quote path completions if path contains &#8216;and&#8217; or &#8216;or&#8217;</p>
-</li>
-<li><p class="first">Completion now works on subcommands after pipe, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> and so on.</p>
-</li>
-<li><p class="first">cd . and cd &lt;singleCharacter&gt; now work.  Fix indexerror in AUTO_PUSHD case, too.</p>
-</li>
-<li><p class="first">Fixed issue with accidentally wrapping generators inside of function calls.</p>
-</li>
-<li><p class="first">History indexing with string returns most recent command.</p>
-</li>
+<li>Fix bug where know commands where not highlighted on windows.</li>
+<li>Fixed completer showing executable in upper case on windows.</li>
+<li>Fixed issue where tilde expansion was occurring more than once before an
+equals sign.</li>
+<li>test_dirstack test_cdpath_expansion leaving stray testing dirs</li>
+<li>Better completer display for long completions in prompt-toolkit</li>
+<li>Automatically append newline to target of <code class="docutils literal"><span class="pre">source</span></code> alias, so that it may
+be exec’d.</li>
+<li>test_news fails when single graves around word</li>
+<li>Slashes in virtual environment names work in vox</li>
+<li>non string type value in $FORMATTER_DICT turning prompt ugly</li>
+<li>whole prompt turning useless when one formatting function raises an exception</li>
+<li>Fix completion after alias expansion</li>
+<li>Fix hard crash when foreign shell functions fails to run. #1715</li>
+<li>Bug where non-default locations for <code class="docutils literal"><span class="pre">XDG_DATA_HOME</span></code> and <code class="docutils literal"><span class="pre">XONSH_DATA_DIR</span></code>
+would not expand <code class="docutils literal"><span class="pre">~</span></code> into the home directory</li>
+<li>Auto quote path completions if path contains ‘and’ or ‘or’</li>
+<li>Completion now works on subcommands after pipe, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> and so on.</li>
+<li>cd . and cd &lt;singleCharacter&gt; now work.  Fix indexerror in AUTO_PUSHD case, too.</li>
+<li>Fixed issue with accidentally wrapping generators inside of function calls.</li>
+<li>History indexing with string returns most recent command.</li>
 </ul>
 </div>
 <div class="section" id="v0-4-6">
@@ -916,7 +977,7 @@ completion instead of running command while completion menu is displayed.</li>
 <li>NetBSD is now supported.</li>
 <li>Macro function calls are now available. These use a Rust-like
 <code class="docutils literal"><span class="pre">f!(arg)</span></code> syntax.</li>
-<li>Macro subprocess call now avalaible with the <code class="docutils literal"><span class="pre">echo!</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span></code>
+<li>Macro subprocess call now available with the <code class="docutils literal"><span class="pre">echo!</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span></code>
 syntax.</li>
 <li>A new <a class="reference external" href="http://xon.sh/tutorial_events.html">event subsystem</a> has been added.</li>
 <li>howto install sections for Debian/Ubuntu and Fedora.</li>
@@ -949,7 +1010,7 @@ They emulate behavior of <cite>CMD.EXE</cite> by creating a temporary mapped dri
 the <code class="docutils literal"><span class="pre">\\&lt;server&gt;\&lt;share&gt;</span></code> portion of the path, on the <code class="docutils literal"><span class="pre">pushd</span></code> and unmapping the drive letter when all references
 to it are popped.</li>
 <li>And <code class="docutils literal"><span class="pre">dirstack</span></code> suppresses this temporary drive mapping funky jive if registry entry
-<code class="docutils literal"><span class="pre">HKCU\software\microsoft\command</span> <span class="pre">processor\DisableUNCCheck</span></code> (or HKLM...) is a DWORD value 1.  This allows Xonsh
+<code class="docutils literal"><span class="pre">HKCU\software\microsoft\command</span> <span class="pre">processor\DisableUNCCheck</span></code> (or HKLM…) is a DWORD value 1.  This allows Xonsh
 to show the actual UNC path in your prompt string and <em>also</em> allows subprocess commands invoking <cite>CMD.EXE</cite> to run in
 the expected working directory. See <a class="reference external" href="https://support.microsoft.com/en-us/kb/156276">https://support.microsoft.com/en-us/kb/156276</a> to satisfy any lingering curiosity.</li>
 <li><code class="docutils literal"><span class="pre">lazy_locate_binary</span></code> handles binary on different drive letter than current working directory (on Windows).</li>
@@ -968,12 +1029,12 @@ include opening brackets in Python completions</li>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li>xonsh modules imported now have the __file__ attribute</li>
-<li>Context senstitive AST transformer was not adding argument names to the
+<li>Context sensitive AST transformer was not adding argument names to the
 local scope. This would then enable extraneous subprocess mode wrapping
 for expressions whose leftmost name was function argument. This has been
 fixed by properly adding the argument names to the scope.</li>
 <li>Foreign shell functions that are mapped to empty filenames no longer
-receive alaises since they can&#8217;t be found to source later.</li>
+receive aliases since they can’t be found to source later.</li>
 <li>Correctly preserve arguments given to xon.sh, in case there are quoted ones.</li>
 <li>Environment variables in subprocess mode were not being expanded
 unless they were in a sting. They are now expanded properly.</li>
@@ -1019,7 +1080,7 @@ the xonsh FAQ for more information on trade-offs and mitigation strategies.</p>
 <li><p class="first"><code class="docutils literal"><span class="pre">which</span> <span class="pre">-v</span></code> now calls superhelp, which will print highlighted source.</p>
 </li>
 <li><p class="first">Added xontribs:
-* <a class="reference external" href="https://github.com/astronouth7303/xontrib-z">z (Tracks your most used directories, based on &#8216;frecency&#8217;.)</a></p>
+* <a class="reference external" href="https://github.com/astronouth7303/xontrib-z">z (Tracks your most used directories, based on ‘frecency’.)</a></p>
 </li>
 <li><p class="first">amalgamate.py now supports relative imports.</p>
 </li>
@@ -1041,7 +1102,7 @@ is detected.</p>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">xonsh.completers</span></code> sub-package is now fully lazy.</p>
 </li>
-<li><p class="first">The vox xontrib now takes flags very similar to Python&#8217;s venv tool. Use
+<li><p class="first">The vox xontrib now takes flags very similar to Python’s venv tool. Use
 <code class="docutils literal"><span class="pre">vox</span> <span class="pre">--help</span> <span class="pre">&lt;command&gt;</span></code> to learn more.</p>
 </li>
 <li><p class="first">Xontribs may now define <code class="docutils literal"><span class="pre">__all__</span></code> as a module top-level to limit what gets exported to the shell context</p>
@@ -1087,7 +1148,7 @@ The recipe used to build xonsh on conda-forge can be found here:
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">_zsh_hist_parser</span></code> not parsing history files without timestamps.</li>
 <li>Fixed amalgamation of aliased imports that are already in <code class="docutils literal"><span class="pre">sys.modules</span></code>.</li>
-<li>Xonsh will no longer fail to start in directories where the user doesn&#8217;t have
+<li>Xonsh will no longer fail to start in directories where the user doesn’t have
 read access.</li>
 <li>Fixed parser error line number exception from being raised while trying to
 raise a SyntaxError.</li>
@@ -1119,7 +1180,7 @@ functions into lazy, global objects.</p>
 </li>
 <li><p class="first">Tab completion for pip python package manager.</p>
 </li>
-<li><p class="first">Regular expressions for enviroment variable matching</p>
+<li><p class="first">Regular expressions for environment variable matching.</p>
 </li>
 <li><p class="first">__contains__ method on Env</p>
 </li>
@@ -1147,9 +1208,9 @@ different files.</p>
 </li>
 <li><p class="first">Docs on how to tweak the Windows ConHost for a better color scheme.</p>
 </li>
-<li><p class="first">Docs: how to fix Thunar&#8217;s &#8220;Open Terminal Here&#8221; action.</p>
+<li><p class="first">Docs: how to fix Thunar’s “Open Terminal Here” action.</p>
 </li>
-<li><p class="first">A new API class was added to Vox: <code class="docutils literal"><span class="pre">xontrib.voxapi.Vox</span></code>. This allows programtic access to the virtual environment machinery for other xontribs. See the API documentation for details.</p>
+<li><p class="first">A new API class was added to Vox: <code class="docutils literal"><span class="pre">xontrib.voxapi.Vox</span></code>. This allows programmatic access to the virtual environment machinery for other xontribs. See the API documentation for details.</p>
 </li>
 <li><p class="first">History now accepts multiple slices arguments separated by spaces</p>
 </li>
@@ -1158,9 +1219,9 @@ different files.</p>
 <ul class="simple">
 <li>amalgamate now works on Python 2 and allows relative imports.</li>
 <li>Top-level xonsh package now more lazy.</li>
-<li>Show conda environement name in prompt in parentheses similiar what conda does.</li>
+<li>Show conda environment name in prompt in parentheses similar what conda does.</li>
 <li>Implementation of expandvars now uses regex</li>
-<li>Because of the addition of &#8220;optional items&#8221; to the prompt format string, the
+<li>Because of the addition of “optional items” to the prompt format string, the
 functions <code class="docutils literal"><span class="pre">xonsh.environ.current_branch</span></code>, <code class="docutils literal"><span class="pre">xonsh.environ.env_name</span></code> and
 formatter dict items <code class="docutils literal"><span class="pre">curr_branch</span></code>, <code class="docutils literal"><span class="pre">current_job</span></code>, <code class="docutils literal"><span class="pre">env_name</span></code> are
 no longer padded with a separator.</li>
@@ -1186,7 +1247,7 @@ can be used instead.</li>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li>Fixed bug on Windows preventing xonsh from changing the console title.</li>
-<li>Unrecognized <code class="docutils literal"><span class="pre">$XONSH_COLOR_STYLE</span></code> values don&#8217;t crash terminal.</li>
+<li>Unrecognized <code class="docutils literal"><span class="pre">$XONSH_COLOR_STYLE</span></code> values don’t crash terminal.</li>
 <li>Writing the window title will no longer accidentally answer interactive
 questions, eg <code class="docutils literal"><span class="pre">rm</span> <span class="pre">-i</span></code> now works as expected.</li>
 <li>more matching cases for envvar reference</li>
@@ -1203,11 +1264,11 @@ caused unexpected problems like printing out the raw $PROMPT string.</li>
 <li>Fixed multiple definition of <code class="docutils literal"><span class="pre">pyghooks</span></code>.</li>
 <li>Fixed multiple definition of <code class="docutils literal"><span class="pre">pygments</span></code>.</li>
 <li>Fixed multiple definition of <code class="docutils literal"><span class="pre">tokenize</span></code>.</li>
-<li>redundant and &#8216;leaky&#8217; tests in nose</li>
+<li>redundant and ‘leaky’ tests in nose</li>
 <li>Fix bug that prevented disabling $INTENSIFY_COLORS_ON_WIN in <code class="docutils literal"><span class="pre">xonshrc</span></code></li>
 <li><code class="docutils literal"><span class="pre">LazyJSON</span></code> will now hide failures to close, and instead rely on reference
 counting if something goes wrong.</li>
-<li>Fixed maximum recurssion error with color styles.</li>
+<li>Fixed maximum recursion error with color styles.</li>
 <li>Parser tables will no longer be generated in the current directory
 by accident.</li>
 <li>Error messages when zsh or bash history file is not found</li>
@@ -1243,8 +1304,8 @@ has been resolved.</li>
 <li>Minor amalgamate bug with <code class="docutils literal"><span class="pre">import</span> <span class="pre">pkg.mod</span></code> amalgamated imports.</li>
 <li>No longer raises an error if a directory in <code class="docutils literal"><span class="pre">$PATH</span></code> does not exist on
 Python v3.4.</li>
-<li>Fixed a readline shell completion issue that caused by inconsistence between
-<code class="docutils literal"><span class="pre">$CASE_SENSITIVE_COMPLETIONS</span></code> and readline&#8217;s inputrc setting.</li>
+<li>Fixed a readline shell completion issue that caused by inconsistency between
+<code class="docutils literal"><span class="pre">$CASE_SENSITIVE_COMPLETIONS</span></code> and readline’s inputrc setting.</li>
 </ul>
 </div>
 <div class="section" id="v0-4-2">
@@ -1261,7 +1322,7 @@ also displays the git sha of the current build</li>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li>Sourcing foreign shells now allow fully capture environment variables that
-contain newlines as long as they also don&#8217;t contain equal signs.</li>
+contain newlines as long as they also don’t contain equal signs.</li>
 <li>Added scripts directory to MANIFEST.in</li>
 </ul>
 </div>
@@ -1295,13 +1356,13 @@ Packages and sub-packages must be amalgamated separately.</p>
 classes for delayed creation of objects.</p>
 <blockquote>
 <div><ul class="simple">
-<li>A <code class="docutils literal"><span class="pre">LazyObject</span></code> won&#8217;t be created until it has an attribute accessed.</li>
+<li>A <code class="docutils literal"><span class="pre">LazyObject</span></code> won’t be created until it has an attribute accessed.</li>
 <li>A <code class="docutils literal"><span class="pre">LazyDict</span></code> will load each value only when a key is accessed.</li>
 <li>A <code class="docutils literal"><span class="pre">LazyBool</span></code> will only be created when <code class="docutils literal"><span class="pre">__bool__()</span></code> is called.</li>
 </ul>
 </div></blockquote>
 <p>Additionally, when fully loaded, the above objects will replace themselves
-by name in the context that they were handed, thus derefenceing themselves.
+by name in the context that they were handed, thus dereferencing themselves.
 This is useful for global variables that may be expensive to create,
 should only be created once, and may not be used in any particular session.</p>
 </li>
@@ -1325,7 +1386,7 @@ remaining completers.</p>
 part of the <code class="docutils literal"><span class="pre">xonsh.contexts</span></code> module.</p>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">Block</span></code> provides support for turning a context body into a non-executing
-list of string lines. This is implmement via a syntax tree transformation.
+list of string lines. This is implement via a syntax tree transformation.
 This is useful for creating remote execution tools that seek to prevent
 local execution.</p>
 </li>
@@ -1350,16 +1411,16 @@ Also handles differences between Py3.4 and 3.5 in CalledProcessError</p>
 <li><p class="first">Tab completion of paths now includes zsh-style path expansion (subsequence
 matching), toggleable with <code class="docutils literal"><span class="pre">$SUBSEQUENCE_PATH_COMPLETION</span></code></p>
 </li>
-<li><p class="first">Tab completion of paths now includes &#8220;fuzzy&#8221; matches that are accurate to
+<li><p class="first">Tab completion of paths now includes “fuzzy” matches that are accurate to
 within a few characters, toggleable with <code class="docutils literal"><span class="pre">$FUZZY_PATH_COMPLETION</span></code></p>
 </li>
 <li><p class="first">Provide <code class="docutils literal"><span class="pre">$XONSH_SOURCE</span></code> for scripts in the environment variables pointing to
-the currently running script&#8217;s path</p>
+the currently running script’s path</p>
 </li>
-<li><p class="first">Arguments &#8216;+&#8217; and &#8216;-&#8216; for the <code class="docutils literal"><span class="pre">fg</span></code> command (job control)</p>
+<li><p class="first">Arguments ‘+’ and ‘-‘ for the <code class="docutils literal"><span class="pre">fg</span></code> command (job control)</p>
 </li>
 <li><p class="first">Provide <code class="docutils literal"><span class="pre">$XONSH_SOURCE</span></code> for scripts in the environment variables pointing to
-the currently running script&#8217;s path</p>
+the currently running script’s path</p>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">!(command)</span></code> is now usefully iterable, yielding lines of stdout</p>
 </li>
@@ -1388,10 +1449,10 @@ object, so that non-absolute paths or paths containing environment variables
 can be resolved properly.</li>
 <li>In <code class="docutils literal"><span class="pre">VI_MODE</span></code>, the <code class="docutils literal"><span class="pre">v</span></code> key will enter character selection mode, not open
 the editor.  <code class="docutils literal"><span class="pre">Ctrl-X</span> <span class="pre">Ctrl-E</span></code> will still open an editor in any mode</li>
-<li><code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> will now supress amalgamted imports. This usually needs to be
+<li><code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> will now suppress amalgamated imports. This usually needs to be
 set in the calling environment or prior to <em>any</em> xonsh imports.</li>
-<li>Restuctured <code class="docutils literal"><span class="pre">xonsh.platform</span></code> to be fully lazy.</li>
-<li>Restuctured <code class="docutils literal"><span class="pre">xonsh.ansi_colors</span></code> to be fully lazy.</li>
+<li>Restructured <code class="docutils literal"><span class="pre">xonsh.platform</span></code> to be fully lazy.</li>
+<li>Restructured <code class="docutils literal"><span class="pre">xonsh.ansi_colors</span></code> to be fully lazy.</li>
 <li>Ensured the <code class="docutils literal"><span class="pre">pygments</span></code> and <code class="docutils literal"><span class="pre">xonsh.pyghooks</span></code> are not imported until
 actually needed.</li>
 <li>Yacc parser is now loaded in a background thread.</li>
@@ -1403,7 +1464,7 @@ initialized.</li>
 <li>On Windows the <code class="docutils literal"><span class="pre">PROMPT</span></code> environment variable is reset to <cite>$P$G</cite> before
 sourcing <code class="docutils literal"><span class="pre">*.bat</span></code> files.</li>
 <li>On Windows the <code class="docutils literal"><span class="pre">PROMPT</span></code> environment variable is reset to <cite>$P$G</cite> before starting
-subprocesses. This prevents the unformatted xonsh <code class="docutils literal"><span class="pre">PROMPT</span></code> tempalte from showing up
+subprocesses. This prevents the unformatted xonsh <code class="docutils literal"><span class="pre">PROMPT</span></code> template from showing up
 when running batch files with <code class="docutils literal"><span class="pre">ECHO</span> <span class="pre">ON`</span></code></li>
 <li><code class="docutils literal"><span class="pre">&#64;()</span></code> now passes through functions as well as strings, which allows for the
 use of anonymous aliases and aliases not explicitly added to the <code class="docutils literal"><span class="pre">aliases</span></code>
@@ -1411,7 +1472,7 @@ mapping.</li>
 <li>Functions in <code class="docutils literal"><span class="pre">Execer</span></code> now take <code class="docutils literal"><span class="pre">transform</span></code> kwarg instead of
 <code class="docutils literal"><span class="pre">wrap_subproc</span></code>.</li>
 <li>Provide <code class="docutils literal"><span class="pre">$XONSH_SOURCE</span></code> for scripts in the environment variables pointing to
-the currently running script&#8217;s path</li>
+the currently running script’s path</li>
 <li>XonshError and XonshCalledProcessError are now in builtins</li>
 <li><code class="docutils literal"><span class="pre">__repr__</span></code> on the environment only shows a short representation of the
 object instead of printing the whole environment dictionary</li>
@@ -1439,15 +1500,15 @@ see <a class="reference external" href="http://xon.sh/xonshconfig.html#foreign-s
 <ul class="simple">
 <li>Issue where <code class="docutils literal"><span class="pre">xonsh</span></code> did not expand user and environment variables in
 <code class="docutils literal"><span class="pre">$PATH</span></code>, forcing the user to add absolute paths.</li>
-<li>Fixed a problem with aliases not always beeing found.</li>
+<li>Fixed a problem with aliases not always being found.</li>
 <li>Fixed issue where input was directed to the last process in a pipeline,
 rather than the first.</li>
-<li>Bug where xonfig wizard can&#8217;t find ENV docs</li>
+<li>Bug where xonfig wizard can’t find ENV docs</li>
 <li>Fixed <code class="docutils literal"><span class="pre">xonsh.environ.locate_binary()</span></code> to handle PATH variable are given as a tuple.</li>
 <li>Fixed missing completions for <code class="docutils literal"><span class="pre">cd</span></code> and <code class="docutils literal"><span class="pre">`rmdir</span></code> when directories had spaces
 in their names.</li>
 <li>Bug preventing <cite>xonsh</cite> executable being installed on macOS.</li>
-<li>Strip leading space in commands passed using the &#8220;-c&#8221; switch</li>
+<li>Strip leading space in commands passed using the “-c” switch</li>
 <li>Fixed xonfig wizard failing on Windows due to colon in created filename.</li>
 <li>Ensured that the prompt_toolkit shell functions, even without a <code class="docutils literal"><span class="pre">completer</span></code>
 attribute.</li>
@@ -1473,7 +1534,7 @@ process is a function alias and has no pid.</li>
 attempted to load.</li>
 <li>Only show the prompt for the wizard if we did not attempt to load any run
 control files (as opposed to if none were successfully loaded).</li>
-<li>Git and mercurial branch and dirty function refactor to imporve run times.</li>
+<li>Git and mercurial branch and dirty function refactor to improve run times.</li>
 </ul>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
@@ -1486,7 +1547,7 @@ from the <code class="docutils literal"><span class="pre">signal</span></code> m
 <li>Fixed crash resulting from malformed <code class="docutils literal"><span class="pre">$PROMPT</span></code>.</li>
 <li>Fixed regression on Windows with the locate_binary() function.
 The bug prevented <cite>source-cmd</cite> from working correctly and broke the
-<code class="docutils literal"><span class="pre">activate</span></code>/<code class="docutils literal"><span class="pre">deactivate</span></code> aliases for the conda environements.</li>
+<code class="docutils literal"><span class="pre">activate</span></code>/<code class="docutils literal"><span class="pre">deactivate</span></code> aliases for the conda environments.</li>
 <li>Fixed crash resulting from errors other than syntax errors in run control
 file.</li>
 <li>On Windows if bash is not on the path look in the registry for the defaults
@@ -1527,16 +1588,16 @@ the <code class="docutils literal"><span class="pre">readline</span></code> shel
 </ul>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
-<li>Fixed crashed bash-completer when bash is not avaiable on Windows</li>
+<li>Fixed crashed bash-completer when bash is not available on Windows</li>
 <li>Fixed bug on Windows where tab-completion for executables would return all files.</li>
 <li>Fixed bug on Windows which caused the bash $PROMPT variable to be used when no
 no $PROMPT variable was set in .xonshrc</li>
 <li>Improved start-up times by caching information about bash completion
 functions</li>
-<li>The &#8211;shell-type CLI flag now takes precedence over $SHELL_TYPE specified in
+<li>The –shell-type CLI flag now takes precedence over $SHELL_TYPE specified in
 .xonshrc</li>
 <li>Fixed an issue about <code class="docutils literal"><span class="pre">os.killpg()</span></code> on OS X which caused xonsh crash with
-occasionality</li>
+occasionally.</li>
 </ul>
 </div>
 <div class="section" id="v0-3-2">
@@ -1561,14 +1622,14 @@ the subprocess command itself with the result of running <code class="docutils l
 commands and arguments.</li>
 <li>Added <code class="docutils literal"><span class="pre">$DYNAMIC_CWD_WIDTH</span></code> to allow the adjusting of the current working
 directory width in the prompt.</li>
-<li>Added <code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> environment variable to help with debuging.</li>
+<li>Added <code class="docutils literal"><span class="pre">$XONSH_DEBUG</span></code> environment variable to help with debugging.</li>
 <li>The <code class="docutils literal"><span class="pre">${...}</span></code> shortcut for <code class="docutils literal"><span class="pre">__xonsh_env__</span></code> now returns appropriate
 completion options</li>
 </ul>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
 <li>On Windows the default bash completions files <code class="docutils literal"><span class="pre">$BASH_COMPLETIONS</span></code> now points
-to the default location of the completions files used by &#8216;Git for Windows&#8217;</li>
+to the default location of the completions files used by ‘Git for Windows’</li>
 <li>On Cygwin, some tweaks are applied to foreign shell subprocess calls and the
 readline import, in order to avoid hangs on launch.</li>
 </ul>
@@ -1589,7 +1650,7 @@ sensitive parsing.</li>
 triggered by libedit.</li>
 <li><code class="docutils literal"><span class="pre">$MULTILINE_PROMPT</span></code> now allows colors, as originally intended.</li>
 <li>Rectified install issue with Jupyter hook when installing with pyenv,
-Jupyter install hook now repects <code class="docutils literal"><span class="pre">--prefix</span></code> argument.</li>
+Jupyter install hook now respects <code class="docutils literal"><span class="pre">--prefix</span></code> argument.</li>
 <li>Fixed issue with the xonsh.ply subpackage not being installed.</li>
 <li>Fixed a parsing bug whereby a trailing <code class="docutils literal"><span class="pre">&amp;</span></code> on a line was being ignored
 (processes were unable to be started in the background)</li>
@@ -1602,7 +1663,7 @@ Jupyter install hook now repects <code class="docutils literal"><span class="pre
 <li><code class="docutils literal"><span class="pre">and</span></code>, <code class="docutils literal"><span class="pre">or</span></code>, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal"><span class="pre">||</span></code> have been added as subprocess logical operators,
 by popular demand!</li>
 <li>Subprocesses may be negated with <code class="docutils literal"><span class="pre">not</span></code> and grouped together with parentheses.</li>
-<li>New framework for writing xonsh extentions, called <code class="docutils literal"><span class="pre">xontribs</span></code>.</li>
+<li>New framework for writing xonsh extensions, called <code class="docutils literal"><span class="pre">xontribs</span></code>.</li>
 <li>Added a new shell type <code class="docutils literal"><span class="pre">'none'</span></code>, used to avoid importing <code class="docutils literal"><span class="pre">readline</span></code> or
 <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> when running scripts or running a single command.</li>
 <li>New: <cite>sudo</cite> functionality on Windows through an alias</li>
@@ -1613,7 +1674,7 @@ $INTENSIFY_COLORS_ON_WIN environment variable.</li>
 <li>Added an option to update <code class="docutils literal"><span class="pre">os.environ</span></code> every time the xonsh environment changes.
 This is disabled by default but can be enabled by setting <code class="docutils literal"><span class="pre">$UPDATE_OS_ENVIRON</span></code> to
 True.</li>
-<li>Added Windows &#8216;cmd.exe&#8217; as a foreign shell. This gives xonsh the ability to source
+<li>Added Windows ‘cmd.exe’ as a foreign shell. This gives xonsh the ability to source
 Windows Batch files (.bat and .cmd). Calling <code class="docutils literal"><span class="pre">source-cmd</span> <span class="pre">script.bat</span></code> or the
 alias <code class="docutils literal"><span class="pre">source-bat</span> <span class="pre">script.bat</span></code> will call the bat file and changes to the
 environment variables will be reflected in xonsh.</li>
@@ -1634,10 +1695,10 @@ the readline shell</li>
 <p><strong>Changed:</strong></p>
 <ul class="simple">
 <li>Running scripts through xonsh (or running a single command with <code class="docutils literal"><span class="pre">-c</span></code>) no
-longer runs the user&#8217;s rc file, unless the <code class="docutils literal"><span class="pre">--login</span></code> option is specified.
+longer runs the user’s rc file, unless the <code class="docutils literal"><span class="pre">--login</span></code> option is specified.
 Also avoids loading aliases and environments from foreign shells, as well as
 loading bash completions.</li>
-<li>rc files are now compiled and cached, to avoid re-parsing when they haven&#8217;t
+<li>rc files are now compiled and cached, to avoid re-parsing when they haven’t
 changed.  Scripts are also compiled and cached, and there is the option to
 cache interactive commands.</li>
 <li>Left and Right arrows in the <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> shell now wrap in multiline
@@ -1650,7 +1711,7 @@ Sensinble defaults are provided for existing shells.</li>
 <li>PLY is no longer a external dependency but is bundled in xonsh/ply. Xonsh can
 therefore run without any external dependencies, although having prompt-toolkit
 recommended.</li>
-<li>Provide better user feedback when running <code class="docutils literal"><span class="pre">which</span></code> in a platform that doesn&#8217;t
+<li>Provide better user feedback when running <code class="docutils literal"><span class="pre">which</span></code> in a platform that doesn’t
 provide it (e.g. Windows).</li>
 <li>The lexer now uses a custom tokenizer that handles regex globs in the proper
 way.</li>
@@ -1660,14 +1721,14 @@ way.</li>
 <li>Fixed bug with loading prompt-toolkit shell &lt; v0.57.</li>
 <li>Fixed bug with prompt-toolkit completion when the cursor is not at the end of
 the line.</li>
-<li>Aliases will now evaluate enviornment variables and other expansions
+<li>Aliases will now evaluate environment variables and other expansions
 at execution time rather than passing through a literal string.</li>
-<li>Fixed environment variables from os.environ not beeing loaded when a running
+<li>Fixed environment variables from os.environ not being loaded when a running
 a script</li>
 <li>The readline shell will now load the inputrc files.</li>
 <li>Fixed bug that prevented <cite>source-alias</cite> from working.</li>
 <li>Now able to <code class="docutils literal"><span class="pre">^C</span></code> the xonfig wizard on start up.</li>
-<li>Fixed deadlock on Windows when runing subprocess that generates enough output
+<li>Fixed deadlock on Windows when running subprocess that generates enough output
 to fill the OS pipe buffer.</li>
 <li>Sourcing foreign shells will now return a non-zero exit code if the
 source operation failed for some reason.</li>
@@ -1683,10 +1744,10 @@ source operation failed for some reason.</li>
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li>Added new valid <code class="docutils literal"><span class="pre">$SHELL_TYPE</span></code> called <code class="docutils literal"><span class="pre">'best'</span></code>. This selects the best value
-for the concrete shell type based on the availability on the user&#8217;s machine.</li>
+for the concrete shell type based on the availability on the user’s machine.</li>
 <li>New environment variable <code class="docutils literal"><span class="pre">$XONSH_COLOR_STYLE</span></code> will set the color mapping
 for all of xonsh.</li>
-<li>New <code class="docutils literal"><span class="pre">XonshStyle</span></code> pygments style will determine the approriate color
+<li>New <code class="docutils literal"><span class="pre">XonshStyle</span></code> pygments style will determine the appropriate color
 mapping based on <code class="docutils literal"><span class="pre">$XONSH_COLOR_STYLE</span></code>.  The associated <code class="docutils literal"><span class="pre">xonsh_style_proxy()</span></code>
 is intended for wrapping <code class="docutils literal"><span class="pre">XonshStyle</span></code> when actually being used by
 pygments.</li>
@@ -1695,7 +1756,7 @@ dispatch to the approriate shell color handling and may be used from
 anywhere.</li>
 <li><code class="docutils literal"><span class="pre">xonsh.tools.HAVE_PYGMENTS</span></code> flag now denotes if pygments is installed and
 available on the users system.</li>
-<li>The <code class="docutils literal"><span class="pre">ansi_colors</span></code> module is now availble for handling ANSI color codes.</li>
+<li>The <code class="docutils literal"><span class="pre">ansi_colors</span></code> module is now available for handling ANSI color codes.</li>
 <li><code class="docutils literal"><span class="pre">?</span></code> and <code class="docutils literal"><span class="pre">??</span></code> operator output now has colored titles, like in IPython.</li>
 <li><code class="docutils literal"><span class="pre">??</span></code> will syntax highlight source code if pygments is available.</li>
 <li>Python mode output is now syntax highlighted if pygments is available.</li>
@@ -1780,7 +1841,7 @@ from working in these terminal emulators on Windows.</li>
 <h2>v0.2.5<a class="headerlink" href="#v0-2-5" title="Permalink to this headline">¶</a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
-<li>New configuration utility &#8216;xonfig&#8217; which reports current system
+<li>New configuration utility ‘xonfig’ which reports current system
 setup information and creates config files through an interactive
 wizard.</li>
 <li>Toolkit for creating wizards now available</li>
@@ -1829,7 +1890,7 @@ with a decoding error.</li>
 </div>
 <div class="section" id="v0-2-1-v0-2-4">
 <h2>v0.2.1 - v0.2.4<a class="headerlink" href="#v0-2-1-v0-2-4" title="Permalink to this headline">¶</a></h2>
-<p>You are reading the docs...but you still feel hungry.</p>
+<p>You are reading the docs…but you still feel hungry.</p>
 </div>
 <div class="section" id="v0-2-0">
 <h2>v0.2.0<a class="headerlink" href="#v0-2-0" title="Permalink to this headline">¶</a></h2>
@@ -1871,12 +1932,13 @@ with a decoding error.</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xonsh Change Log</a><ul>
+<li><a class="reference internal" href="#v0-6-0">v0.6.0</a></li>
 <li><a class="reference internal" href="#v0-5-12">v0.5.12</a></li>
 <li><a class="reference internal" href="#v0-5-11">v0.5.11</a></li>
 <li><a class="reference internal" href="#v0-5-10">v0.5.10</a></li>
@@ -1918,7 +1980,7 @@ with a decoding error.</li>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="devguide.html"
-                          title="Previous page">&larr; Developer&#8217;s Guide</a></p>
+                          title="Previous page">&larr; Developer’s Guide</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
@@ -1944,6 +2006,23 @@ with a decoding error.</li>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -1963,15 +2042,16 @@ with a decoding error.</li>
         <li class="right" >
           <a href="devguide.html" title="Developer’s Guide"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

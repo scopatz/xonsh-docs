@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>xonsh.execer &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>xonsh.execer &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -37,7 +35,7 @@
     <link rel="canonical" href="http://xon.sh/_modules/xonsh/execer.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -49,7 +47,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -74,7 +72,7 @@
 <span class="kn">from</span> <span class="nn">xonsh.ast</span> <span class="k">import</span> <span class="n">CtxAwareTransformer</span>
 <span class="kn">from</span> <span class="nn">xonsh.parser</span> <span class="k">import</span> <span class="n">Parser</span>
 <span class="kn">from</span> <span class="nn">xonsh.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">subproc_toks</span><span class="p">,</span> <span class="n">find_next_break</span><span class="p">,</span> <span class="n">get_logical_line</span><span class="p">,</span>
-                         <span class="n">replace_logical_line</span><span class="p">)</span>
+                         <span class="n">replace_logical_line</span><span class="p">,</span> <span class="n">balanced_parens</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">xonsh.built_ins</span> <span class="k">import</span> <span class="n">load_builtins</span><span class="p">,</span> <span class="n">unload_builtins</span>
 
 
@@ -130,7 +128,7 @@
         <span class="c1"># Parsing actually happens in a couple of phases. The first is a</span>
         <span class="c1"># shortcut for a context-free parser. Normally, all subprocess</span>
         <span class="c1"># lines should be wrapped in $(), to indicate that they are a</span>
-        <span class="c1"># subproc. But that would be super annoying. Unfortnately, Python</span>
+        <span class="c1"># subproc. But that would be super annoying. Unfortunately, Python</span>
         <span class="c1"># mode - after indentation - is whitespace agnostic while, using</span>
         <span class="c1"># the Python token, subproc mode is whitespace aware. That is to say,</span>
         <span class="c1"># in Python mode &quot;ls -l&quot;, &quot;ls-l&quot;, and &quot;ls - l&quot; all parse to the</span>
@@ -252,7 +250,7 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="c1"># whitespace only lines are not valid syntax in Python&#39;s</span>
                     <span class="c1"># interactive mode=&#39;single&#39;, who knew?! Just ignore them.</span>
-                    <span class="c1"># this might cause actual sytax errors to have bad line</span>
+                    <span class="c1"># this might cause actual syntax errors to have bad line</span>
                     <span class="c1"># numbers reported, but should only affect interactive mode</span>
                     <span class="k">del</span> <span class="n">lines</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
                     <span class="n">last_error_line</span> <span class="o">=</span> <span class="n">last_error_col</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -273,8 +271,9 @@
                     <span class="c1"># go greedy the first time if the syntax error was because</span>
                     <span class="c1"># we hit an end token out of place. This usually indicates</span>
                     <span class="c1"># a subshell or maybe a macro.</span>
-                    <span class="n">greedy</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">maxcol</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">balanced_parens</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">maxcol</span><span class="o">=</span><span class="n">maxcol</span><span class="p">):</span>
+                        <span class="n">greedy</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">maxcol</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">sbpline</span> <span class="o">=</span> <span class="n">subproc_toks</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">returnline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">greedy</span><span class="o">=</span><span class="n">greedy</span><span class="p">,</span>
                                        <span class="n">maxcol</span><span class="o">=</span><span class="n">maxcol</span><span class="p">,</span> <span class="n">lexer</span><span class="o">=</span><span class="n">lexer</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">sbpline</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -322,8 +321,8 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../../index.html" title="index">
-          <img class="logo" src="../../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../../sidebar.html" title="sidebar">
+          <img class="logo" src="../../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
@@ -337,6 +336,23 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -350,7 +366,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -359,7 +375,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

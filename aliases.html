@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Built-in Aliases &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Built-in Aliases &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/aliases.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="envvars.html" title="Environment Variables"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -75,7 +74,7 @@
 <div class="section" id="cd">
 <h2><code class="docutils literal"><span class="pre">cd</span></code><a class="headerlink" href="#cd" title="Permalink to this headline">¶</a></h2>
 <p>Changes the directory. If no directory is specified (i.e. if there are no arguments)
-then this changes to the current user&#8217;s home directory.</p>
+then this changes to the current user’s home directory.</p>
 </div>
 <div class="section" id="pushd">
 <h2><code class="docutils literal"><span class="pre">pushd</span></code><a class="headerlink" href="#pushd" title="Permalink to this headline">¶</a></h2>
@@ -164,7 +163,7 @@ only works on xonsh and Python files.</p>
 <div class="section" id="source-bash">
 <h2><code class="docutils literal"><span class="pre">source-bash</span></code><a class="headerlink" href="#source-bash" title="Permalink to this headline">¶</a></h2>
 <p>Like the <code class="docutils literal"><span class="pre">source</span></code> command but for Bash files. This is a thin wrapper around
-the <code class="docutils literal"><span class="pre">source-foreign</span></code> alias where the <code class="docutils literal"><span class="pre">shell</span></code> argument is autoamtically set
+the <code class="docutils literal"><span class="pre">source-foreign</span></code> alias where the <code class="docutils literal"><span class="pre">shell</span></code> argument is automatically set
 to <code class="docutils literal"><span class="pre">bash</span></code>.</p>
 </div>
 <div class="section" id="source-foreign">
@@ -274,7 +273,7 @@ optional arguments:
 </div>
 <div class="section" id="timeit">
 <h2><code class="docutils literal"><span class="pre">timeit</span></code><a class="headerlink" href="#timeit" title="Permalink to this headline">¶</a></h2>
-<p>Runs timing study on arguments. Similar to IPython&#8217;s <code class="docutils literal"><span class="pre">%timeit</span></code> magic.</p>
+<p>Runs timing study on arguments. Similar to IPython’s <code class="docutils literal"><span class="pre">%timeit</span></code> magic.</p>
 </div>
 <div class="section" id="scp-resume">
 <h2><code class="docutils literal"><span class="pre">scp-resume</span></code><a class="headerlink" href="#scp-resume" title="Permalink to this headline">¶</a></h2>
@@ -282,7 +281,7 @@ optional arguments:
 </div>
 <div class="section" id="showcmd">
 <h2><code class="docutils literal"><span class="pre">showcmd</span></code><a class="headerlink" href="#showcmd" title="Permalink to this headline">¶</a></h2>
-<p>Displays how comands and arguments are evaluated.</p>
+<p>Displays how commands and arguments are evaluated.</p>
 </div>
 <div class="section" id="ipynb">
 <h2><code class="docutils literal"><span class="pre">ipynb</span></code><a class="headerlink" href="#ipynb" title="Permalink to this headline">¶</a></h2>
@@ -307,10 +306,12 @@ action:
 </pre></div>
 </div>
 </div>
-<div class="section" id="xip">
-<h2><code class="docutils literal"><span class="pre">xip</span></code><a class="headerlink" href="#xip" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="xpip">
+<h2><code class="docutils literal"><span class="pre">xpip</span></code><a class="headerlink" href="#xpip" title="Permalink to this headline">¶</a></h2>
 <p>Runs the <code class="docutils literal"><span class="pre">pip</span></code> package manager for xonsh itself. Useful for installations where xonsh is in an
-isolated environment (eg homebrew). Pronounced &#8220;kip&#8221;.</p>
+isolated environment (eg conda, homebrew).</p>
+<p>In general, use <code class="docutils literal"><span class="pre">xpip</span></code> if you’re configuring or adding features to xonsh, and use <code class="docutils literal"><span class="pre">pip</span></code> if
+you’re doing Python development.</p>
 </div>
 <div class="section" id="xonfig">
 <h2><code class="docutils literal"><span class="pre">xonfig</span></code><a class="headerlink" href="#xonfig" title="Permalink to this headline">¶</a></h2>
@@ -365,8 +366,8 @@ in cmd.exe.</p>
 <div class="section" id="sudo-on-windows">
 <h2><code class="docutils literal"><span class="pre">sudo</span></code> on Windows<a class="headerlink" href="#sudo-on-windows" title="Permalink to this headline">¶</a></h2>
 <p>On Windows, if no executables named <code class="docutils literal"><span class="pre">sudo</span></code> are found, Xonsh adds a <code class="docutils literal"><span class="pre">sudo</span></code> alias
-that poly fills the &#8220;run as Admin&#8221; behavior with the help of <code class="docutils literal"><span class="pre">ShellExecuteEx</span></code> and
-<code class="docutils literal"><span class="pre">ctypes</span></code>. It doesn&#8217;t support any actual <code class="docutils literal"><span class="pre">sudo</span></code> parameters and just takes the
+that poly fills the “run as Admin” behavior with the help of <code class="docutils literal"><span class="pre">ShellExecuteEx</span></code> and
+<code class="docutils literal"><span class="pre">ctypes</span></code>. It doesn’t support any actual <code class="docutils literal"><span class="pre">sudo</span></code> parameters and just takes the
 command to run.</p>
 </div>
 <div class="section" id="ls">
@@ -390,10 +391,10 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Built-in Aliases</a><ul>
 <li><a class="reference internal" href="#cd"><code class="docutils literal"><span class="pre">cd</span></code></a></li>
@@ -415,7 +416,7 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
 <li><a class="reference internal" href="#showcmd"><code class="docutils literal"><span class="pre">showcmd</span></code></a></li>
 <li><a class="reference internal" href="#ipynb"><code class="docutils literal"><span class="pre">ipynb</span></code></a></li>
 <li><a class="reference internal" href="#trace"><code class="docutils literal"><span class="pre">trace</span></code></a></li>
-<li><a class="reference internal" href="#xip"><code class="docutils literal"><span class="pre">xip</span></code></a></li>
+<li><a class="reference internal" href="#xpip"><code class="docutils literal"><span class="pre">xpip</span></code></a></li>
 <li><a class="reference internal" href="#xonfig"><code class="docutils literal"><span class="pre">xonfig</span></code></a></li>
 <li><a class="reference internal" href="#windows-cmd-aliases">Windows cmd Aliases</a></li>
 <li><a class="reference internal" href="#activate-deactivate-on-windows-with-anaconda"><code class="docutils literal"><span class="pre">activate</span></code>/<code class="docutils literal"><span class="pre">deactivate</span></code> on Windows with Anaconda</a></li>
@@ -457,6 +458,23 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -476,15 +494,16 @@ it is instead aliased to <code class="docutils literal"><span class="pre">['ls',
         <li class="right" >
           <a href="envvars.html" title="Environment Variables"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

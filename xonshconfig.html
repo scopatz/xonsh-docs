@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Static Configuration File &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Static Configuration File &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/xonshconfig.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="xonshrc.html" title="Run Control File"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -111,7 +110,7 @@ dictionaries have the following structure:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">shell:</th><td class="field-body"><em>str, required</em> - The name or path of the shell, such as &#8220;bash&#8221; or &#8220;/bin/sh&#8221;.</td>
+<tr class="field-odd field"><th class="field-name">shell:</th><td class="field-body"><em>str, required</em> - The name or path of the shell, such as “bash” or “/bin/sh”.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">interactive:</th><td class="field-body"><em>bool, optional</em> - Whether the shell should be run in interactive mode.
 <code class="docutils literal"><span class="pre">default=true</span></code></td>
@@ -158,13 +157,13 @@ running the script, such as <code class="docutils literal"><span class="pre">-c<
 <code class="docutils literal"><span class="pre">default=null</span></code></td>
 </tr>
 <tr class="field-even field"><th class="field-name">seterrprevcmd:</th><td class="field-body"><em>str or None, optional</em> - Command that enables exit-on-error
-for the shell before all other commands. For example, this is &#8220;set -e&#8221; in Bash.
+for the shell before all other commands. For example, this is “set -e” in Bash.
 To disable this exit-on-error behavior, simply pass in an empty string.
 <code class="docutils literal"><span class="pre">default=null</span></code></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">seterrpostcmd:</th><td class="field-body"><em>str or None, optional</em> - Command that enables exit-on-error
 for the shell after all other commands. For example, this is
-&#8220;if errorlevel 1 exit 1&#8221; in cmd.exe. To disable this exit-on-error behavior,
+“if errorlevel 1 exit 1” in cmd.exe. To disable this exit-on-error behavior,
 simply pass in an empty string. <code class="docutils literal"><span class="pre">default=null</span></code></td>
 </tr>
 </tbody>
@@ -193,7 +192,7 @@ simply pass in an empty string. <code class="docutils literal"><span class="pre"
 </div>
 <div class="section" id="putting-it-all-together">
 <h2>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
-<p>The following ecample shows a fully fleshed out config file.</p>
+<p>The following example shows a fully fleshed out config file.</p>
 <p><a class="reference download internal" href="_downloads/xonshconfig.json" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">config.json</span></code></a></p>
 <div class="code json highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="p">{</span>
   <span class="s2">&quot;EDITOR&quot;</span><span class="p">:</span> <span class="s2">&quot;xo&quot;</span><span class="p">,</span>
@@ -219,10 +218,10 @@ simply pass in an empty string. <code class="docutils literal"><span class="pre"
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Static Configuration File</a><ul>
 <li><a class="reference internal" href="#env"><code class="docutils literal"><span class="pre">env</span></code></a></li>
@@ -263,6 +262,23 @@ simply pass in an empty string. <code class="docutils literal"><span class="pre"
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -282,15 +298,16 @@ simply pass in an empty string. <code class="docutils literal"><span class="pre"
         <li class="right" >
           <a href="xonshrc.html" title="Run Control File"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

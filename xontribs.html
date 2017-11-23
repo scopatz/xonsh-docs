@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Xontribs &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Xontribs &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/xontribs.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="aliases.html" title="Built-in Aliases"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -106,15 +105,15 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <td><a class="reference internal" href="#prompt-ret-code"><span class="std std-ref">prompt_ret_code</span></a></td>
 <td><a class="reference internal" href="#prompt-vi-mode"><span class="std std-ref">prompt_vi_mode</span></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#scrapy-tabcomplete"><span class="std std-ref">scrapy_tabcomplete</span></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#schedule"><span class="std std-ref">schedule</span></a></td>
+<td><a class="reference internal" href="#scrapy-tabcomplete"><span class="std std-ref">scrapy_tabcomplete</span></a></td>
 <td><a class="reference internal" href="#vox"><span class="std std-ref">vox</span></a></td>
 <td><a class="reference internal" href="#vox-tabcomplete"><span class="std std-ref">vox_tabcomplete</span></a></td>
-<td><a class="reference internal" href="#xo"><span class="std std-ref">xo</span></a></td>
-<td><a class="reference internal" href="#xonda"><span class="std std-ref">xonda</span></a></td>
+<td><a class="reference internal" href="#whole-word-jumping"><span class="std std-ref">whole_word_jumping</span></a></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#z"><span class="std std-ref">z</span></a></td>
-<td>&#160;</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><a class="reference internal" href="#xo"><span class="std std-ref">xo</span></a></td>
+<td><a class="reference internal" href="#xonda"><span class="std std-ref">xonda</span></a></td>
+<td><a class="reference internal" href="#z"><span class="std std-ref">z</span></a></td>
 <td>&#160;</td>
 <td>&#160;</td>
 </tr>
@@ -137,7 +136,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <p>Adds tabcomplete functionality to apt-get/apt-cache inside of xonsh.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">tabcomplete</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">tabcomplete</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -157,7 +156,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <p>Adds automatic execution of xonsh script files called``.autoxsh`` when enterting a directory with <code class="docutils literal"><span class="pre">cd</span></code> function</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">autoxsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">autoxsh</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -177,7 +176,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <p>Automatic (de)activation of virtual environments as you cd around</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">xip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">avox</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">avox</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -204,7 +203,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -227,7 +226,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <p>Adds tabcomplete functionality to click based python applications inside of xonsh.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">click</span><span class="o">-</span><span class="n">tabcomplete</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">click</span><span class="o">-</span><span class="n">tabcomplete</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -244,7 +243,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 </tr>
 </tbody>
 </table>
-<p>Additional core utilites that are implemened in xonsh. The current list includes:</p>
+<p>Additional core utilities that are implemented in xonsh. The current list includes:</p>
 <ul class="simple">
 <li>cat</li>
 <li>echo</li>
@@ -261,7 +260,7 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -281,8 +280,8 @@ the <code class="docutils literal"><span class="pre">xontrib</span></code> comma
 </tr>
 </tbody>
 </table>
-<p>The distributed parallel computing library hooks for xonsh. Importantly this provides a subsitute &#8216;dworker&#8217; command which enables distributed workers to have access to xonsh builtins.</p>
-<p>Furthermore, this xontrib adds a &#8216;DSubmitter&#8217; context manager for executing a block remotely. Moroever, this also adds a convienece function &#8216;dsubmit()&#8217; for creating DSubmitter and Executor instances at the same time. Thus users may submit distributed jobs with:</p>
+<p>The distributed parallel computing library hooks for xonsh. Importantly this provides a substitute ‘dworker’ command which enables distributed workers to have access to xonsh builtins.</p>
+<p>Furthermore, this xontrib adds a ‘DSubmitter’ context manager for executing a block remotely. Moreover, this also adds a convenience function ‘dsubmit()’ for creating DSubmitter and Executor instances at the same time. Thus users may submit distributed jobs with:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>with dsubmit(&#39;127.0.0.1:8786&#39;, rtn=&#39;x&#39;) as dsub:
     x = $(echo I am elsewhere)
 
@@ -299,7 +298,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -322,7 +321,7 @@ print(res)
 <p>Adds tabcomplete functionality to docker inside of xonsh.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">tabcomplete</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">tabcomplete</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -348,7 +347,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -371,7 +370,7 @@ print(res)
 <p>Adds some fzf widgets to your xonsh shell.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">xip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">fzf</span><span class="o">-</span><span class="n">widgets</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">fzf</span><span class="o">-</span><span class="n">widgets</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -397,7 +396,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -417,7 +416,7 @@ print(res)
 </tr>
 </tbody>
 </table>
-<p>Matplotlib hooks for xonsh, including the new &#8216;mpl&#8217; alias that displays the current figure on the screen.</p>
+<p>Matplotlib hooks for xonsh, including the new ‘mpl’ alias that displays the current figure on the screen.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with aura</span>
 <span class="n">sudo</span> <span class="n">aura</span> <span class="o">-</span><span class="n">A</span> <span class="n">xonsh</span>
@@ -426,7 +425,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -449,7 +448,7 @@ print(res)
 <p>Powerline for Xonsh shell</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">powerline</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">powerline</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -475,7 +474,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -498,13 +497,33 @@ print(res)
 <p>vi-mode status formatter for xonsh prompt</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">prompt</span><span class="o">-</span><span class="n">vi</span><span class="o">-</span><span class="n">mode</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">prompt</span><span class="o">-</span><span class="n">vi</span><span class="o">-</span><span class="n">mode</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="schedule">
+<span id="id22"></span><h3>schedule<a class="headerlink" href="#schedule" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Website:</th><td class="field-body"><a class="reference external" href="https://github.com/astronouth7303/xontrib-schedule">https://github.com/astronouth7303/xontrib-schedule</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Package:</th><td class="field-body"><a class="reference external" href="https://github.com/astronouth7303/xontrib-schedule">xontrib-schedule website</a>, MIT</td>
+</tr>
+</tbody>
+</table>
+<p>Xonsh Task Scheduling</p>
+<p><strong>Installation:</strong></p>
+<div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">schedule</span>
 </pre></div>
 </div>
 <hr class="docutils" />
 </div>
 <div class="section" id="scrapy-tabcomplete">
-<span id="id22"></span><h3>scrapy_tabcomplete<a class="headerlink" href="#scrapy-tabcomplete" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3>scrapy_tabcomplete<a class="headerlink" href="#scrapy-tabcomplete" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -518,13 +537,13 @@ print(res)
 <p>Adds tabcomplete functionality to scrapy inside of xonsh.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">scrapy</span><span class="o">-</span><span class="n">tabcomplete</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">scrapy</span><span class="o">-</span><span class="n">tabcomplete</span>
 </pre></div>
 </div>
 <hr class="docutils" />
 </div>
 <div class="section" id="vox">
-<span id="id23"></span><h3>vox<a class="headerlink" href="#vox" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3>vox<a class="headerlink" href="#vox" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -544,7 +563,7 @@ print(res)
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
 
 <span class="c1"># install with yaourt</span>
 <span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
@@ -553,7 +572,7 @@ print(res)
 <hr class="docutils" />
 </div>
 <div class="section" id="vox-tabcomplete">
-<span id="id25"></span><h3>vox_tabcomplete<a class="headerlink" href="#vox-tabcomplete" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3>vox_tabcomplete<a class="headerlink" href="#vox-tabcomplete" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -567,13 +586,42 @@ print(res)
 <p>Adds tabcomplete functionality to vox inside of xonsh.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">vox</span><span class="o">-</span><span class="n">tabcomplete</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span><span class="o">-</span><span class="n">vox</span><span class="o">-</span><span class="n">tabcomplete</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="whole-word-jumping">
+<span id="id27"></span><h3>whole_word_jumping<a class="headerlink" href="#whole-word-jumping" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Website:</th><td class="field-body"><a class="reference external" href="http://xon.sh">http://xon.sh</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Package:</th><td class="field-body"><a class="reference external" href="http://xon.sh">xonsh website</a>, BSD 3-clause</td>
+</tr>
+</tbody>
+</table>
+<p>Jumping across whole words (non-whitespace) with Ctrl+Left/Right.Alt+Left/Right remains unmodified to jump over smaller word segments.</p>
+<p><strong>Installation:</strong></p>
+<div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with aura</span>
+<span class="n">sudo</span> <span class="n">aura</span> <span class="o">-</span><span class="n">A</span> <span class="n">xonsh</span>
+
+<span class="c1"># install with conda</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xonsh</span>
+
+<span class="c1"># install with pip</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonsh</span>
+
+<span class="c1"># install with yaourt</span>
+<span class="n">yaourt</span> <span class="o">-</span><span class="n">Sa</span> <span class="n">xonsh</span>
 </pre></div>
 </div>
 <hr class="docutils" />
 </div>
 <div class="section" id="xo">
-<span id="id26"></span><h3>xo<a class="headerlink" href="#xo" title="Permalink to this headline">¶</a></h3>
+<span id="id29"></span><h3>xo<a class="headerlink" href="#xo" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -584,19 +632,19 @@ print(res)
 </tr>
 </tbody>
 </table>
-<p>Adds an &#8216;xo&#8217; alias to run the exofrills text editor in the current Python interpreter session. This shaves off a bit of the startup time when running your favorite, minimal text editor.</p>
+<p>Adds an ‘xo’ alias to run the exofrills text editor in the current Python interpreter session. This shaves off a bit of the startup time when running your favorite, minimal text editor.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with conda</span>
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">xo</span>
 
 <span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">exofrills</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">exofrills</span>
 </pre></div>
 </div>
 <hr class="docutils" />
 </div>
 <div class="section" id="xonda">
-<span id="id27"></span><h3>xonda<a class="headerlink" href="#xonda" title="Permalink to this headline">¶</a></h3>
+<span id="id30"></span><h3>xonda<a class="headerlink" href="#xonda" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -610,13 +658,13 @@ print(res)
 <p>A thin wrapper around conda with tab completion</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">xonda</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xonda</span>
 </pre></div>
 </div>
 <hr class="docutils" />
 </div>
 <div class="section" id="z">
-<span id="id28"></span><h3>z<a class="headerlink" href="#z" title="Permalink to this headline">¶</a></h3>
+<span id="id31"></span><h3>z<a class="headerlink" href="#z" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -627,10 +675,10 @@ print(res)
 </tr>
 </tbody>
 </table>
-<p>Tracks your most used directories, based on &#8216;frecency&#8217;.</p>
+<p>Tracks your most used directories, based on ‘frecency’.</p>
 <p><strong>Installation:</strong></p>
 <div class="highlight-xonsh"><div class="highlight"><pre><span></span><span class="c1"># install with pip</span>
-<span class="n">xip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">z</span>
+<span class="n">xpip</span> <span class="n">install</span> <span class="n">xontrib</span><span class="o">-</span><span class="n">z</span>
 </pre></div>
 </div>
 </div>
@@ -643,10 +691,10 @@ print(res)
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Xontribs</a><ul>
 <li><a class="reference internal" href="#information">Information</a><ul>
@@ -665,9 +713,11 @@ print(res)
 <li><a class="reference internal" href="#powerline">powerline</a></li>
 <li><a class="reference internal" href="#prompt-ret-code">prompt_ret_code</a></li>
 <li><a class="reference internal" href="#prompt-vi-mode">prompt_vi_mode</a></li>
+<li><a class="reference internal" href="#schedule">schedule</a></li>
 <li><a class="reference internal" href="#scrapy-tabcomplete">scrapy_tabcomplete</a></li>
 <li><a class="reference internal" href="#vox">vox</a></li>
 <li><a class="reference internal" href="#vox-tabcomplete">vox_tabcomplete</a></li>
+<li><a class="reference internal" href="#whole-word-jumping">whole_word_jumping</a></li>
 <li><a class="reference internal" href="#xo">xo</a></li>
 <li><a class="reference internal" href="#xonda">xonda</a></li>
 <li><a class="reference internal" href="#z">z</a></li>
@@ -707,6 +757,23 @@ print(res)
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -726,15 +793,16 @@ print(res)
         <li class="right" >
           <a href="aliases.html" title="Built-in Aliases"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Commands Cache (xonsh.commands_cache) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Commands Cache (xonsh.commands_cache) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/commands_cache.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="foreign_shells.html" title="Foreign Shell Tools (xonsh.foreign_shells)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -75,7 +74,7 @@
 <p>Module for caching command &amp; alias names as well as for predicting whether
 a command will be able to be run in the background.</p>
 <p>A background predictor is a function that accepts a single argument list
-and returns whethere or not the process can be run in the background (returns
+and returns whether or not the process can be run in the background (returns
 True) or must be run the foreground (returns False).</p>
 <dl class="class">
 <dt id="xonsh.commands_cache.CommandsCache">
@@ -99,7 +98,7 @@ the command has an alias.</p>
 <dl class="method">
 <dt id="xonsh.commands_cache.CommandsCache.default_predictor_readbin">
 <code class="descname">default_predictor_readbin</code><span class="sig-paren">(</span><em>name</em>, <em>cmd0</em>, <em>timeout</em>, <em>failure</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/commands_cache.html#CommandsCache.default_predictor_readbin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.commands_cache.CommandsCache.default_predictor_readbin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a defautt predictor by
+<dd><p>Make a default predictor by
 analyzing the content of the binary. Should only works on POSIX.
 Return failure if the analysis fails.</p>
 </dd></dl>
@@ -210,8 +209,8 @@ The default is to predict true.</p>
 <dl class="function">
 <dt id="xonsh.commands_cache.predict_help_ver">
 <code class="descclassname">xonsh.commands_cache.</code><code class="descname">predict_help_ver</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/commands_cache.html#predict_help_ver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.commands_cache.predict_help_ver" title="Permalink to this definition">¶</a></dt>
-<dd><p>Precict the backgroundability of commands that have help &amp; version
-switches: -h, &#8211;help, -v, -V, &#8211;version. If either of these options is
+<dd><p>Predict the backgroundability of commands that have help &amp; version
+switches: -h, –help, -v, -V, –version. If either of these options is
 present, the command is assumed to print to stdout normally and is therefore
 threadable. Otherwise, the command is assumed to not be threadable.
 This is useful for commands, like top, that normally enter alternate mode
@@ -221,7 +220,7 @@ but may not in certain circumstances.</p>
 <dl class="function">
 <dt id="xonsh.commands_cache.predict_shell">
 <code class="descclassname">xonsh.commands_cache.</code><code class="descname">predict_shell</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/commands_cache.html#predict_shell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.commands_cache.predict_shell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Precict the backgroundability of the normal shell interface, which
+<dd><p>Predict the backgroundability of the normal shell interface, which
 comes down to whether it is being run in subproc mode.</p>
 </dd></dl>
 
@@ -239,8 +238,8 @@ comes down to whether it is being run in subproc mode.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -271,6 +270,23 @@ comes down to whether it is being run in subproc mode.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -290,16 +306,17 @@ comes down to whether it is being run in subproc mode.</p>
         <li class="right" >
           <a href="foreign_shells.html" title="Foreign Shell Tools (xonsh.foreign_shells)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

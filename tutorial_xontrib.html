@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Tutorial: Extensions (Xontribs) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Tutorial: Extensions (Xontribs) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/tutorial_xontrib.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="tutorial_macros.html" title="Tutorial: Macros"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -71,7 +70,7 @@
             
   <div class="section" id="tutorial-extensions-xontribs">
 <span id="tutorial-xontrib"></span><h1>Tutorial: Extensions (Xontribs)<a class="headerlink" href="#tutorial-extensions-xontribs" title="Permalink to this headline">¶</a></h1>
-<p>Take a deep breath and prepare for some serious Show &amp; Tell; it&#8217;s time to
+<p>Take a deep breath and prepare for some serious Show &amp; Tell; it’s time to
 learn about xonsh extensions!</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
@@ -198,7 +197,7 @@ it in a directory named <code class="docutils literal"><span class="pre">xontrib
 <p class="first admonition-title">Warning</p>
 <p class="last">Do not place an <code class="docutils literal"><span class="pre">__init__.py</span></code> in the <code class="docutils literal"><span class="pre">xontrib/</span></code> directory!</p>
 </div>
-<p>If you plan on using <code class="docutils literal"><span class="pre">*.xsh</span></code> files in you xontrib, then you&#8217;ll
+<p>If you plan on using <code class="docutils literal"><span class="pre">*.xsh</span></code> files in you xontrib, then you’ll
 have to add some hooks to distutils, setuptools, pip, etc. to install these
 files. Try adding entries like the following entries to your <code class="docutils literal"><span class="pre">setup()</span></code> call
 in your <code class="docutils literal"><span class="pre">setup.py</span></code>:</p>
@@ -226,7 +225,7 @@ good idea, in general, because then:</p>
 <li>It will appear in the <code class="docutils literal"><span class="pre">xontrib</span> <span class="pre">list</span></code> command, and</li>
 <li>It will show up in <code class="docutils literal"><span class="pre">xonfig</span> <span class="pre">wizard</span></code>.</li>
 </ul>
-<p>All of this let&#8217;s users know that your xontrib is out there, ready to be used.
+<p>All of this let’s users know that your xontrib is out there, ready to be used.
 Of course, your under no obligation to register your xontrib.  Users will
 still be able to load your xontrib, as long as they have it installed.</p>
 <p>To register a xontrib, add an entry to
@@ -257,7 +256,7 @@ entries have the following structure:</p>
    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://example&quot;</span><span class="p">,</span>
    <span class="nt">&quot;install&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;conda&quot;</span><span class="p">:</span> <span class="s2">&quot;conda install package-name&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;pip&quot;</span><span class="p">:</span> <span class="s2">&quot;pip install package-name&quot;</span><span class="p">}</span>
+    <span class="nt">&quot;pip&quot;</span><span class="p">:</span> <span class="s2">&quot;xpip install package-name&quot;</span><span class="p">}</span>
    <span class="p">}</span>
  <span class="p">}</span>
 <span class="p">}</span>
@@ -276,10 +275,10 @@ you want.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
-        </a></p><div class="sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="sidebar.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Tutorial: Extensions (Xontribs)</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
@@ -322,6 +321,23 @@ you want.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -341,15 +357,16 @@ you want.</p>
         <li class="right" >
           <a href="tutorial_macros.html" title="Tutorial: Macros"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Bash to Xonsh Translation Guide &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Bash to Xonsh Translation Guide &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="shortcut icon" href="_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/bash_to_xsh.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,8 +55,9 @@
         <li class="right" >
           <a href="tutorial_ptk.html" title="Tutorial: prompt_toolkit custom keybindings"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -73,8 +72,8 @@
 <h1>Bash to Xonsh Translation Guide<a class="headerlink" href="#bash-to-xonsh-translation-guide" title="Permalink to this headline">¶</a></h1>
 <p>As you have probably figured out by now, xonsh is not <code class="docutils literal"><span class="pre">sh</span></code>-lang compliant.
 If your muscles have memorized all of the Bash prestidigitations, this page
-will help you put a finger on how to do the equivelent task in xonsh.</p>
-<table border="1" class="docutils">
+will help you put a finger on how to do the equivalent task in xonsh.</p>
+<table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="30%" />
 <col width="30%" />
@@ -140,6 +139,15 @@ Use an indented block to execute many commands in the same context.</td>
 <td><code class="docutils literal"><span class="pre">__xonsh_history__[-1,</span> <span class="pre">-1]</span></code></td>
 <td>Get the last argument of the last command</td>
 </tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$&lt;n&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">$ARG&lt;n&gt;</span></code></td>
+<td>Command line argument at index <code class="docutils literal"><span class="pre">n</span></code>,
+so <code class="docutils literal"><span class="pre">$ARG1</span></code> is the equivalent of <code class="docutils literal"><span class="pre">$1</span></code>.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$&#64;</span></code></td>
+<td><code class="docutils literal"><span class="pre">$ARGS</span></code></td>
+<td>List of all command line argument and parameter strings.</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -150,8 +158,8 @@ Use an indented block to execute many commands in the same context.</td>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="index.html" title="index">
-          <img class="logo" src="_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="sidebar.html" title="sidebar">
+          <img class="logo" src="_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -182,6 +190,23 @@ Use an indented block to execute many commands in the same context.</td>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -201,15 +226,16 @@ Use an indented block to execute many commands in the same context.</td>
         <li class="right" >
           <a href="tutorial_ptk.html" title="Tutorial: prompt_toolkit custom keybindings"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">xonsh 0.5.12 documentation</a> &#187;</li>
- 
+    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

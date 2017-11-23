@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Wizard Making Tools (xonsh.wizard) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Wizard Making Tools (xonsh.wizard) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/wizard.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="jupyter_kernel.html" title="Jupyter Kernel (xonsh.jupyter_kernel)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -104,7 +103,7 @@ default False.</p>
 <p><strong>retry</strong> : bool, optional</p>
 <blockquote>
 <div><p>In the event that the conversion operation fails, should
-users be re-prompted until they provide valid input. Deafult False.</p>
+users be re-prompted until they provide valid input. Default False.</p>
 </div></blockquote>
 <p><strong>path</strong> : str or sequence of str, optional</p>
 <blockquote class="last">
@@ -259,7 +258,7 @@ default filename)</p>
 </div></blockquote>
 <p><strong>kwargs</strong> : optional</p>
 <blockquote class="last">
-<div><p>Options that are passed through to the prompt via the shell&#8217;s
+<div><p>Options that are passed through to the prompt via the shell’s
 singleline() method. See BaseShell for mor details.</p>
 </div></blockquote>
 </td>
@@ -338,7 +337,7 @@ singleline() method. See BaseShell for mor details.</p>
 <p><strong>converter</strong> : callable, optional</p>
 <blockquote>
 <div><p>Converts the string the user typed into another object
-that serves as a key to the reponses dict.</p>
+that serves as a key to the responses dict.</p>
 </div></blockquote>
 <p><strong>path</strong> : str or sequence of str, optional</p>
 <blockquote class="last">
@@ -398,7 +397,7 @@ default filename)</p>
 <dl class="class">
 <dt id="xonsh.wizard.StateFile">
 <em class="property">class </em><code class="descclassname">xonsh.wizard.</code><code class="descname">StateFile</code><span class="sig-paren">(</span><em>default_file=None</em>, <em>check=True</em>, <em>ask_filename=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/wizard.html#StateFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.wizard.StateFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Node for repesenting the state as a JSON file under a default or user
+<dd><p>Node for representing the state as a JSON file under a default or user
 given file name. This node type is likely not useful on its own.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -481,7 +480,7 @@ This works by wrapping the converter function.</p>
 <dl class="class">
 <dt id="xonsh.wizard.TrueFalseBreak">
 <em class="property">class </em><code class="descclassname">xonsh.wizard.</code><code class="descname">TrueFalseBreak</code><span class="sig-paren">(</span><em>prompt='yes</em>, <em>no</em>, <em>or break [default: no]? '</em>, <em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/wizard.html#TrueFalseBreak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.wizard.TrueFalseBreak" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input node the returns a True, False, or &#8216;break&#8217; value.</p>
+<dd><p>Input node the returns a True, False, or ‘break’ value.</p>
 <dl class="attribute">
 <dt id="xonsh.wizard.TrueFalseBreak.attrs">
 <code class="descname">attrs</code><em class="property"> = ('prompt', 'converter', 'show_conversion', 'confirm', 'path')</em><a class="headerlink" href="#xonsh.wizard.TrueFalseBreak.attrs" title="Permalink to this definition">¶</a></dt>
@@ -513,10 +512,10 @@ This implements the visit() method.</p>
 <dl class="class">
 <dt id="xonsh.wizard.While">
 <em class="property">class </em><code class="descclassname">xonsh.wizard.</code><code class="descname">While</code><span class="sig-paren">(</span><em>cond</em>, <em>body</em>, <em>idxname='idx'</em>, <em>beg=0</em>, <em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/wizard.html#While"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.wizard.While" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes a body while a condition function evaluates to true.
-The condition function has the form cond(visitor=None, node=None) and
-should return an object that is convertable to a bool. The beg attribute
-specifies the number to start the loop iteration at.</p>
+<dd><p>Computes a body while a condition function evaluates to true.</p>
+<p>The condition function has the form <code class="docutils literal"><span class="pre">cond(visitor=None,</span> <span class="pre">node=None)</span></code> and
+must return an object that responds to the Python magic method <code class="docutils literal"><span class="pre">__bool__</span></code>.
+The beg attribute specifies the number to start the loop iteration at.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -524,13 +523,13 @@ specifies the number to start the loop iteration at.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cond</strong> : callable</p>
 <blockquote>
 <div><p>Function that determines if the next loop iteration should
-be executed. The condition function has the form
-cond(visitor=None, node=None) and should return an object that
-is convertable to a bool.</p>
+be executed.</p>
 </div></blockquote>
 <p><strong>body</strong> : sequence of nodes</p>
 <blockquote>
-<div><p>A list of node to execute on each iteration.</p>
+<div><p>A list of node to execute on each iteration. The condition function
+has the form <code class="docutils literal"><span class="pre">cond(visitor=None,</span> <span class="pre">node=None)</span></code> and must return an
+object that responds to the Python magic method <code class="docutils literal"><span class="pre">__bool__</span></code>.</p>
 </div></blockquote>
 <p><strong>idxname</strong> : str, optional</p>
 <blockquote>
@@ -631,8 +630,8 @@ path that is passed in here.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -663,6 +662,23 @@ path that is passed in here.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -682,16 +698,17 @@ path that is passed in here.</p>
         <li class="right" >
           <a href="jupyter_kernel.html" title="Jupyter Kernel (xonsh.jupyter_kernel)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

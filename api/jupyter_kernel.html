@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Jupyter Kernel (xonsh.jupyter_kernel) &#8212; xonsh 0.5.12 documentation</title>
-    
+    <title>Jupyter Kernel (xonsh.jupyter_kernel) &#8212; xonsh 0.6.0.dev151 documentation</title>
     <link rel="stylesheet" href="../_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.12',
+        VERSION:     '0.6.0.dev151',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,6 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../_static/cloud.js"></script>
     <link rel="shortcut icon" href="../_static/magic_conch.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -39,7 +37,7 @@
     <link rel="canonical" href="http://xon.sh/api/jupyter_kernel.html"/>
 
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -57,9 +55,10 @@
         <li class="right" >
           <a href="pyghooks.html" title="Pygments Hooks (xonsh.pyghooks)"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -70,57 +69,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-xonsh.jupyter_kernel">
-<span id="jupyter-kernel-xonsh-jupyter-kernel"></span><span id="xonsh-jupyter-kernel"></span><h1>Jupyter Kernel (<code class="docutils literal"><span class="pre">xonsh.jupyter_kernel</span></code>)<a class="headerlink" href="#module-xonsh.jupyter_kernel" title="Permalink to this headline">¶</a></h1>
-<p>Hooks for Jupyter Xonsh Kernel.</p>
-<dl class="class">
-<dt id="xonsh.jupyter_kernel.XonshKernel">
-<em class="property">class </em><code class="descclassname">xonsh.jupyter_kernel.</code><code class="descname">XonshKernel</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/jupyter_kernel.html#XonshKernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Xonsh xernal for Jupyter</p>
-<dl class="method">
-<dt id="xonsh.jupyter_kernel.XonshKernel.do_complete">
-<code class="descname">do_complete</code><span class="sig-paren">(</span><em>code</em>, <em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/jupyter_kernel.html#XonshKernel.do_complete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.do_complete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get completions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="xonsh.jupyter_kernel.XonshKernel.do_execute">
-<code class="descname">do_execute</code><span class="sig-paren">(</span><em>code</em>, <em>silent</em>, <em>store_history=True</em>, <em>user_expressions=None</em>, <em>allow_stdin=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xonsh/jupyter_kernel.html#XonshKernel.do_execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.do_execute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Execute user code.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.banner">
-<code class="descname">banner</code><em class="property"> = 'Xonsh - Python-powered, cross-platform shell'</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.banner" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.implementation">
-<code class="descname">implementation</code><em class="property"> = 'Xonsh 0.5.12'</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.implementation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.implementation_version">
-<code class="descname">implementation_version</code><em class="property"> = '0.5.12'</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.implementation_version" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.language">
-<code class="descname">language</code><em class="property"> = 'xonsh'</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.language" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.language_info">
-<code class="descname">language_info</code><em class="property"> = {'version': '0.5.12', 'name': 'xonsh', 'pygments_lexer': 'xonsh', 'codemirror_mode': 'shell', 'mimetype': 'text/x-sh', 'file_extension': '.xsh'}</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.language_info" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="xonsh.jupyter_kernel.XonshKernel.language_version">
-<code class="descname">language_version</code><em class="property"> = '0.5.12'</em><a class="headerlink" href="#xonsh.jupyter_kernel.XonshKernel.language_version" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="jupyter-kernel-xonsh-jupyter-kernel">
+<span id="xonsh-jupyter-kernel"></span><h1>Jupyter Kernel (<code class="docutils literal"><span class="pre">xonsh.jupyter_kernel</span></code>)<a class="headerlink" href="#jupyter-kernel-xonsh-jupyter-kernel" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -129,8 +79,8 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-        <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/ascii_conch_part_color_tight.png" alt="Logo"/>
+        <p class="logo"><a href="../sidebar.html" title="sidebar">
+          <img class="logo" src="../_static/ascii_conch_part_transparent_tight.png" alt="Logo"/>
         </a></p>
   <div class="sphinxprev">
     <h4>Previous page</h4>
@@ -161,6 +111,23 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
     <div class="relbar-bottom">
@@ -180,16 +147,17 @@
         <li class="right" >
           <a href="pyghooks.html" title="Pygments Hooks (xonsh.pyghooks)"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="../index.html">xonsh 0.5.12 documentation</a> &#187;</li>
+    <li><a href="../sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Xonsh API</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >the xonsh shell</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Xonsh API</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
