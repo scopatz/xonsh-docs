@@ -6,21 +6,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Environment Variables &#8212; xonsh 0.6.0.dev151 documentation</title>
+    <title>Environment Variables &#8212; xonsh 0.6.0.dev77 documentation</title>
     <link rel="stylesheet" href="_static/numpy_friendly.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.6.0.dev151',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -36,8 +28,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="canonical" href="http://xon.sh/envvars.html"/>
 
-  </head>
-  <body>
+  </head><body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -55,7 +46,7 @@
         <li class="right" >
           <a href="xonshconfig.html" title="Static Configuration File"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+    <li><a href="sidebar.html">xonsh 0.6.0.dev77 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">the xonsh shell</a> &#187;</li> 
       </ul>
@@ -231,7 +222,7 @@ applicable.</p>
 <div class="section" id="auto-suggest">
 <span id="id4"></span><h3>$AUTO_SUGGEST<a class="headerlink" href="#auto-suggest" title="Permalink to this headline">¶</a></h3>
 <p>Enable automatic command suggestions based on history, like in the fish shell.</p>
-<p>Pressing the right arrow key inserts the currently displayed suggestion. Only usable with <code class="docutils literal"><span class="pre">$SHELL_TYPE=prompt_toolkit.</span></code></p>
+<p>Pressing the right arrow key inserts the currently displayed suggestion. Only usable with <code class="docutils literal notranslate"><span class="pre">$SHELL_TYPE=prompt_toolkit.</span></code></p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -247,21 +238,21 @@ applicable.</p>
 </div>
 <div class="section" id="bash-completions">
 <span id="id6"></span><h3>$BASH_COMPLETIONS<a class="headerlink" href="#bash-completions" title="Permalink to this headline">¶</a></h3>
-<p>This is a list (or tuple) of strings that specifies where the <code class="docutils literal"><span class="pre">bash_completion</span></code> script may be found. The first valid path will be used. For better performance, bash-completion v2.x is recommended since it lazy-loads individual completion scripts. For both bash-completion v1.x and v2.x, paths of individual completion scripts (like <code class="docutils literal"><span class="pre">.../completes/ssh</span></code>) do not need to be included here. The default values are platform dependent, but sane. To specify an alternate list, do so in the run control file.</p>
+<p>This is a list (or tuple) of strings that specifies where the <code class="docutils literal notranslate"><span class="pre">bash_completion</span></code> script may be found. The first valid path will be used. For better performance, bash-completion v2.x is recommended since it lazy-loads individual completion scripts. For both bash-completion v1.x and v2.x, paths of individual completion scripts (like <code class="docutils literal notranslate"><span class="pre">.../completes/ssh</span></code>) do not need to be included here. The default values are platform dependent, but sane. To specify an alternate list, do so in the run control file.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> Normally this is:</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">('/usr/share/bash-completion/bash_completion',</span> <span class="pre">)</span></code></div></blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">('/usr/share/bash-completion/bash_completion',</span> <span class="pre">)</span></code></div></blockquote>
 <p>But, on Mac it is:</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">('/usr/local/share/bash-completion/bash_completion',</span> <span class="pre">'/usr/local/etc/bash_completion')</span></code></div></blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">('/usr/local/share/bash-completion/bash_completion',</span> <span class="pre">'/usr/local/etc/bash_completion')</span></code></div></blockquote>
 <p>Other OS-specific defaults may be added in the future.</p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="bottom-toolbar">
 <span id="id7"></span><h3>$BOTTOM_TOOLBAR<a class="headerlink" href="#bottom-toolbar" title="Permalink to this headline">¶</a></h3>
-<p>Template string for the bottom toolbar. This may be parametrized in the same way as the <code class="docutils literal"><span class="pre">$PROMPT</span></code> variable. Currently, this is only available in the prompt-toolkit shell.</p>
+<p>Template string for the bottom toolbar. This may be parametrized in the same way as the <code class="docutils literal notranslate"><span class="pre">$PROMPT</span></code> variable. Currently, this is only available in the prompt-toolkit shell.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -317,18 +308,18 @@ applicable.</p>
 </div>
 <div class="section" id="completions-display">
 <span id="id14"></span><h3>$COMPLETIONS_DISPLAY<a class="headerlink" href="#completions-display" title="Permalink to this headline">¶</a></h3>
-<p>Configure if and how Python completions are displayed by the <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> shell.</p>
+<p>Configure if and how Python completions are displayed by the <code class="docutils literal notranslate"><span class="pre">prompt_toolkit</span></code> shell.</p>
 <p>This option does not affect Bash completions, auto-suggestions, etc.</p>
 <p>Changing it at runtime will take immediate effect, so you can quickly disable and enable completions during shell sessions.</p>
 <ul class="simple">
-<li>If <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal"><span class="pre">none</span></code> or <code class="docutils literal"><span class="pre">false</span></code>, do not display
+<li>If <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal notranslate"><span class="pre">none</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>, do not display
 those completions.</li>
-<li>If <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal"><span class="pre">single</span></code>, display completions in a
+<li>If <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal notranslate"><span class="pre">single</span></code>, display completions in a
 single column while typing.</li>
-<li>If <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal"><span class="pre">multi</span></code> or <code class="docutils literal"><span class="pre">true</span></code>, display completions
+<li>If <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal notranslate"><span class="pre">multi</span></code> or <code class="docutils literal notranslate"><span class="pre">true</span></code>, display completions
 in multiple columns while typing.</li>
 </ul>
-<p>These option values are not case- or type-sensitive, so e.g.writing <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span> <span class="pre">=</span> <span class="pre">None</span></code> and <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span> <span class="pre">=</span> <span class="pre">'none'</span></code> are equivalent. Only usable with <code class="docutils literal"><span class="pre">$SHELL_TYPE=prompt_toolkit</span></code></p>
+<p>These option values are not case- or type-sensitive, so e.g.writing <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span> <span class="pre">=</span> <span class="pre">None</span></code> and <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span> <span class="pre">=</span> <span class="pre">'none'</span></code> are equivalent. Only usable with <code class="docutils literal notranslate"><span class="pre">$SHELL_TYPE=prompt_toolkit</span></code></p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘multi’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -336,7 +327,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="completions-menu-rows">
 <span id="id15"></span><h3>$COMPLETIONS_MENU_ROWS<a class="headerlink" href="#completions-menu-rows" title="Permalink to this headline">¶</a></h3>
-<p>Number of rows to reserve for tab-completions menu if <code class="docutils literal"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal"><span class="pre">single</span></code> or <code class="docutils literal"><span class="pre">multi</span></code>. This only affects the prompt-toolkit shell.</p>
+<p>Number of rows to reserve for tab-completions menu if <code class="docutils literal notranslate"><span class="pre">$COMPLETIONS_DISPLAY</span></code> is <code class="docutils literal notranslate"><span class="pre">single</span></code> or <code class="docutils literal notranslate"><span class="pre">multi</span></code>. This only affects the prompt-toolkit shell.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> 5</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -360,7 +351,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="dynamic-cwd-elision-char">
 <span id="id18"></span><h3>$DYNAMIC_CWD_ELISION_CHAR<a class="headerlink" href="#dynamic-cwd-elision-char" title="Permalink to this headline">¶</a></h3>
-<p>The string used to show a shortened directory in a shortened cwd, e.g. <code class="docutils literal"><span class="pre">'…'</span></code>.</p>
+<p>The string used to show a shortened directory in a shortened cwd, e.g. <code class="docutils literal notranslate"><span class="pre">'…'</span></code>.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -368,7 +359,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="dynamic-cwd-width">
 <span id="id19"></span><h3>$DYNAMIC_CWD_WIDTH<a class="headerlink" href="#dynamic-cwd-width" title="Permalink to this headline">¶</a></h3>
-<p>Maximum length in number of characters or as a percentage for the <code class="docutils literal"><span class="pre">cwd</span></code> prompt variable. For example, “20” is a twenty character width and “10%” is ten percent of the number of columns available.</p>
+<p>Maximum length in number of characters or as a percentage for the <code class="docutils literal notranslate"><span class="pre">cwd</span></code> prompt variable. For example, “20” is a twenty character width and “10%” is ten percent of the number of columns available.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> (inf, ‘c’)</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -384,7 +375,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="force-posix-paths">
 <span id="id21"></span><h3>$FORCE_POSIX_PATHS<a class="headerlink" href="#force-posix-paths" title="Permalink to this headline">¶</a></h3>
-<p>Forces forward slashes (<code class="docutils literal"><span class="pre">/</span></code>) on Windows systems when using auto completion if set to anything truthy.</p>
+<p>Forces forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) on Windows systems when using auto completion if set to anything truthy.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -392,7 +383,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="foreign-aliases-override">
 <span id="id22"></span><h3>$FOREIGN_ALIASES_OVERRIDE<a class="headerlink" href="#foreign-aliases-override" title="Permalink to this headline">¶</a></h3>
-<p>Whether or not foreign aliases should override xonsh aliases with the same name. Note that setting of this must happen in the static configuration file <code class="docutils literal"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code> in the ‘env’ section and not in <code class="docutils literal"><span class="pre">.xonshrc</span></code> as loading of foreign aliases happens before``.xonshrc`` is parsed</p>
+<p>Whether or not foreign aliases should override xonsh aliases with the same name. Note that setting of this must happen in the static configuration file <code class="docutils literal notranslate"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code> in the ‘env’ section and not in <code class="docutils literal notranslate"><span class="pre">.xonshrc</span></code> as loading of foreign aliases happens before``.xonshrc`` is parsed</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -400,7 +391,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="fuzzy-path-completion">
 <span id="id23"></span><h3>$FUZZY_PATH_COMPLETION<a class="headerlink" href="#fuzzy-path-completion" title="Permalink to this headline">¶</a></h3>
-<p>Toggles ‘fuzzy’ matching of paths for tab completion, which is only used as a fallback if no other completions succeed but can be used as a way to adjust for typographical errors. If <code class="docutils literal"><span class="pre">True</span></code>, then, e.g., <code class="docutils literal"><span class="pre">xonhs</span></code> will match <code class="docutils literal"><span class="pre">xonsh</span></code>.</p>
+<p>Toggles ‘fuzzy’ matching of paths for tab completion, which is only used as a fallback if no other completions succeed but can be used as a way to adjust for typographical errors. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then, e.g., <code class="docutils literal notranslate"><span class="pre">xonhs</span></code> will match <code class="docutils literal notranslate"><span class="pre">xonsh</span></code>.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -408,7 +399,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="glob-sorted">
 <span id="id24"></span><h3>$GLOB_SORTED<a class="headerlink" href="#glob-sorted" title="Permalink to this headline">¶</a></h3>
-<p>Toggles whether globbing results are manually sorted. If <code class="docutils literal"><span class="pre">False</span></code>, the results are returned in arbitrary order.</p>
+<p>Toggles whether globbing results are manually sorted. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the results are returned in arbitrary order.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -416,7 +407,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="histcontrol">
 <span id="id25"></span><h3>$HISTCONTROL<a class="headerlink" href="#histcontrol" title="Permalink to this headline">¶</a></h3>
-<p>A set of strings (comma-separated list in string form) of options that determine what commands are saved to the history list. By default all commands are saved. The option <code class="docutils literal"><span class="pre">ignoredups</span></code> will not save the command if it matches the previous command. The option ‘ignoreerr’ will cause any commands that fail (i.e. return non-zero exit status) to not be added to the history list.</p>
+<p>A set of strings (comma-separated list in string form) of options that determine what commands are saved to the history list. By default all commands are saved. The option <code class="docutils literal notranslate"><span class="pre">ignoredups</span></code> will not save the command if it matches the previous command. The option ‘ignoreerr’ will cause any commands that fail (i.e. return non-zero exit status) to not be added to the history list.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> set()</p>
 <p><strong>store_as_str:</strong> True</p>
@@ -440,7 +431,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="intensify-colors-on-win">
 <span id="id28"></span><h3>$INTENSIFY_COLORS_ON_WIN<a class="headerlink" href="#intensify-colors-on-win" title="Permalink to this headline">¶</a></h3>
-<p>Enhance style colors for readability when using the default terminal (<code class="docutils literal"><span class="pre">cmd.exe</span></code>) on Windows. Blue colors, which are hard to read, are replaced with cyan. Other colors are generally replaced by their bright counter parts.</p>
+<p>Enhance style colors for readability when using the default terminal (<code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code>) on Windows. Blue colors, which are hard to read, are replaced with cyan. Other colors are generally replaced by their bright counter parts.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -464,7 +455,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="loaded-rc-files">
 <span id="id31"></span><h3>$LOADED_RC_FILES<a class="headerlink" href="#loaded-rc-files" title="Permalink to this headline">¶</a></h3>
-<p>Whether or not any of the xonsh run control files were loaded at startup. This is a sequence of bools in Python that is converted to a CSV list in string form, ie <code class="docutils literal"><span class="pre">[True,</span> <span class="pre">False]</span></code> becomes <code class="docutils literal"><span class="pre">'True,False'</span></code>.</p>
+<p>Whether or not any of the xonsh run control files were loaded at startup. This is a sequence of bools in Python that is converted to a CSV list in string form, ie <code class="docutils literal notranslate"><span class="pre">[True,</span> <span class="pre">False]</span></code> becomes <code class="docutils literal notranslate"><span class="pre">'True,False'</span></code>.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> ()</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -472,7 +463,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="mouse-support">
 <span id="id32"></span><h3>$MOUSE_SUPPORT<a class="headerlink" href="#mouse-support" title="Permalink to this headline">¶</a></h3>
-<p>Enable mouse support in the <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> shell. This allows clicking for positioning the cursor or selecting a completion. In some terminals however, this disables the ability to scroll back through the history of the terminal. Only usable with <code class="docutils literal"><span class="pre">$SHELL_TYPE=prompt_toolkit</span></code></p>
+<p>Enable mouse support in the <code class="docutils literal notranslate"><span class="pre">prompt_toolkit</span></code> shell. This allows clicking for positioning the cursor or selecting a completion. In some terminals however, this disables the ability to scroll back through the history of the terminal. Only usable with <code class="docutils literal notranslate"><span class="pre">$SHELL_TYPE=prompt_toolkit</span></code></p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -498,13 +489,13 @@ in multiple columns while typing.</li>
 <span id="id35"></span><h3>$PATH<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
 <p>List of strings representing where to look for executables.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> (‘/root/bin’, ‘/usr/local/sbin’, ‘/usr/local/bin’, ‘/usr/sbin’, ‘/usr/bin’, ‘/sbin’, ‘/bin’, ‘/usr/games’, ‘/usr/local/games’)</p>
+<p><strong>default:</strong> (‘/home/scopatz/bin’, ‘/usr/local/sbin’, ‘/usr/local/bin’, ‘/usr/sbin’, ‘/usr/bin’, ‘/sbin’, ‘/bin’, ‘/usr/games’, ‘/usr/local/games’)</p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="pathext">
 <span id="id36"></span><h3>$PATHEXT<a class="headerlink" href="#pathext" title="Permalink to this headline">¶</a></h3>
-<p>Sequence of extension strings (eg, <code class="docutils literal"><span class="pre">.EXE</span></code>) for filtering valid executables by. Each element must be uppercase.</p>
+<p>Sequence of extension strings (eg, <code class="docutils literal notranslate"><span class="pre">.EXE</span></code>) for filtering valid executables by. Each element must be uppercase.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> []</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -522,7 +513,7 @@ in multiple columns while typing.</li>
 <span id="id38"></span><h3>$PROMPT<a class="headerlink" href="#prompt" title="Permalink to this headline">¶</a></h3>
 <p>The prompt text. May contain keyword arguments which are auto-formatted, see ‘Customizing the Prompt’ at <a class="reference external" href="http://xon.sh/tutorial.html#customizing-the-prompt">http://xon.sh/tutorial.html#customizing-the-prompt</a>. This value is never inherited from parent processes.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">xonsh.environ.DEFAULT_PROMPT</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">xonsh.environ.DEFAULT_PROMPT</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -530,7 +521,7 @@ in multiple columns while typing.</li>
 <span id="id39"></span><h3>$PROMPT_FIELDS<a class="headerlink" href="#prompt-fields" title="Permalink to this headline">¶</a></h3>
 <p>Dictionary containing variables to be used when formatting $PROMPT and $TITLE. See ‘Customizing the Prompt’ <a class="reference external" href="http://xon.sh/tutorial.html#customizing-the-prompt">http://xon.sh/tutorial.html#customizing-the-prompt</a></p>
 <p><strong>configurable:</strong> False</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">xonsh.prompt.PROMPT_FIELDS</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">xonsh.prompt.PROMPT_FIELDS</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -552,7 +543,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="raise-subproc-error">
 <span id="id42"></span><h3>$RAISE_SUBPROC_ERROR<a class="headerlink" href="#raise-subproc-error" title="Permalink to this headline">¶</a></h3>
-<p>Whether or not to raise an error if a subprocess (captured or uncaptured) returns a non-zero exit status, which indicates failure. This is most useful in xonsh scripts or modules where failures should cause an end to execution. This is less useful at a terminal. The error that is raised is a <code class="docutils literal"><span class="pre">subprocess.CalledProcessError</span></code>.</p>
+<p>Whether or not to raise an error if a subprocess (captured or uncaptured) returns a non-zero exit status, which indicates failure. This is most useful in xonsh scripts or modules where failures should cause an end to execution. This is less useful at a terminal. The error that is raised is a <code class="docutils literal notranslate"><span class="pre">subprocess.CalledProcessError</span></code>.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -560,7 +551,7 @@ in multiple columns while typing.</li>
 </div>
 <div class="section" id="right-prompt">
 <span id="id43"></span><h3>$RIGHT_PROMPT<a class="headerlink" href="#right-prompt" title="Permalink to this headline">¶</a></h3>
-<p>Template string for right-aligned text at the prompt. This may be parametrized in the same way as the <code class="docutils literal"><span class="pre">$PROMPT</span></code> variable. Currently, this is only available in the prompt-toolkit shell.</p>
+<p>Template string for right-aligned text at the prompt. This may be parametrized in the same way as the <code class="docutils literal notranslate"><span class="pre">$PROMPT</span></code> variable. Currently, this is only available in the prompt-toolkit shell.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -571,25 +562,25 @@ in multiple columns while typing.</li>
 <p>Which shell is used. Currently two base shell types are supported:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">readline</span></code> that is backed by Python’s readline module</li>
-<li><code class="docutils literal"><span class="pre">prompt_toolkit</span></code> that uses external library of the same name</li>
-<li><code class="docutils literal"><span class="pre">random</span></code> selects a random shell from the above on startup</li>
+<li><code class="docutils literal notranslate"><span class="pre">readline</span></code> that is backed by Python’s readline module</li>
+<li><code class="docutils literal notranslate"><span class="pre">prompt_toolkit</span></code> that uses external library of the same name</li>
+<li><code class="docutils literal notranslate"><span class="pre">random</span></code> selects a random shell from the above on startup</li>
 <li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">best</span></code> selects the most feature-rich shell available on the</dt>
+<dt><code class="docutils literal notranslate"><span class="pre">best</span></code> selects the most feature-rich shell available on the</dt>
 <dd>user’s system</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>To use the <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> shell you need to have the <a class="reference external" href="https://github.com/jonathanslenders/python-prompt-toolkit">prompt_toolkit</a> library installed. To specify which shell should be used, do so in the run control file.</p>
+<p>To use the <code class="docutils literal notranslate"><span class="pre">prompt_toolkit</span></code> shell you need to have the <a class="reference external" href="https://github.com/jonathanslenders/python-prompt-toolkit">prompt_toolkit</a> library installed. To specify which shell should be used, do so in the run control file.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">best</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">best</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="subsequence-path-completion">
 <span id="id45"></span><h3>$SUBSEQUENCE_PATH_COMPLETION<a class="headerlink" href="#subsequence-path-completion" title="Permalink to this headline">¶</a></h3>
-<p>Toggles subsequence matching of paths for tab completion. If <code class="docutils literal"><span class="pre">True</span></code>, then, e.g., <code class="docutils literal"><span class="pre">~/u/ro</span></code> can match <code class="docutils literal"><span class="pre">~/lou/carcolh</span></code>.</p>
+<p>Toggles subsequence matching of paths for tab completion. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then, e.g., <code class="docutils literal notranslate"><span class="pre">~/u/ro</span></code> can match <code class="docutils literal notranslate"><span class="pre">~/lou/carcolh</span></code>.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -633,10 +624,10 @@ in multiple columns while typing.</li>
 <ul class="simple">
 <li>Set this from the program that launches xonsh. On POSIX systems,
 this can be performed by using env, e.g.
-<code class="docutils literal"><span class="pre">/usr/bin/env</span> <span class="pre">TERM=xterm-color</span> <span class="pre">xonsh</span></code> or similar.</li>
-<li>From the xonsh command line, namely <code class="docutils literal"><span class="pre">xonsh</span> <span class="pre">-DTERM=xterm-color</span></code>.</li>
-<li>In the config file with <code class="docutils literal"><span class="pre">{&quot;env&quot;:</span> <span class="pre">{&quot;TERM&quot;:</span> <span class="pre">&quot;xterm-color&quot;}}</span></code>.</li>
-<li>Lastly, in xonshrc with <code class="docutils literal"><span class="pre">$TERM</span></code></li>
+<code class="docutils literal notranslate"><span class="pre">/usr/bin/env</span> <span class="pre">TERM=xterm-color</span> <span class="pre">xonsh</span></code> or similar.</li>
+<li>From the xonsh command line, namely <code class="docutils literal notranslate"><span class="pre">xonsh</span> <span class="pre">-DTERM=xterm-color</span></code>.</li>
+<li>In the config file with <code class="docutils literal notranslate"><span class="pre">{&quot;env&quot;:</span> <span class="pre">{&quot;TERM&quot;:</span> <span class="pre">&quot;xterm-color&quot;}}</span></code>.</li>
+<li>Lastly, in xonshrc with <code class="docutils literal notranslate"><span class="pre">$TERM</span></code></li>
 </ul>
 <p>Ideally, your terminal emulator will set this correctly but that does not always happen.</p>
 <p><strong>configurable:</strong> False</p>
@@ -646,9 +637,9 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="title">
 <span id="id51"></span><h3>$TITLE<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h3>
-<p>The title text for the window in which xonsh is running. Formatted in the same manner as <code class="docutils literal"><span class="pre">$PROMPT</span></code>, see ‘Customizing the Prompt’ <a class="reference external" href="http://xon.sh/tutorial.html#customizing-the-prompt">http://xon.sh/tutorial.html#customizing-the-prompt</a>.</p>
+<p>The title text for the window in which xonsh is running. Formatted in the same manner as <code class="docutils literal notranslate"><span class="pre">$PROMPT</span></code>, see ‘Customizing the Prompt’ <a class="reference external" href="http://xon.sh/tutorial.html#customizing-the-prompt">http://xon.sh/tutorial.html#customizing-the-prompt</a>.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">xonsh.environ.DEFAULT_TITLE</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">xonsh.environ.DEFAULT_TITLE</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -662,7 +653,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="update-os-environ">
 <span id="id53"></span><h3>$UPDATE_OS_ENVIRON<a class="headerlink" href="#update-os-environ" title="Permalink to this headline">¶</a></h3>
-<p>If True <code class="docutils literal"><span class="pre">os_environ</span></code> will always be updated when the xonsh environment changes. The environment can be reset to the default value by calling <code class="docutils literal"><span class="pre">__xonsh_env__.undo_replace_env()</span></code></p>
+<p>If True <code class="docutils literal notranslate"><span class="pre">os_environ</span></code> will always be updated when the xonsh environment changes. The environment can be reset to the default value by calling <code class="docutils literal notranslate"><span class="pre">__xonsh_env__.undo_replace_env()</span></code></p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -702,7 +693,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="vi-mode">
 <span id="id58"></span><h3>$VI_MODE<a class="headerlink" href="#vi-mode" title="Permalink to this headline">¶</a></h3>
-<p>Flag to enable <code class="docutils literal"><span class="pre">vi_mode</span></code> in the <code class="docutils literal"><span class="pre">prompt_toolkit</span></code> shell.</p>
+<p>Flag to enable <code class="docutils literal notranslate"><span class="pre">vi_mode</span></code> in the <code class="docutils literal notranslate"><span class="pre">prompt_toolkit</span></code> shell.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -710,7 +701,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="win-unicode-console">
 <span id="id59"></span><h3>$WIN_UNICODE_CONSOLE<a class="headerlink" href="#win-unicode-console" title="Permalink to this headline">¶</a></h3>
-<p>Enables unicode support in windows terminals. Requires the external library <code class="docutils literal"><span class="pre">win_unicode_console</span></code>.</p>
+<p>Enables unicode support in windows terminals. Requires the external library <code class="docutils literal notranslate"><span class="pre">win_unicode_console</span></code>.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -720,7 +711,7 @@ this can be performed by using env, e.g.
 <span id="id60"></span><h3>$XDG_CONFIG_HOME<a class="headerlink" href="#xdg-config-home" title="Permalink to this headline">¶</a></h3>
 <p>Open desktop standard configuration home dir. This is the same default as used in the standard.</p>
 <p><strong>configurable:</strong> False</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">~/.config</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">~/.config</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -728,7 +719,7 @@ this can be performed by using env, e.g.
 <span id="id61"></span><h3>$XDG_DATA_HOME<a class="headerlink" href="#xdg-data-home" title="Permalink to this headline">¶</a></h3>
 <p>Open desktop standard data home dir. This is the same default as used in the standard.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">~/.local/share</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">~/.local/share</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -736,7 +727,7 @@ this can be performed by using env, e.g.
 <span id="id62"></span><h3>$XONSHCONFIG<a class="headerlink" href="#xonshconfig" title="Permalink to this headline">¶</a></h3>
 <p>The location of the static xonsh configuration file, if it exists. This is in JSON format.</p>
 <p><strong>configurable:</strong> False</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">$XONSH_CONFIG_DIR/config.json</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -744,8 +735,8 @@ this can be performed by using env, e.g.
 <span id="id63"></span><h3>$XONSHRC<a class="headerlink" href="#xonshrc" title="Permalink to this headline">¶</a></h3>
 <p>A list of the locations of run control files, if they exist.  User defined run control file will supersede values set in system-wide control file if there is a naming collision.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> On Linux &amp; Mac OSX: <code class="docutils literal"><span class="pre">['/etc/xonshrc',</span> <span class="pre">'~/.xonshrc']</span></code></p>
-<p>On Windows: <code class="docutils literal"><span class="pre">['%ALLUSERSPROFILE%\\xonsh\\xonshrc',</span> <span class="pre">'~/.xonshrc']</span></code></p>
+<p><strong>default:</strong> On Linux &amp; Mac OSX: <code class="docutils literal notranslate"><span class="pre">['/etc/xonshrc',</span> <span class="pre">'~/.config/xonsh/rc.xsh',</span> <span class="pre">'~/.xonshrc']</span></code></p>
+<p>On Windows: <code class="docutils literal notranslate"><span class="pre">['%ALLUSERSPROFILE%\\xonsh\\xonshrc',</span> <span class="pre">'~/.config/xonsh/rc.xsh',</span> <span class="pre">'~/.xonshrc']</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -753,7 +744,7 @@ this can be performed by using env, e.g.
 <span id="id64"></span><h3>$XONSH_APPEND_NEWLINE<a class="headerlink" href="#xonsh-append-newline" title="Permalink to this headline">¶</a></h3>
 <p>Append new line when a partial line is preserved in output.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> False</p>
+<p><strong>default:</strong> &lt;function xonsh_append_newline at 0x7fd1e57c7b70&gt;</p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -775,7 +766,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-cache-scripts">
 <span id="id67"></span><h3>$XONSH_CACHE_SCRIPTS<a class="headerlink" href="#xonsh-cache-scripts" title="Permalink to this headline">¶</a></h3>
-<p>Controls whether the code for scripts run from xonsh will be cached (<code class="docutils literal"><span class="pre">True</span></code>) or re-compiled each time (<code class="docutils literal"><span class="pre">False</span></code>).</p>
+<p>Controls whether the code for scripts run from xonsh will be cached (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or re-compiled each time (<code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> True</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -783,7 +774,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-color-style">
 <span id="id68"></span><h3>$XONSH_COLOR_STYLE<a class="headerlink" href="#xonsh-color-style" title="Permalink to this headline">¶</a></h3>
-<p>Sets the color style for xonsh colors. This is a style name, not a color map. Run <code class="docutils literal"><span class="pre">xonfig</span> <span class="pre">styles</span></code> to see the available styles.</p>
+<p>Sets the color style for xonsh colors. This is a style name, not a color map. Run <code class="docutils literal notranslate"><span class="pre">xonfig</span> <span class="pre">styles</span></code> to see the available styles.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘default’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -793,7 +784,7 @@ this can be performed by using env, e.g.
 <span id="id69"></span><h3>$XONSH_CONFIG_DIR<a class="headerlink" href="#xonsh-config-dir" title="Permalink to this headline">¶</a></h3>
 <p>This is the location where xonsh configuration information is stored.</p>
 <p><strong>configurable:</strong> False</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">$XDG_CONFIG_HOME/xonsh</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">$XDG_CONFIG_HOME/xonsh</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -801,13 +792,13 @@ this can be performed by using env, e.g.
 <span id="id70"></span><h3>$XONSH_DATA_DIR<a class="headerlink" href="#xonsh-data-dir" title="Permalink to this headline">¶</a></h3>
 <p>This is the location where xonsh data files are stored, such as history.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">$XDG_DATA_HOME/xonsh</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">$XDG_DATA_HOME/xonsh</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="xonsh-datetime-format">
 <span id="id71"></span><h3>$XONSH_DATETIME_FORMAT<a class="headerlink" href="#xonsh-datetime-format" title="Permalink to this headline">¶</a></h3>
-<p>The format that is used for <code class="docutils literal"><span class="pre">datetime.strptime()</span></code> in various placesi.e the history timestamp option</p>
+<p>The format that is used for <code class="docutils literal notranslate"><span class="pre">datetime.strptime()</span></code> in various placesi.e the history timestamp option</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘%Y-%m-%d %H:%M’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -815,7 +806,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-debug">
 <span id="id72"></span><h3>$XONSH_DEBUG<a class="headerlink" href="#xonsh-debug" title="Permalink to this headline">¶</a></h3>
-<p>Sets the xonsh debugging level. This may be an integer or a boolean. Setting this variable prior to stating xonsh to <code class="docutils literal"><span class="pre">1</span></code> or <code class="docutils literal"><span class="pre">True</span></code> will suppress amalgamated imports. Setting it to <code class="docutils literal"><span class="pre">2</span></code> will get some basic information like input transformation, command replacement. With <code class="docutils literal"><span class="pre">3</span></code> or a higher number will make more debugging information presented, like PLY parsing messages.</p>
+<p>Sets the xonsh debugging level. This may be an integer or a boolean. Setting this variable prior to stating xonsh to <code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">True</span></code> will suppress amalgamated imports. Setting it to <code class="docutils literal notranslate"><span class="pre">2</span></code> will get some basic information like input transformation, command replacement. With <code class="docutils literal notranslate"><span class="pre">3</span></code> or a higher number will make more debugging information presented, like PLY parsing messages.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> 0</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -825,7 +816,7 @@ this can be performed by using env, e.g.
 <span id="id73"></span><h3>$XONSH_ENCODING<a class="headerlink" href="#xonsh-encoding" title="Permalink to this headline">¶</a></h3>
 <p>This is the encoding that xonsh should use for subprocess operations.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">sys.getdefaultencoding()</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">sys.getdefaultencoding()</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -833,7 +824,7 @@ this can be performed by using env, e.g.
 <span id="id74"></span><h3>$XONSH_ENCODING_ERRORS<a class="headerlink" href="#xonsh-encoding-errors" title="Permalink to this headline">¶</a></h3>
 <p>The flag for how to handle encoding errors should they happen. Any string flag that has been previously registered with Python is allowed. See the ‘Python codecs documentation’ (<a class="reference external" href="https://docs.python.org/3/library/codecs.html#error-handlers">https://docs.python.org/3/library/codecs.html#error-handlers</a>) for more information and available options.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">surrogateescape</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">surrogateescape</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -841,17 +832,17 @@ this can be performed by using env, e.g.
 <span id="id75"></span><h3>$XONSH_GITSTATUS_*<a class="headerlink" href="#xonsh-gitstatus" title="Permalink to this headline">¶</a></h3>
 <p>Symbols for gitstatus prompt. Default values are:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_HASH</span></code>: <code class="docutils literal"><span class="pre">:</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_BRANCH</span></code>: <code class="docutils literal"><span class="pre">{CYAN}</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_OPERATION</span></code>: <code class="docutils literal"><span class="pre">{CYAN}</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_STAGED</span></code>: <code class="docutils literal"><span class="pre">{RED}●</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_CONFLICTS</span></code>: <code class="docutils literal"><span class="pre">{RED}×</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_CHANGED</span></code>: <code class="docutils literal"><span class="pre">{BLUE}+</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_UNTRACKED</span></code>: <code class="docutils literal"><span class="pre">…</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_STASHED</span></code>: <code class="docutils literal"><span class="pre">⚑</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_CLEAN</span></code>: <code class="docutils literal"><span class="pre">{BOLD_GREEN}✓</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_AHEAD</span></code>: <code class="docutils literal"><span class="pre">↑·</span></code></li>
-<li><code class="docutils literal"><span class="pre">XONSH_GITSTATUS_BEHIND</span></code>: <code class="docutils literal"><span class="pre">↓·</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_HASH</span></code>: <code class="docutils literal notranslate"><span class="pre">:</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_BRANCH</span></code>: <code class="docutils literal notranslate"><span class="pre">{CYAN}</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_OPERATION</span></code>: <code class="docutils literal notranslate"><span class="pre">{CYAN}</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_STAGED</span></code>: <code class="docutils literal notranslate"><span class="pre">{RED}●</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_CONFLICTS</span></code>: <code class="docutils literal notranslate"><span class="pre">{RED}×</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_CHANGED</span></code>: <code class="docutils literal notranslate"><span class="pre">{BLUE}+</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_UNTRACKED</span></code>: <code class="docutils literal notranslate"><span class="pre">…</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_STASHED</span></code>: <code class="docutils literal notranslate"><span class="pre">⚑</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_CLEAN</span></code>: <code class="docutils literal notranslate"><span class="pre">{BOLD_GREEN}✓</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_AHEAD</span></code>: <code class="docutils literal notranslate"><span class="pre">↑·</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">XONSH_GITSTATUS_BEHIND</span></code>: <code class="docutils literal notranslate"><span class="pre">↓·</span></code></li>
 </ul>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘&lt;default not set&gt;’</p>
@@ -860,7 +851,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-history-backend">
 <span id="id76"></span><h3>$XONSH_HISTORY_BACKEND<a class="headerlink" href="#xonsh-history-backend" title="Permalink to this headline">¶</a></h3>
-<p>Set which history backend to use. Options are: ‘json’, ‘sqlite’, and ‘dummy’. The default is ‘json’. <code class="docutils literal"><span class="pre">XONSH_HISTORY_BACKEND</span></code> also accepts a class type that inherits from <code class="docutils literal"><span class="pre">xonsh.history.base.History</span></code>, or its instance.</p>
+<p>Set which history backend to use. Options are: ‘json’, ‘sqlite’, and ‘dummy’. The default is ‘json’. <code class="docutils literal notranslate"><span class="pre">XONSH_HISTORY_BACKEND</span></code> also accepts a class type that inherits from <code class="docutils literal notranslate"><span class="pre">xonsh.history.base.History</span></code>, or its instance.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘json’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -870,7 +861,7 @@ this can be performed by using env, e.g.
 <span id="id77"></span><h3>$XONSH_HISTORY_FILE<a class="headerlink" href="#xonsh-history-file" title="Permalink to this headline">¶</a></h3>
 <p>Location of history file (deprecated).</p>
 <p><strong>configurable:</strong> False</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">~/.xonsh_history</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">~/.xonsh_history</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
@@ -878,20 +869,20 @@ this can be performed by using env, e.g.
 <span id="id78"></span><h3>$XONSH_HISTORY_SIZE<a class="headerlink" href="#xonsh-history-size" title="Permalink to this headline">¶</a></h3>
 <p>Value and units tuple that sets the size of history after garbage collection. Canonical units are:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">commands</span></code> for the number of past commands executed,</li>
-<li><code class="docutils literal"><span class="pre">files</span></code> for the number of history files to keep,</li>
-<li><code class="docutils literal"><span class="pre">s</span></code> for the number of seconds in the past that are allowed, and</li>
-<li><code class="docutils literal"><span class="pre">b</span></code> for the number of bytes that history may consume.</li>
+<li><code class="docutils literal notranslate"><span class="pre">commands</span></code> for the number of past commands executed,</li>
+<li><code class="docutils literal notranslate"><span class="pre">files</span></code> for the number of history files to keep,</li>
+<li><code class="docutils literal notranslate"><span class="pre">s</span></code> for the number of seconds in the past that are allowed, and</li>
+<li><code class="docutils literal notranslate"><span class="pre">b</span></code> for the number of bytes that history may consume.</li>
 </ul>
 <p>Common abbreviations, such as ‘6 months’ or ‘1 GB’ are also allowed.</p>
 <p><strong>configurable:</strong> True</p>
-<p><strong>default:</strong> <code class="docutils literal"><span class="pre">(8128,</span> <span class="pre">'commands')</span></code> or <code class="docutils literal"><span class="pre">'8128</span> <span class="pre">commands'</span></code></p>
+<p><strong>default:</strong> <code class="docutils literal notranslate"><span class="pre">(8128,</span> <span class="pre">'commands')</span></code> or <code class="docutils literal notranslate"><span class="pre">'8128</span> <span class="pre">commands'</span></code></p>
 <p><strong>store_as_str:</strong> False</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="xonsh-interactive">
 <span id="id79"></span><h3>$XONSH_INTERACTIVE<a class="headerlink" href="#xonsh-interactive" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">True</span></code> if xonsh is running interactively, and <code class="docutils literal"><span class="pre">False</span></code> otherwise.</p>
+<p><code class="docutils literal notranslate"><span class="pre">True</span></code> if xonsh is running interactively, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> ‘&lt;default not set&gt;’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -899,7 +890,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-login">
 <span id="id80"></span><h3>$XONSH_LOGIN<a class="headerlink" href="#xonsh-login" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">True</span></code> if xonsh is running as a login shell, and <code class="docutils literal"><span class="pre">False</span></code> otherwise.</p>
+<p><code class="docutils literal notranslate"><span class="pre">True</span></code> if xonsh is running as a login shell, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p><strong>configurable:</strong> False</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -915,7 +906,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-show-traceback">
 <span id="id82"></span><h3>$XONSH_SHOW_TRACEBACK<a class="headerlink" href="#xonsh-show-traceback" title="Permalink to this headline">¶</a></h3>
-<p>Controls if a traceback is shown if exceptions occur in the shell. Set to <code class="docutils literal"><span class="pre">True</span></code> to always show traceback or <code class="docutils literal"><span class="pre">False</span></code> to always hide. If undefined then the traceback is hidden but a notice is shown on how to enable the full traceback.</p>
+<p>Controls if a traceback is shown if exceptions occur in the shell. Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to always show traceback or <code class="docutils literal notranslate"><span class="pre">False</span></code> to always hide. If undefined then the traceback is hidden but a notice is shown on how to enable the full traceback.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -931,7 +922,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-stderr-postfix">
 <span id="id84"></span><h3>$XONSH_STDERR_POSTFIX<a class="headerlink" href="#xonsh-stderr-postfix" title="Permalink to this headline">¶</a></h3>
-<p>A format string, using the same keys and colors as <code class="docutils literal"><span class="pre">$PROMPT</span></code>, that is appended whenever stderr is displayed. This may be used in conjunction with <code class="docutils literal"><span class="pre">$XONSH_STDERR_PREFIX</span></code> to start the block.For example, to have stderr appear on a red background, the prefix &amp; postfix pair would be “{BACKGROUND_RED}” &amp; “{NO_COLOR}”.</p>
+<p>A format string, using the same keys and colors as <code class="docutils literal notranslate"><span class="pre">$PROMPT</span></code>, that is appended whenever stderr is displayed. This may be used in conjunction with <code class="docutils literal notranslate"><span class="pre">$XONSH_STDERR_PREFIX</span></code> to start the block.For example, to have stderr appear on a red background, the prefix &amp; postfix pair would be “{BACKGROUND_RED}” &amp; “{NO_COLOR}”.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -939,7 +930,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-stderr-prefix">
 <span id="id85"></span><h3>$XONSH_STDERR_PREFIX<a class="headerlink" href="#xonsh-stderr-prefix" title="Permalink to this headline">¶</a></h3>
-<p>A format string, using the same keys and colors as <code class="docutils literal"><span class="pre">$PROMPT</span></code>, that is prepended whenever stderr is displayed. This may be used in conjunction with <code class="docutils literal"><span class="pre">$XONSH_STDERR_POSTFIX</span></code> to close out the block.For example, to have stderr appear on a red background, the prefix &amp; postfix pair would be “{BACKGROUND_RED}” &amp; “{NO_COLOR}”.</p>
+<p>A format string, using the same keys and colors as <code class="docutils literal notranslate"><span class="pre">$PROMPT</span></code>, that is prepended whenever stderr is displayed. This may be used in conjunction with <code class="docutils literal notranslate"><span class="pre">$XONSH_STDERR_POSTFIX</span></code> to close out the block.For example, to have stderr appear on a red background, the prefix &amp; postfix pair would be “{BACKGROUND_RED}” &amp; “{NO_COLOR}”.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> ‘’</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -947,7 +938,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-store-stdin">
 <span id="id86"></span><h3>$XONSH_STORE_STDIN<a class="headerlink" href="#xonsh-store-stdin" title="Permalink to this headline">¶</a></h3>
-<p>Whether or not to store the stdin that is supplied to the <code class="docutils literal"><span class="pre">!()</span></code> and <code class="docutils literal"><span class="pre">![]</span></code> operators.</p>
+<p>Whether or not to store the stdin that is supplied to the <code class="docutils literal notranslate"><span class="pre">!()</span></code> and <code class="docutils literal notranslate"><span class="pre">![]</span></code> operators.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -955,7 +946,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-store-stdout">
 <span id="id87"></span><h3>$XONSH_STORE_STDOUT<a class="headerlink" href="#xonsh-store-stdout" title="Permalink to this headline">¶</a></h3>
-<p>Whether or not to store the <code class="docutils literal"><span class="pre">stdout</span></code> and <code class="docutils literal"><span class="pre">stderr</span></code> streams in the history files.</p>
+<p>Whether or not to store the <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> streams in the history files.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> False</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -963,7 +954,7 @@ this can be performed by using env, e.g.
 </div>
 <div class="section" id="xonsh-traceback-logfile">
 <span id="id88"></span><h3>$XONSH_TRACEBACK_LOGFILE<a class="headerlink" href="#xonsh-traceback-logfile" title="Permalink to this headline">¶</a></h3>
-<p>Specifies a file to store the traceback log to, regardless of whether <code class="docutils literal"><span class="pre">XONSH_SHOW_TRACEBACK</span></code> has been set. Its value must be a writable file or None / the empty string if traceback logging is not desired. Logging to a file is not enabled by default.</p>
+<p>Specifies a file to store the traceback log to, regardless of whether <code class="docutils literal notranslate"><span class="pre">XONSH_SHOW_TRACEBACK</span></code> has been set. Its value must be a writable file or None / the empty string if traceback logging is not desired. Logging to a file is not enabled by default.</p>
 <p><strong>configurable:</strong> True</p>
 <p><strong>default:</strong> None</p>
 <p><strong>store_as_str:</strong> False</p>
@@ -1098,12 +1089,14 @@ this can be performed by using env, e.g.
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1144,7 +1137,7 @@ this can be performed by using env, e.g.
         <li class="right" >
           <a href="xonshconfig.html" title="Static Configuration File"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="sidebar.html">xonsh 0.6.0.dev151 documentation</a> &#187;</li>
+    <li><a href="sidebar.html">xonsh 0.6.0.dev77 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >the xonsh shell</a> &#187;</li> 
       </ul>
@@ -1153,7 +1146,7 @@ this can be performed by using env, e.g.
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Anthony Scopatz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
